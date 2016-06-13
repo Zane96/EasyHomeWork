@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;
@@ -27,7 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class ClazzDetailHomeWorkAdapter extends BaseListAdapterPresenter<HomeWorkDetail>{
 
-    private Button button;
+    private ImageView button;
 
     public ClazzDetailHomeWorkAdapter(@NonNull Context mContext) {
         super(mContext);
@@ -41,7 +43,7 @@ public class ClazzDetailHomeWorkAdapter extends BaseListAdapterPresenter<HomeWor
     @Override
     public void OnBindViewHloder(BaseListViewHolderImpl baseListViewHolder, final int i) {
         baseListViewHolder.setData(mDatas.get(i));
-        button = (Button) baseListViewHolder.get(R.id.button_post_homework);
+        button = (ImageView) baseListViewHolder.get(R.id.button_post_homework);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

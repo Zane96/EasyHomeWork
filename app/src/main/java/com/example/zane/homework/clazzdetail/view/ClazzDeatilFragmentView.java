@@ -2,9 +2,11 @@ package com.example.zane.homework.clazzdetail.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewTreeObserver;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
@@ -12,6 +14,11 @@ import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailHomeWorkAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailMemberAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailNoticeAdapter;
+import com.example.zane.homework.event.ActivityReenterEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 

@@ -23,6 +23,7 @@ public class MemberViewHolder extends BaseListViewHolderImpl<MemberDetail>{
     private ImageView avatar;
     private TextView name;
     private TextView number;
+    private TextView selfInfo;
 
     public MemberViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -33,15 +34,17 @@ public class MemberViewHolder extends BaseListViewHolderImpl<MemberDetail>{
         avatar = $(R.id.imageview_item_member);
         name = $(R.id.textview_item_membername);
         number = $(R.id.textview_item_membernumber);
+        selfInfo = $(R.id.textview_item_selfinfo);
     }
 
     @Override
     public void setData(MemberDetail memberDetail) {
         Glide.with(App.getInstance())
-                .load(RandomBackImage.getRandomImage())
+                .load(memberDetail.getAvatar())
                 .transform(new CircleTransform(App.getInstance()))
                 .into(avatar);
         name.setText(memberDetail.getName());
         number.setText(memberDetail.getNumber());
+        selfInfo.setText(memberDetail.getSelfIntro());
     }
 }

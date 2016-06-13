@@ -16,8 +16,10 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_homeworkdetail"
+            android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/MyCustomToolBarStyle"
             app:layout_collapseMode="pin" />
@@ -26,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tablayout_homeworkdetail"
+            android:background="@color/colorPrimary"
             />
 
     </android.support.design.widget.AppBarLayout>

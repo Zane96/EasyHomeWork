@@ -1,5 +1,6 @@
 package com.example.zane.homework.clazzdetail.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import com.example.zane.homework.entity.HomeWorkDetail;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.event.FinishUpLoadEvent;
 import com.example.zane.homework.event.PostHomeWorkEvent;
+import com.example.zane.homework.homeworkdetail.presenters.HomeWorkDetailActivity;
 import com.jude.utils.JUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -71,6 +73,7 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
         adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
+                startActivity(new Intent(getActivity(), HomeWorkDetailActivity.class));
             }
             @Override
             public void onLongClick(View view, final int i) {

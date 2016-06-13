@@ -29,42 +29,40 @@
             android:layout_height="match_parent"
             android:layout_weight="3">
             <TextView
-                android:id="@+id/textview_item_postime"
-                android:paddingTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="发布: 16/05/25 21:48"
-                android:textColor="@color/gray"/>
-            <TextView
                 android:id="@+id/textview_item_workname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:text="数据库第三次课堂作业"
                 android:textSize="18sp"
                 android:paddingLeft="10dp"
+                android:textColor="@color/black"
                 android:maxLines="1"
                 android:ellipsize="end"/>
             <TextView
+                android:id="@+id/textview_item_postime"
+                android:paddingTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="发布: 2016年07月13日"/>
+            <TextView
                 android:id="@+id/textview_item_endtime"
-                android:background="@color/background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:paddingLeft="10dp"
-                android:text="截至: 16/05/28 23:59"/>
+                android:text="截至: 2016年07月18日"/>
         </LinearLayout>
 
-        <Button
+
+        <ImageView
             android:id="@+id/button_post_homework"
-            android:layout_gravity="center"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"/>
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 

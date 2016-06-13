@@ -25,6 +25,10 @@
                   android:configChanges="orientation"/>
         <activity android:name=".clazzdetail.presenter.ClazzDetailPostNoticeActivity"
                   android:configChanges="orientation"/>
+        <activity android:name=".homeworkdetail.presenters.HomeWorkDetailActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".otherinfo.presenters.OtherInfoActivity"
+                  android:configChanges="orientation"/>
         <service android:name=".service.UpLoadFileService"/>
         <service android:name=".service.PostHomeWorkService"/>
     </application>

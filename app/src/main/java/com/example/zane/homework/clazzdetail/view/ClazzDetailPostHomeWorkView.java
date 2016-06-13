@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
@@ -37,7 +39,7 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
     @Bind(R.id.button_choose_time)
     Button buttonChooseTime;
     @Bind(R.id.button_choose_file)
-    Button buttonChooseFile;
+    ImageView buttonChooseFile;
     @Bind(R.id.button_posthomework)
     Button buttonPosthomework;
     @Bind(R.id.edit_text_posthomework)
@@ -120,12 +122,12 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
     }
 
     public void loading() {
-        buttonChooseFile.setText("上传中");
+        buttonChooseFile.setImageResource(R.drawable.ic_upload_1);
         file = "loading";
     }
 
     public void loaded() {
-        buttonChooseFile.setText("已上传");
+        buttonChooseFile.setImageResource(R.drawable.ic_upload_2);
         file = "loaded";
     }
 

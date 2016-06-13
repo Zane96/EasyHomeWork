@@ -1,16 +1,12 @@
 package com.example.zane.homework.clazz;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +18,6 @@ import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.entity.Clazz;
 import com.example.zane.homework.utils.RandomBackImage;
-import com.example.zane.homework.utils.RandomColor;
 import com.jude.utils.JUtils;
 
 import java.lang.ref.WeakReference;
@@ -113,7 +108,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView>{
                     case 1:
                         for (int i = 0; i < 10; i++){
                             Clazz clazz = new Clazz();
-                            clazz.setImage(RandomBackImage.getRandomImage());
+                            clazz.setImage(RandomBackImage.getRandomAvatar());
                             reference.get().datas.add(clazz);
                         }
                         reference.get().adapterPresenter.addAll(reference.get().datas);

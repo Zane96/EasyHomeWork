@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.example.zane.homework.homeworkdetail.presenters.FinishedMemberFragment;
 import com.example.zane.homework.homeworkdetail.presenters.NoFinishedMemberFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class HomeWorkDetailViewpagerAdapter extends FragmentPagerAdapter{
 
     public HomeWorkDetailViewpagerAdapter(FragmentManager fm) {
         super(fm);
+        titles = new ArrayList<>();
     }
 
     public void addFinishedFragment(FinishedMemberFragment fragment, String title){

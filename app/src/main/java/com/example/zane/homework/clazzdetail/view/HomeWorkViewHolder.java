@@ -5,6 +5,8 @@ import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;
@@ -27,7 +29,7 @@ public class HomeWorkViewHolder extends BaseListViewHolderImpl<HomeWorkDetail>{
     private TextView postTime;
     private TextView workName;
     private TextView endTime;
-    private Button button;
+    private ImageView button;
 
     public HomeWorkViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -47,11 +49,11 @@ public class HomeWorkViewHolder extends BaseListViewHolderImpl<HomeWorkDetail>{
         endTime.setText(homeWorkDetail.getDeadLine());
         workName.setText(homeWorkDetail.getAddtion());
         if (homeWorkDetail.getAttachement().equals("null")){
-            button.setText("上传附件");
+            button.setImageResource(R.drawable.ic_upload);
         } else if (homeWorkDetail.getAttachement().equals("loaded")){
-            button.setText("已上传");
+            button.setImageResource(R.drawable.ic_upload_2);
         } else {
-            button.setText("上传中");
+            button.setImageResource(R.drawable.ic_upload_1);
         }
     }
 }

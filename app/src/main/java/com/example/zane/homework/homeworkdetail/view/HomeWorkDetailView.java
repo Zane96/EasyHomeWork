@@ -1,6 +1,8 @@
 package com.example.zane.homework.homeworkdetail.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,6 +12,8 @@ import android.view.View;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
+import com.example.zane.homework.homeworkdetail.HomeWorkDetailViewpagerAdapter;
 
 import butterknife.Bind;
 
@@ -29,6 +33,7 @@ public class HomeWorkDetailView extends BaseViewImpl {
     @Bind(R.id.fab_homeworkdetail)
     FloatingActionButton fabHomeworkdetail;
     private AppCompatActivity activity;
+    private ProgressDialog progressDialog;
 
     @Override
     public int getRootViewId() {
@@ -41,6 +46,8 @@ public class HomeWorkDetailView extends BaseViewImpl {
     }
 
     public void initToolbar() {
+        progressDialog = new ProgressDialog(activity);
+
         activity.setSupportActionBar(toolbarHomeworkdetail);
         activity.setSupportActionBar(toolbarHomeworkdetail);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,7 +59,15 @@ public class HomeWorkDetailView extends BaseViewImpl {
         });
     }
 
-    public void initTabLayout(){
+    public void initTabLayout(HomeWorkDetailViewpagerAdapter adapter){
+        viewpagerHomeworkdetail.setAdapter(adapter);
+        tablayoutHomeworkdetail.setupWithViewPager(viewpagerHomeworkdetail);
+    }
 
+    public void showProgress(){
+        progressDialog.show();
+    }
+    public void hideProgress(){
+        progressDialog.hide();
     }
 }

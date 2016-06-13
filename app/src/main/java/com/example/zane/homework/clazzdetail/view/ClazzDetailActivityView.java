@@ -21,6 +21,7 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActivity;
+import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;
 
@@ -98,23 +99,9 @@ public class ClazzDetailActivityView extends BaseViewImpl {
     public void setText(String clazzName, String courseName, int image) {
         textviewClazzdetailClassname.setText(clazzName);
         textviewClazzdetailCoursename.setText(courseName);
-        int avatar = R.drawable.back1_re;
-        switch (image) {
-            case R.drawable.back1_sq:
-                avatar = R.drawable.back1_re;
-                break;
-            case R.drawable.back2_sq:
-                avatar = R.drawable.back2_re;
-                break;
-            case R.drawable.back3_sq:
-                avatar = R.drawable.back3_re;
-                break;
-            case R.drawable.back4_sq:
-                avatar = R.drawable.back4_re;
-                break;
-        }
+
         Glide.with(activity)
-                .load(avatar)
+                .load(RandomBackImage.getBackground(image))
                 .centerCrop()
                 .into(imageviewClazzdetailTop);
     }
