@@ -1,6 +1,7 @@
 package com.example.zane.homework.clazzdetail.presenter;
 
 import android.app.Activity;
+import android.app.SharedElementCallback;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +57,10 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
     private List<Integer> positions;
     //最后一个被添加的下载
     private int position;
+    private SharedElementCallback mCallBack;
+    private String imageName;
+    private boolean isReturn;
+    private boolean isDisappear;
 
     @Override
     public Class<ClazzDetailActivityView> getRootViewClass() {
@@ -84,6 +89,12 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         adapter.addHomeWorkFrag(HomeWorkFragment.newInstance(), "作业");
         adapter.addMemberFrag(MemberFragment.newInstance(), "公告");
         adapter.addNoticeFrag(NoticeFragment.newInstance(), "成员");
+    }
+
+    @Override
+    public void finishAfterTransition() {
+        super.finishAfterTransition();
+
     }
 
     @Override

@@ -17,8 +17,11 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.entity.Clazz;
+import com.example.zane.homework.event.ActivityExitingEvent;
 import com.example.zane.homework.utils.RandomBackImage;
 import com.jude.utils.JUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -76,16 +79,19 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView>{
         adapterPresenter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                Intent intent = new Intent(getActivity(), ClazzDetailActivityPresenter.class);
-                intent.putExtra(CLAZZ_NAME, datas.get(i).getClassName());
-                intent.putExtra(COURSE_NAME, datas.get(i).getCourseName());
-                intent.putExtra(IMAGE, datas.get(i).getImage());
-                getActivity().startActivity(intent);
+//                Intent intent = new Intent(getActivity(), ClazzDetailActivityPresenter.class);
+//                intent.putExtra(CLAZZ_NAME, datas.get(i).getClassName());
+//                intent.putExtra(COURSE_NAME, datas.get(i).getCourseName());
+//                intent.putExtra(IMAGE, datas.get(i).getImage());
+//                getActivity().startActivity(intent);
+                ActivityExitingEvent event = new ActivityExitingEvent();
+                event.setActivity(getActivity());
+                event.setClazz(datas.get(i));
+                EventBus.getDefault().post(event);
             }
 
             @Override
             public void onLongClick(View view, int i) {
-                
             }
         });
     }

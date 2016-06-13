@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.event.ActivityReenterEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
@@ -101,9 +104,8 @@ public class MainActivity extends BaseActivityPresenter<MainView>
     public void onActivityReenter(int resultCode, Intent data) {
         //推迟绘制
         postponeEnterTransition();
-
         isReenterState = true;
-
+        EventBus.getDefault().post(new ActivityReenterEvent());
     }
 
     @Override

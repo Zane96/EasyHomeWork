@@ -3,13 +3,20 @@ package com.example.zane.homework.clazz;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewTreeObserver;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.event.ActivityReenterEvent;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 
@@ -25,7 +32,7 @@ public class ClazzFragView extends BaseViewImpl {
     RecyclerView recycleviewClazzInfo;
     @Bind(R.id.fab_clazzfragment)
     FloatingActionButton fabClazzfragment;
-    private Context context;
+    private AppCompatActivity context;
     private LinearLayoutManager manager;
     private ProgressDialog progressDialog;
 
@@ -36,7 +43,7 @@ public class ClazzFragView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        context = activity;
+        context = (AppCompatActivity) activity;
     }
 
     public void initRecycleview(ClazzRecyAdapterPresenter adapterPresenter) {
@@ -66,5 +73,18 @@ public class ClazzFragView extends BaseViewImpl {
         progressDialog.dismiss();
     }
 
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onActivityReenter(ActivityReenterEvent event){
+        recycleviewClazzInfo.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                recycleviewClazzInfo.getViewTreeObserver().removeOnPreDrawListener(this);
+                recycleviewClazzInfo.requestLayout();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    context.startPostponedEnterTransition();
+                }
+                return true;
+            }
+        });
+    }
 }
