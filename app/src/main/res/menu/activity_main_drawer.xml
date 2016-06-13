@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_class"
+            android:icon="@drawable/clazz"
+            android:title="@string/drawer_class"/>
+        <item
+            android:id="@+id/drawer_message"
+            android:icon="@drawable/message"
+            android:title="@string/drawer_message"/>
+        <item
+            android:id="@+id/drawer_info"
+            android:icon="@drawable/info"
+            android:title="@string/drawer_info"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Tools"/>-->
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/drawer_about"
+                android:icon="@drawable/about"
+                android:title="@string/drawer_about"/>
+            <item
+                android:id="@+id/drawer_setting"
+                android:icon="@drawable/setting"
+                android:title="@string/drawer_setting"/>
+        </menu>
+    </item>
+
+</menu>
