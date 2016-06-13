@@ -27,7 +27,6 @@
             android:layout_height="match_parent"
             android:id="@+id/imageview_item_clazz"
             android:padding="15dp"
-            android:src="@drawable/ic_menu_camera"
             />
 
         <TextView

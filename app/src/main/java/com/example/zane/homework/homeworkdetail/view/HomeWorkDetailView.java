@@ -1,10 +1,12 @@
 package com.example.zane.homework.homeworkdetail.view;
 
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
@@ -17,21 +19,40 @@ import butterknife.Bind;
  */
 
 public class HomeWorkDetailView extends BaseViewImpl {
-    @Bind(R.id.toolbar_postnotice)
-    Toolbar toolbarPostnotice;
-    @Bind(R.id.edit_text_posnotice)
-    EditText editTextPosnotice;
-    @Bind(R.id.button_postnotice)
-    Button buttonPostnotice;
+
+    @Bind(R.id.toolbar_homeworkdetail)
+    Toolbar toolbarHomeworkdetail;
+    @Bind(R.id.tablayout_homeworkdetail)
+    TabLayout tablayoutHomeworkdetail;
+    @Bind(R.id.viewpager_homeworkdetail)
+    ViewPager viewpagerHomeworkdetail;
+    @Bind(R.id.fab_homeworkdetail)
+    FloatingActionButton fabHomeworkdetail;
     private AppCompatActivity activity;
 
     @Override
     public int getRootViewId() {
-        return R.layout.activity_postnotice;
+        return R.layout.activity_homeworkdetail;
     }
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = activity;
+        this.activity = (AppCompatActivity) activity;
+    }
+
+    public void initToolbar() {
+        activity.setSupportActionBar(toolbarHomeworkdetail);
+        activity.setSupportActionBar(toolbarHomeworkdetail);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarHomeworkdetail.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.finish();
+            }
+        });
+    }
+
+    public void initTabLayout(){
+
     }
 }

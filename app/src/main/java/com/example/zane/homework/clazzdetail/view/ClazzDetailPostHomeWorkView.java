@@ -40,8 +40,6 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
     Button buttonChooseFile;
     @Bind(R.id.button_posthomework)
     Button buttonPosthomework;
-    @Bind(R.id.textview_time_choosed)
-    TextView textviewTimeChoosed;
     @Bind(R.id.edit_text_posthomework)
     EditText editTextPosthomework;
     private AppCompatActivity activity;
@@ -80,7 +78,7 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         endTime = TimeUtils.DateFormat(year, monthOfYear + 1, dayOfMonth);
-                        textviewTimeChoosed.setText(endTime);
+
                     }
                 }, calendar.get(Calendar.YEAR),
                                             calendar.get(Calendar.MONTH),

@@ -5,5 +5,5 @@ package com.example.zane.homework.homeworkdetail.presenters;
  * Email: zanebot96@gmail.com
  */
 
-public class HomeWorkDetailActivity {
+public class HomeWorkDetailActivity extends {
 }

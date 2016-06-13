@@ -20,6 +20,7 @@ import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
+import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActivity;
 
 import butterknife.Bind;
 
@@ -85,6 +86,7 @@ public class ClazzDetailActivityView extends BaseViewImpl {
                                 activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
                                 break;
                             case 1:
+                                activity.startActivity(new Intent(activity, ClazzDetailPostNoticeActivity.class));
                                 break;
                         }
                     }

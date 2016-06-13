@@ -42,14 +42,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
                 />
 
-            <TextView
-                android:id="@+id/textview_time_choosed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/gray"
-                />
-
             <Button
                 android:id="@+id/button_choose_time"
                 android:layout_width="wrap_content"
@@ -58,7 +50,7 @@
                 android:text="选择"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
 
