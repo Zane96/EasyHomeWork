@@ -21,6 +21,15 @@ public class Clazz implements Serializable, IListModel{
     private String owner = "徐志";
     //班级头像
     private int image;
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public int getImage() {
         return image;

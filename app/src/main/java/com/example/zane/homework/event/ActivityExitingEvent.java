@@ -13,6 +13,15 @@ import com.example.zane.homework.entity.Clazz;
 public class ActivityExitingEvent {
     private FragmentActivity activity;
     private Clazz clazz;
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public Activity getActivity() {
         return activity;

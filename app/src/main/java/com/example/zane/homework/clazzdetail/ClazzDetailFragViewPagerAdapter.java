@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
-import com.example.zane.homework.clazz.ClazzRecyAdapterPresenter;
+
 import com.example.zane.homework.clazzdetail.presenter.HomeWorkFragment;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.clazzdetail.presenter.NoticeFragment;
@@ -22,7 +22,7 @@ import java.util.List;
 public class ClazzDetailFragViewPagerAdapter extends FragmentPagerAdapter{
 
     private static final int COUNT = 3;
-    private static final String TAG = ClazzRecyAdapterPresenter.class.getSimpleName();
+    private static final String TAG = ClazzDetailFragViewPagerAdapter.class.getSimpleName();
     private List<String> titles;
     private MemberFragment memberFragment;
     private NoticeFragment noticeFragment;

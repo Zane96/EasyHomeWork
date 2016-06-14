@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewTreeObserver;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
@@ -15,6 +16,7 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.event.ActivityReenterEvent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -36,6 +38,10 @@ public class ClazzFragView extends BaseViewImpl {
     private LinearLayoutManager manager;
     private ProgressDialog progressDialog;
 
+    public ClazzFragView(){
+        EventBus.getDefault().register(this);
+    }
+
     @Override
     public int getRootViewId() {
         return R.layout.fragment_clazz;
@@ -46,7 +52,7 @@ public class ClazzFragView extends BaseViewImpl {
         context = (AppCompatActivity) activity;
     }
 
-    public void initRecycleview(ClazzRecyAdapterPresenter adapterPresenter) {
+    public void initRecycleview(ClazzFragPresenter.ClazzRecyAdapterPresenter adapterPresenter) {
         manager = new LinearLayoutManager(App.getInstance());
         recycleviewClazzInfo.setAdapter(adapterPresenter);
         recycleviewClazzInfo.setLayoutManager(manager);

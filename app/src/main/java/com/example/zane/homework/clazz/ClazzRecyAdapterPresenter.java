@@ -15,31 +15,32 @@ import com.example.zane.homework.entity.Clazz;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzRecyAdapterPresenter extends BaseListAdapterPresenter<Clazz>{
-
-    private static final String TAG = ClazzRecyAdapterPresenter.class.getSimpleName();
-
-    public ClazzRecyAdapterPresenter(@NonNull Context mContext) {
-        super(mContext);
-    }
-
-    @Override
-    public BaseListViewHolderImpl OnCreatViewHolder(ViewGroup viewGroup, int i) {
-        return new ClazzRecyView(viewGroup, R.layout.item_clazz);
-    }
-
-    @Override
-    public void OnBindViewHloder(BaseListViewHolderImpl baseListViewHolder, int i) {
-        baseListViewHolder.setData(mDatas.get(i));
-    }
-
-    @Override
-    public int setHeadNum() {
-        return 0;
-    }
-
-    @Override
-    public int setFootNum() {
-        return 0;
-    }
-}
+//public class ClazzRecyAdapterPresenter extends BaseListAdapterPresenter<Clazz>{
+//
+//    private static final String TAG = ClazzRecyAdapterPresenter.class.getSimpleName();
+//
+//    public ClazzRecyAdapterPresenter(@NonNull Context mContext) {
+//        super(mContext);
+//    }
+//
+//    @Override
+//    public BaseListViewHolderImpl OnCreatViewHolder(ViewGroup viewGroup, int i) {
+//        return new ClazzRecyView(viewGroup, R.layout.item_clazz);
+//    }
+//
+//    @Override
+//    public void OnBindViewHloder(BaseListViewHolderImpl baseListViewHolder, int i) {
+//        mDatas.get(i).setPosition(i);
+//        baseListViewHolder.setData(mDatas.get(i));
+//    }
+//
+//    @Override
+//    public int setHeadNum() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int setFootNum() {
+//        return 0;
+//    }
+//}

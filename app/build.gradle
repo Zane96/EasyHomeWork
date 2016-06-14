@@ -31,4 +31,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.jude:utils:1.2.1'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
