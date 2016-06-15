@@ -2,6 +2,11 @@
 <manifest package="com.example.zane.homework"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -10,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".login.presenters.LoginRegisterActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -28,6 +33,18 @@
         <activity android:name=".homeworkdetail.presenters.HomeWorkDetailActivity"
                   android:configChanges="orientation"/>
         <activity android:name=".otherinfo.presenters.OtherInfoActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".search.presenters.SearchActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".info.presenters.ChangeOtherInfoActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".info.presenters.ChangPasswordActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".MainActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".info.presenters.InfoActivity"
+                  android:configChanges="orientation"/>
+        <activity android:name=".authorinfo.presenters.AuthorInfoActivity"
                   android:configChanges="orientation"/>
         <service android:name=".service.UpLoadFileService"/>
         <service android:name=".service.PostHomeWorkService"/>

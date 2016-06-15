@@ -3,14 +3,30 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-    defaultConfig {
-        applicationId "com.example.zane.homework"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    def versionPropsFile = file('version.properties')
+
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+        defaultConfig {
+            applicationId "com.example.zane.homework"
+            minSdkVersion 15
+            targetSdkVersion 23
+            versionCode code
+            versionName "1.0"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+    } else {
+        throw new GradleException("Could not read version.properties!")
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -32,4 +48,5 @@ dependencies {
     compile 'com.jude:utils:1.2.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.Zane96:EasyImageProvider:v1.0.2'
 }

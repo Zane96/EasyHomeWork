@@ -30,6 +30,10 @@
                 android:id="@+id/drawer_setting"
                 android:icon="@drawable/setting"
                 android:title="@string/drawer_setting"/>
+            <item
+                android:id="@+id/drawer_login"
+                android:icon="@drawable/out"
+                android:title="@string/out"/>
         </menu>
     </item>
 

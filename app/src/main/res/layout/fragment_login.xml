@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal">
+        <!-- 账号 -->
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:src="@drawable/d3"
+            android:id="@+id/image1"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_toRightOf="@id/image1"
+            android:id="@+id/textinput_login_username"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_login_username"
+                android:hint="用户名"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:src="@drawable/c3"
+            android:id="@+id/image2"
+            android:layout_below="@id/image1"
+            android:layout_marginTop="20dp"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_toRightOf="@id/image2"
+            android:id="@+id/textinput_login_password"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/textinput_login_username"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_login_password"
+                android:hint="密码"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/radiogroup_login"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/textinput_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radio_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="老师"
+                android:textSize="20sp"
+                android:textColor="@color/gray"/>
+
+            <RadioButton
+                android:layout_marginLeft="70dp"
+                android:id="@+id/radio_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学生"
+                android:textSize="20sp"
+                android:textColor="@color/gray"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:text="登陆"
+            android:layout_below="@id/radiogroup_login"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_login"
+            android:id="@+id/text_register"
+            android:text="没有账号?注册"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

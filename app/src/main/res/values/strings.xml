@@ -13,4 +13,8 @@
     <string name="drawer_about">关于</string>
 
     <string name="finish_load">加载完毕~</string>
+    <string name="login">登陆</string>
+    <string name="out">退出登录</string>
+    <string name="readme">https://github.com/Zane96/EasyHomeWork/blob/master/README.md</string>
+    <string name="homework">https://github.com/Zane96/EasyHomeWork</string>
 </resources>

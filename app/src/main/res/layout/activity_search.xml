@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:background="@color/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:focusable="true"
+                  android:focusableInTouchMode="true"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_search"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/MyCustomToolBarStyle"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textinput_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <EditText
+                android:hint="输入你想要搜索的班级代号"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_search"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/clazz_item"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="#fff"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="true"
+            android:foreground="@drawable/card_foreground"
+            android:visibility="invisible"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageview_search"
+                    android:padding="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textview_search_clazzname"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_marginLeft="20dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_toRightOf="@id/imageview_search"
+                    android:layout_marginTop="2dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textview_search_owner"
+                    android:layout_toRightOf="@id/imageview_search"
+                    android:layout_below="@id/textview_search_clazzname"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"/>
+
+                <TextView
+                    android:id="@+id/textview_search_creatime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/imageview_search"
+                    android:layout_below="@id/textview_search_owner"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:visibility="invisible"
+        />
+</FrameLayout>

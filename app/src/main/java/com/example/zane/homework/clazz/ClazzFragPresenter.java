@@ -93,26 +93,6 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         Message message = new Message();
         message.what = 1;
         progressHandler.sendMessageDelayed(message, 1500);
-
-//        adapterPresenter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
-//            @Override
-//            public void onClick(View view, int i) {
-////                Intent intent = new Intent(getActivity(), ClazzDetailActivityPresenter.class);
-////                intent.putExtra(CLAZZ_NAME, datas.get(i).getClassName());
-////                intent.putExtra(COURSE_NAME, datas.get(i).getCourseName());
-////                intent.putExtra(IMAGE, datas.get(i).getImage());
-////                getActivity().startActivity(intent);
-//                ActivityExitingEvent event = new ActivityExitingEvent();
-//                event.setActivity(getActivity());
-//                event.setClazz(datas.get(i));
-//                event.setPosition(i);
-//                EventBus.getDefault().post(event);
-//            }
-//
-//            @Override
-//            public void onLongClick(View view, int i) {
-//            }
-//        });
     }
 
     @Override
