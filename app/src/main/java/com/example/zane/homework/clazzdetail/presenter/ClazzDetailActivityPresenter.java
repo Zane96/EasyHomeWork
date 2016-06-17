@@ -77,6 +77,7 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         String clazzName = getIntent().getStringExtra(ClazzFragPresenter.CLAZZ_NAME);
         String courseName = getIntent().getStringExtra(ClazzFragPresenter.COURSE_NAME);
         share_position = getIntent().getIntExtra(ClazzFragPresenter.POSITION_SHARE, 0);
+        //背景图写死了
         int image = getIntent().getIntExtra(ClazzFragPresenter.IMAGE, R.drawable.back1_re);
 
         //handler = new ProgressHandler(this);
@@ -85,11 +86,6 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         initData();
         v.setText(clazzName, courseName, image, share_position);
         v.initTablayout(adapter);
-        //v.showProgress();
-
-//        Message message = new Message();
-//        message.what = 1;
-//        handler.sendMessageDelayed(message, 1500);
     }
 
     public void initData(){
@@ -168,24 +164,6 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //handler.removeMessages(1);
     }
 
-//    private final static class ProgressHandler extends Handler{
-//        private WeakReference<ClazzDetailActivityPresenter> reference;
-//        public ProgressHandler(ClazzDetailActivityPresenter activity){
-//            reference = new WeakReference<ClazzDetailActivityPresenter>(activity);
-//        }
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (reference.get() != null){
-//                switch (msg.what){
-//                    case 1:
-//                        //reference.get().v.hideProgress();
-//                        reference.get().v.initTablayout(reference.get().adapter);
-//                        break;
-//                }
-//            }
-//        }
-//    }
 }

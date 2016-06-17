@@ -19,11 +19,14 @@ import android.widget.TextView;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
+import com.example.zane.homework.config.MockStudentData;
 import com.example.zane.homework.config.MockTeacherData;
+import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.RegisterEvent;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.example.zane.homework.utils.MySharedPre;
+import com.jude.utils.JUtils;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,17 +73,14 @@ public class LoginView extends BaseViewImpl {
     }
 
     public void init(){
-
         progressDialog = new ProgressDialog(activity);
         radiogroupLogin.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_student){
                     setIdentity(2);
-                    MySharedPre.getInstance().setIdentity("student");
                 } else if (checkedId == R.id.radio_teacher){
                     setIdentity(1);
-                    MySharedPre.getInstance().setIdentity("teacher");
                 } else {
                     setIdentity(0);
                 }
@@ -120,6 +120,8 @@ public class LoginView extends BaseViewImpl {
                 if (editLoginUsername.getText().toString().equals(MockTeacherData.userName) &&
                             editLoginPassword.getText().toString().equals(MockTeacherData.password) &&
                         identity == 1){
+                    MySharedPre.getInstance().setIdentity("teacher");
+                    MySharedPre.getInstance().setLogin(true);
                     progressDialog.show();
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -128,23 +130,53 @@ public class LoginView extends BaseViewImpl {
                             //序列化存储保持登陆
                             if (MySharedPre.getInstance().getIdentity().equals("teacher")){
                                 TeacherLogin teacherLogin = TeacherLogin.getInstacne();
-                                teacherLogin.setAvatar("");
+                                teacherLogin.setAvatar(0);
                                 teacherLogin.setCourse(MockTeacherData.course);
                                 teacherLogin.setGender(MockTeacherData.gender);
-                                teacherLogin.setLogin(true);
                                 teacherLogin.setName(MockTeacherData.name);
                                 teacherLogin.setPsd(MockTeacherData.password);
                                 teacherLogin.setSelfIntro(MockTeacherData.selfIntro);
                                 teacherLogin.setSessionid(MockTeacherData.sessionId);
                                 teacherLogin.setUserName(MockTeacherData.userName);
-                            } else {
-                                // TODO: 16/6/15 student 
+                                teacherLogin.setClazz(MockTeacherData.className);
+                                teacherLogin.setOwners(MockTeacherData.owners);
+                                teacherLogin.setIds(MockTeacherData.ids);
                             }
                             activity.startActivity(new Intent(activity, MainActivity.class));
                             activity.finish();
                         }
                     }, 1000);
-                }else {
+                } else if (editLoginPassword.getText().toString().equals(MockStudentData.password) && editLoginUsername.getText().toString().equals(MockStudentData.userName) &&
+                              identity == 2){
+                    MySharedPre.getInstance().setIdentity("student");
+                    MySharedPre.getInstance().setLogin(true);
+                    progressDialog.show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.hide();
+                            //序列化存储保持登陆
+                            if (MySharedPre.getInstance().getIdentity().equals("student")){
+                                StudentLogin studentLogin = StudentLogin.getInstacne();
+                                studentLogin.setAvatar(0);
+                                studentLogin.setCourse(MockStudentData.courseNames);
+                                studentLogin.setGender(MockStudentData.gender);
+                                studentLogin.setLogin(true);
+                                studentLogin.setName(MockStudentData.name);
+                                studentLogin.setPsd(MockStudentData.password);
+                                studentLogin.setSelfIntro(MockStudentData.selfIntro);
+                                studentLogin.setSessionid(MockStudentData.sessionId);
+                                studentLogin.setUserName(MockStudentData.userName);
+                                studentLogin.setClazz(MockStudentData.clazzNames);
+                                studentLogin.setOwner(MockStudentData.owners);
+                                studentLogin.setIsOwner(MockStudentData.owner);
+                                studentLogin.setIds(MockStudentData.ids);
+                            }
+                            activity.startActivity(new Intent(activity, MainActivity.class));
+                            activity.finish();
+                        }
+                    }, 1000);
+                } else {
                     Snackbar.make(textinputLoginPassword, "身份,用户名,密码错误!~", Snackbar.LENGTH_SHORT).show();
                 }
             }

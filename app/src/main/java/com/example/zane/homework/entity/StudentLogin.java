@@ -1,7 +1,6 @@
 package com.example.zane.homework.entity;
 
 import android.content.Context;
-import android.net.Uri;
 
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.utils.SecurePreferences;
@@ -11,29 +10,28 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by Zane on 16/6/15.
+ * Created by Zane on 16/6/16.
  * Email: zanebot96@gmail.com
- * 单列保持登录类
  */
 
-public class TeacherLogin {
+public class StudentLogin {
 
     private Context context;
     private SecurePreferences preferences;
     private SecurePreferences.Editor editor;
 
-    private TeacherLogin(){
+    private StudentLogin(){
         this.context = App.getInstance();
         preferences = new SecurePreferences(this.context);
         editor = preferences.edit();
     }
 
     private static class SingletonHolder{
-        private static final TeacherLogin instance = new TeacherLogin();
+        private static final StudentLogin instance = new StudentLogin();
     }
 
-    public static TeacherLogin getInstacne(){
-        return SingletonHolder.instance;
+    public static StudentLogin getInstacne(){
+        return StudentLogin.SingletonHolder.instance;
     }
 
     public String getName() {
@@ -99,28 +97,19 @@ public class TeacherLogin {
         editor.commit();
     }
 
-    public String getCourse() {
-        return preferences.getString("course", "");
+    public boolean isLogin() {
+        return preferences.getBoolean("isLogin", false);
     }
 
-    public void setCourse(String course) {
-        editor.putString("course", course);
+    public void setLogin(boolean login) {
+        editor.putBoolean("isLogin", login);
         editor.commit();
     }
 
-    public void setClazz(String[] datas){
-        Set<String> clazzNames = new HashSet<>();
-        for (int i = 0; i < datas.length; i++){
-            clazzNames.add(datas[i]);
-        }
-        editor.putStringSet("clazzname", clazzNames);
-        editor.commit();
-    }
-
-    public String[] getClazz(){
-        Set<String> clazzNames = preferences.getStringSet("clazzname", new HashSet<String>());
-        String[] datas = new String[clazzNames.size()];
-        Iterator<String> iterator = clazzNames.iterator();
+    public String[] getCourse() {
+        Set<String> courseNames = preferences.getStringSet("coursename", new HashSet<String>());
+        String[] datas = new String[courseNames.size()];
+        Iterator<String> iterator = courseNames.iterator();
         int i = 0;
         while (iterator.hasNext()){
             datas[i] = iterator.next();
@@ -129,25 +118,13 @@ public class TeacherLogin {
         return datas;
     }
 
-    public void setOwners(String[] datas){
-        Set<String> owners = new HashSet<>();
+    public void setCourse(String[] datas) {
+        HashSet<String> courseNames = new HashSet<>();
         for (int i = 0; i < datas.length; i++){
-            owners.add(datas[i]);
+            courseNames.add(datas[i]);
         }
-        editor.putStringSet("owners", owners);
+        editor.putStringSet("coursename", courseNames);
         editor.commit();
-    }
-
-    public String[] getOwners(){
-        Set<String> owners = preferences.getStringSet("owners", new HashSet<String>());
-        String[] datas = new String[owners.size()];
-        Iterator<String> iterator = owners.iterator();
-        int i = 0;
-        while (iterator.hasNext()){
-            datas[i] = iterator.next();
-            i++;
-        }
-        return datas;
     }
 
     public String[] getIds() {
@@ -165,9 +142,36 @@ public class TeacherLogin {
     public void setIds(String[] datas) {
         HashSet<String> ids = new HashSet<>();
         for (int i = 0; i < datas.length; i++){
-            ids.add("ID: " + datas[i]);
+            ids.add("ID: "+datas[i]);
         }
         editor.putStringSet("ids", ids);
         editor.commit();
+    }
+
+    public String getClazz(){
+        return preferences.getString("clazzname", "");
+    }
+
+    public void setClazz(String clazzName){
+        editor.putString("clazzname", clazzName);
+        editor.commit();
+    }
+
+    public void setOwner(String data){
+        editor.putString("owner", data);
+        editor.commit();
+    }
+
+    public String getOwner(){
+        return preferences.getString("owner", "");
+    }
+
+    public void setIsOwner(boolean data){
+        editor.putBoolean("isowner", data);
+        editor.commit();
+    }
+
+    public boolean getIsOwner(){
+        return preferences.getBoolean("isowner", false);
     }
 }

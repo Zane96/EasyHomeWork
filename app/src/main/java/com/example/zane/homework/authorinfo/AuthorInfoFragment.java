@@ -26,7 +26,7 @@ import com.jude.utils.JUtils;
 
 public class AuthorInfoFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener{
 
-    private static final String INTRODUCTION = "introduction";
+    private static final String TEACHER = "teacherName";
     private static final String VERSION_CHECK = "versionCheck";
     private static final String CURRENT_VERSION = "currentVersion";
     private static final String SHARE = "share";
@@ -35,7 +35,7 @@ public class AuthorInfoFragment extends PreferenceFragment implements Preference
     private static final String GITHUB = "github";
     private static final String EMAIL = "email";
 
-    private Preference mIntroduction;
+    private Preference mTeacher;
     private Preference mVersionCheck;
     private Preference mShare;
     private Preference mStar;
@@ -49,7 +49,7 @@ public class AuthorInfoFragment extends PreferenceFragment implements Preference
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.about);
 
-        mIntroduction = findPreference(INTRODUCTION);
+        mTeacher = findPreference(TEACHER);
         mVersionCheck = findPreference(VERSION_CHECK);
         mShare = findPreference(SHARE);
         mStar = findPreference(STAR);
@@ -58,7 +58,7 @@ public class AuthorInfoFragment extends PreferenceFragment implements Preference
         mEmail = findPreference(EMAIL);
         mCurrentVersion = findPreference(CURRENT_VERSION);
 
-        mIntroduction.setOnPreferenceClickListener(this);
+        mTeacher.setOnPreferenceClickListener(this);
         mVersionCheck.setOnPreferenceClickListener(this);
         mShare.setOnPreferenceClickListener(this);
         mStar.setOnPreferenceClickListener(this);
@@ -68,20 +68,21 @@ public class AuthorInfoFragment extends PreferenceFragment implements Preference
         mCurrentVersion.setOnPreferenceClickListener(this);
 
         //获取当前的版本名
-        mCurrentVersion.setSummary("HomeWork Version-" + JUtils.getAppVersionName());
+        mCurrentVersion.setSummary("HomeWork Version-" + JUtils.getAppVersionName() + "-" + JUtils.getAppVersionCode());
+        mTeacher.setSummary(getResources().getString(R.string.teachername));
     }
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
         //调用浏览器来打开readme
-        if (mIntroduction == preference){
+        if (mTeacher == preference){
             //指定uri
-            Uri uri = Uri.parse(getString(R.string.readme));
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setData(uri);
-            //启动浏览器
-            getActivity().startActivity(intent);
+//            Uri uri = Uri.parse(getString(R.string.readme));
+//            Intent intent = new Intent();
+//            intent.setAction(Intent.ACTION_VIEW);
+//            intent.setData(uri);
+//            //启动浏览器
+//            getActivity().startActivity(intent);
         } else if (mEmail == preference){
             copyToClipboard(getView(), mEmail.getSummary().toString());
         } else if (mGithub == preference){

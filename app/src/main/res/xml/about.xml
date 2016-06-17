@@ -2,8 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="HomeWork">
         <Preference
-            android:key="introduction"
-            android:title="应用介绍"/>
+            android:key="teacherName"
+            android:title="指导老师"/>
         <Preference
             android:key="currentVersion"
             android:title="当前版本"/>

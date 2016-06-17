@@ -31,6 +31,9 @@ import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActivity;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.entity.StudentLogin;
+import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
+import com.example.zane.homework.utils.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 import com.jude.utils.JUtils;
 
@@ -49,6 +52,8 @@ import butterknife.Bind;
  */
 
 public class ClazzDetailActivityView extends BaseViewImpl {
+
+    public static final String COURSENAME = "courseName";
 
     @Bind(R.id.imageview_clazzdetail_top)
     ImageView imageviewClazzdetailTop;
@@ -70,6 +75,8 @@ public class ClazzDetailActivityView extends BaseViewImpl {
     private AppCompatActivity activity;
     private ProgressDialog progressDialog;
     private SharedElementCallback mCallBack;
+
+    private String courseName;
 
     @Override
     public int getRootViewId() {
@@ -98,19 +105,35 @@ public class ClazzDetailActivityView extends BaseViewImpl {
             @Override
             public void onClick(View v) {
                 //activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
-                new AlertDialog.Builder(activity).setItems(new String[]{"发布作业", "发布公告"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
-                                break;
-                            case 1:
-                                activity.startActivity(new Intent(activity, ClazzDetailPostNoticeActivity.class));
-                                break;
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+                    builder.setItems(new String[]{"发布作业", "发布公告"}, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case 0:
+                                    activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
+                                    break;
+                                case 1:
+                                    activity.startActivity(new Intent(activity, ClazzDetailPostNoticeActivity.class));
+                                    break;
+                            }
                         }
-                    }
-                }).show();
+                    }).show();
+                } else {
+                    builder.setItems(new String[]{"查看课程详情"}, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case 0:
+                                    Intent intent = new Intent(activity, OtherInfoActivity.class);
+                                    intent.putExtra(COURSENAME, courseName);
+                                    activity.startActivity(intent);
+                                    break;
+                            }
+                        }
+                    }).show();
+                }
             }
         });
     }
@@ -130,6 +153,7 @@ public class ClazzDetailActivityView extends BaseViewImpl {
     public void setText(String clazzName, String courseName, int image, int position) {
         textviewClazzdetailClassname.setText(clazzName);
         textviewClazzdetailCoursename.setText(courseName);
+        this.courseName = courseName;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             imageviewClazzdetailTop.setTransitionName(position+"");

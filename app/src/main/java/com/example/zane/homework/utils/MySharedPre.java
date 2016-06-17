@@ -40,4 +40,13 @@ public class MySharedPre {
     public String getIdentity(){
         return preferences.getString("identity", "");
     }
+
+    public void setLogin(boolean data){
+        editor.putBoolean("login", data);
+        editor.commit();
+    }
+
+    public boolean getLogin(){
+        return preferences.getBoolean("login", false);
+    }
 }

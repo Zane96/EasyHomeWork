@@ -19,6 +19,7 @@ import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.event.FinishUpLoadEvent;
 import com.example.zane.homework.event.PostHomeWorkEvent;
 import com.example.zane.homework.homeworkdetail.presenters.HomeWorkDetailActivity;
+import com.example.zane.homework.utils.MySharedPre;
 import com.jude.utils.JUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,22 +71,24 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
         }
         adapter.addAll(datas);
         v.initHomeWorkRecycle(adapter);
-        adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
-            @Override
-            public void onClick(View view, int i) {
-                startActivity(new Intent(getActivity(), HomeWorkDetailActivity.class));
-            }
-            @Override
-            public void onLongClick(View view, final int i) {
-                Snackbar.make(view, "您想要删除这个作业吗?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        adapter.remove(i);
-                        adapter.notifyDataSetChanged();
-                    }
-                }).show();
-            }
-        });
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+            adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
+                @Override
+                public void onClick(View view, int i) {
+                    startActivity(new Intent(getActivity(), HomeWorkDetailActivity.class));
+                }
+                @Override
+                public void onLongClick(View view, final int i) {
+                    Snackbar.make(view, "您想要删除这个作业吗?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            adapter.remove(i);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }).show();
+                }
+            });
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -132,7 +135,7 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
 //        }
 //
 //        @Override
-//        public void handleMessage(Message msg) {
+//        public void handleMessage(MessageDetail msg) {
 //            if (reference.get() != null){
 //                HomeWorkFragment fragment = reference.get();
 //                switch (msg.what){

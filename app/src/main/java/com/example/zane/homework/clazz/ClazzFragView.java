@@ -3,9 +3,11 @@ package com.example.zane.homework.clazz;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.search.presenters.SearchActivity;
+import com.example.zane.homework.utils.MySharedPre;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,6 +59,7 @@ public class ClazzFragView extends BaseViewImpl {
     }
 
     public void initRecycleview(ClazzFragPresenter.ClazzRecyAdapterPresenter adapterPresenter) {
+
         manager = new LinearLayoutManager(App.getInstance());
         recycleviewClazzInfo.setAdapter(adapterPresenter);
         recycleviewClazzInfo.setLayoutManager(manager);
@@ -71,10 +75,31 @@ public class ClazzFragView extends BaseViewImpl {
                 }
             }
         });
+
         fabClazzfragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, SearchActivity.class));
+                if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+                    Intent intent = new Intent(context, SearchActivity.class);
+                    intent.putExtra("STUDENT", 1);
+                    context.startActivity(intent);
+                } else {
+                    new AlertDialog.Builder(context).setItems(new String[]{"创建班级", "搜索班级"}, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(context, SearchActivity.class);
+                            switch (which){
+                                case 0:
+                                    intent.putExtra("STUDENT", 0);
+                                    break;
+                                case 1:
+                                    intent.putExtra("STUDENT", 1);
+                                    break;
+                            }
+                            context.startActivity(intent);
+                        }
+                    }).show();
+                }
             }
         });
     }

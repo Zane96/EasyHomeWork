@@ -12,6 +12,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -293,7 +294,7 @@ public class SecurePreferences implements SharedPreferences {
         //		@Override
         public android.content.SharedPreferences.Editor putStringSet(
                                                                             String key, Set<String> values) {
-            return null;
+            return mEditor.putStringSet(key, values);
         }
     }
 
@@ -309,7 +310,7 @@ public class SecurePreferences implements SharedPreferences {
 
     //	@Override
     public Set<String> getStringSet(String key, Set<String> defValues) {
-        return null;
+        return SecurePreferences.sFile.getStringSet(key, new HashSet<String>());
     }
 
 }

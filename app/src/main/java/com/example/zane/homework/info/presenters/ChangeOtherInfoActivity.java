@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.info.view.ChangeOtherInfoView;
-import com.example.zane.homework.info.view.InfoFragmentView;
+import com.example.zane.homework.info.view.InfoView;
 
 /**
  * Created by Zane on 16/6/14.
@@ -20,7 +20,7 @@ public class ChangeOtherInfoActivity extends BaseActivityPresenter<ChangeOtherIn
 
     @Override
     public void inCreat(Bundle bundle) {
-        String oldData = getIntent().getStringExtra(InfoFragmentView.CHANGE_CONTENT);
+        String oldData = getIntent().getStringExtra(InfoView.CHANGE_CONTENT);
         v.init(oldData);
     }
 

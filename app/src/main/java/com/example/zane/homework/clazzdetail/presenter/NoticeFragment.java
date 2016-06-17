@@ -15,6 +15,7 @@ import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.entity.NoticeDetail;
 import com.example.zane.homework.event.PostNoticeEvent;
+import com.example.zane.homework.utils.MySharedPre;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -71,21 +72,23 @@ public class NoticeFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
         }
         adapter.addAll(datas);
         v.initNoticeRecycle(adapter);
-        adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
-            @Override
-            public void onClick(View view, int i) {
-            }
-            @Override
-            public void onLongClick(View view, final int i) {
-                Snackbar.make(view, "您想要删除这个公告吗?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        adapter.remove(i);
-                        adapter.notifyDataSetChanged();
-                    }
-                }).show();
-            }
-        });
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+            adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
+                @Override
+                public void onClick(View view, int i) {
+                }
+                @Override
+                public void onLongClick(View view, final int i) {
+                    Snackbar.make(view, "您想要删除这个公告吗?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            adapter.remove(i);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }).show();
+                }
+            });
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

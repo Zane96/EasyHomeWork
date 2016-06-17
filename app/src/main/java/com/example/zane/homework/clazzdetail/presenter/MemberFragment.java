@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.SharedElementCallback;
 import android.view.LayoutInflater;
@@ -18,7 +19,9 @@ import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.entity.MemberDetail;
+import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
+import com.example.zane.homework.utils.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import java.util.ArrayList;
@@ -80,7 +83,16 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
                 startActivity(intent);
             }
             @Override
-            public void onLongClick(View view, int i) {
+            public void onLongClick(View view, final int i) {
+                if (MySharedPre.getInstance().getIdentity().equals("student") && StudentLogin.getInstacne().getIsOwner()){
+                    Snackbar.make(view, "您想要删除这位成员嘛?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            adapter.remove(i);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }).show();
+                }
             }
         });
     }

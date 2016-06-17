@@ -20,11 +20,15 @@ import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.authorinfo.presenters.AuthorInfoActivity;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.config.MockStudentData;
 import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.info.presenters.InfoActivity;
+import com.example.zane.homework.message.presenters.MessageActivity;
 import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;
 
@@ -61,7 +65,7 @@ public class MainView extends BaseViewImpl {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void init(ClazzFragPresenter clazzFragPresenter, String name, Uri image) {
+    public void init(ClazzFragPresenter clazzFragPresenter) {
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter);
         fragmentTransaction.commit();
@@ -69,15 +73,31 @@ public class MainView extends BaseViewImpl {
         textView = (TextView) view.findViewById(R.id.text_main_welcom);
         imageView = (ImageView) view.findViewById(R.id.imageView_main_avatar);
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            textView.setText(MockTeacherData.userName + "老师, " + "你好!");
+            textView.setText(TeacherLogin.getInstacne().getUserName() + "老师, " + "你好!");
+            if (MockTeacherData.avatar != null){
+                Glide.with(context)
+                        .load(MockTeacherData.avatar)
+                        .transform(new CircleTransform(App.getInstance()))
+                        .into(imageView);
+            } else {
+                Glide.with(context)
+                        .load(RandomBackImage.getRandomAvatar())
+                        .transform(new CircleTransform(App.getInstance()))
+                        .into(imageView);
+            }
         } else {
-            // TODO: 16/6/15 student
-        }
-        if (image != null){
-            Glide.with(context)
-                    .load(image)
-                    .transform(new CircleTransform(App.getInstance()))
-                    .into(imageView);
+            textView.setText(StudentLogin.getInstacne().getUserName() + "同学" + "你好!");
+            if (MockStudentData.avatar != null){
+                Glide.with(context)
+                        .load(MockStudentData.avatar)
+                        .transform(new CircleTransform(App.getInstance()))
+                        .into(imageView);
+            } else {
+                Glide.with(context)
+                        .load(RandomBackImage.getRandomAvatar())
+                        .transform(new CircleTransform(App.getInstance()))
+                        .into(imageView);
+            }
         }
     }
 
@@ -99,11 +119,18 @@ public class MainView extends BaseViewImpl {
                     .transform(new CircleTransform(App.getInstance()))
                     .into(imageView);
         } else {
-            // TODO: 16/6/15 student
+            textView.setText(StudentLogin.getInstacne().getUserName() + "老师, " + "你好!");
+            Glide.with(context)
+                    .load(MockStudentData.avatar)
+                    .transform(new CircleTransform(App.getInstance()))
+                    .into(imageView);
         }
     }
 
     public void transToAuthorInfo(){
         context.startActivity(new Intent(context, AuthorInfoActivity.class));
+    }
+    public void transToMessage(){
+        context.startActivity(new Intent(context, MessageActivity.class));
     }
 }

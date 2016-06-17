@@ -12,7 +12,12 @@ import com.bumptech.glide.Glide;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
+import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.entity.MemberDetail;
+import com.example.zane.homework.entity.StudentLogin;
+import com.example.zane.homework.utils.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;
@@ -23,6 +28,7 @@ import butterknife.Bind;
  */
 
 public class OtherInfoView extends BaseViewImpl {
+
     @Bind(R.id.imageview_otherinfo_top)
     ImageView imageviewOtherinfoTop;
     @Bind(R.id.imageview_otherinfo_avatar)
@@ -41,6 +47,14 @@ public class OtherInfoView extends BaseViewImpl {
     TextView textOtherinfoNoworktimes;
     @Bind(R.id.text_otherinfo_worktimes)
     TextView textOtherinfoWorktimes;
+    @Bind(R.id.textview_0)
+    TextView textview0;
+    @Bind(R.id.textview_1)
+    TextView textview1;
+    @Bind(R.id.textview_2)
+    TextView textview2;
+    @Bind(R.id.textview_3)
+    TextView textview3;
 
     private AppCompatActivity activity;
     private ProgressDialog progressDialog;
@@ -69,7 +83,7 @@ public class OtherInfoView extends BaseViewImpl {
         });
     }
 
-    public void init(String name, String selfInfo, int avatar){
+    public void init(String name, String selfInfo, int avatar) {
         initToolbar();
         textviewOtherifoName.setText(name);
         textviewOtherinfoSelf.setText(selfInfo);
@@ -78,20 +92,26 @@ public class OtherInfoView extends BaseViewImpl {
                 .load(avatar)
                 .transform(new CircleTransform(App.getInstance()))
                 .into(imageviewOtherinfoAvatar);
+        if (MySharedPre.getInstance().getIdentity().equals("student") && activity.getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
+            textview0.setText("课程名:");
+            textview1.setText("课程总分:");
+            textview2.setText("已获得分数:");
+            textview3.setText("未交作业次数:");
+        }
     }
 
-    public void setData(String number, String score, String works, String noWorks){
+    public void setData(String number, String score, String works, String noWorks) {
         textOtherinfoNumber.setText(number);
         textOtherinfoScore.setText(score);
         textOtherinfoWorktimes.setText(works);
         textOtherinfoNoworktimes.setText(noWorks);
     }
 
-    public void showProgress(){
+    public void showProgress() {
         progressDialog.show();
     }
 
-    public void hideProgress(){
+    public void hideProgress() {
         progressDialog.hide();
     }
 }

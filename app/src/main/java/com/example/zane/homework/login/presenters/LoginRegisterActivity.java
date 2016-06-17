@@ -9,6 +9,8 @@ import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.login.view.LoginRegisterView;
+import com.example.zane.homework.utils.MySharedPre;
+import com.jude.utils.JUtils;
 
 /**
  * Created by Zane on 16/6/15.
@@ -26,7 +28,7 @@ public class LoginRegisterActivity extends BaseActivityPresenter<LoginRegisterVi
 
     @Override
     public void inCreat(Bundle bundle) {
-        if (TeacherLogin.getInstacne().isLogin()){
+        if (MySharedPre.getInstance().getLogin()){
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {

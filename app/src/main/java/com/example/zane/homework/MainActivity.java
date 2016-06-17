@@ -21,6 +21,7 @@ import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
+import com.example.zane.homework.utils.MySharedPre;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,7 +58,7 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         setSupportActionBar(toolbar);
         initCallBack();
         initFragment();
-        v.init(clazzFragPresenter, TeacherLogin.getInstacne().getUserName(), MockTeacherData.avatar);
+        v.init(clazzFragPresenter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -140,7 +141,7 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         if (id == R.id.drawer_class) {
             v.transToClazzFragment(clazzFragPresenter);
         } else if (id == R.id.drawer_message) {
-
+            v.transToMessage();
         } else if (id == R.id.drawer_info) {
             v.transToInfoActivity();
         } else if (id == R.id.drawer_about) {
@@ -149,7 +150,7 @@ public class MainActivity extends BaseActivityPresenter<MainView>
 
         } else if (id == R.id.drawer_login){
             startActivity(new Intent(this, LoginRegisterActivity.class));
-            TeacherLogin.getInstacne().setLogin(false);
+            MySharedPre.getInstance().setLogin(false);
             finish();
         }
 
