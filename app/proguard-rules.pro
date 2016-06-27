@@ -15,3 +15,32 @@
 #-keepclassmembers clazz fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#ButterKinfe
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+#EventBus
+-keepclassmembers class ** {
+   public void onEvent*(**);
+}
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+   <init>(java.lang.Throwable);
+}
+#Picasso
+-dontwarn com.squareup.okhttp.**
+#Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
