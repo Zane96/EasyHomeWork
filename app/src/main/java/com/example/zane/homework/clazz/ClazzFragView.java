@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
@@ -64,17 +68,29 @@ public class ClazzFragView extends BaseViewImpl {
         recycleviewClazzInfo.setAdapter(adapterPresenter);
         recycleviewClazzInfo.setLayoutManager(manager);
         fabClazzfragment.show();
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fabClazzfragment.getLayoutParams();
+        final int fabMarginBottm = lp.bottomMargin;
 
+        recycleviewClazzInfo.setHasFixedSize(true);
         recycleviewClazzInfo.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy <= 0) {
-                    fabClazzfragment.show();
+                if (dy < 0) {
+                    //fabClazzfragment.show();
+                    fabClazzfragment.animate()
+                            .translationY(fabClazzfragment.getHeight() + fabMarginBottm)
+                            .setInterpolator(new AccelerateInterpolator(2))
+                            .start();
                 } else {
-                    fabClazzfragment.hide();
+                    //fabClazzfragment.hide();
+                    fabClazzfragment.animate()
+                            .translationY(0)
+                            .setInterpolator(new DecelerateInterpolator(2))
+                            .start();
                 }
             }
         });
+
 
         fabClazzfragment.setOnClickListener(new View.OnClickListener() {
             @Override
