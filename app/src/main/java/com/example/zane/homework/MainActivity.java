@@ -69,38 +69,46 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
     void initCallBack(){
         //监听reenter的状态
-        mCallback = new SharedElementCallback() {
-            @Override
-            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                /**
-                 * 如果是reenter状态,不用做任何事情,
-                 * 因为系统会默认return/reenter的element就是exiting/enter中共享的
-                 * 如果reenter的时候,需要共享的组件变了,那么就需要重新设置sharedElements了
-                 */
-                if (isReenterState){
-                    isReenterState = false;
-                } else {
-                    //如果是exiting状态,除了后面要共享的ImageView,这里添加状态栏和导航栏
-                    //防止闪屏
-                    getWindow().setExitTransition(null);
-                    View statusBar = findViewById(android.R.id.statusBarBackground);
-                    View navigationBar = findViewById(android.R.id.navigationBarBackground);
-                    if (statusBar != null){
-                        //应该系统控件默认set了transName的吧。。。。
-                        names.add(statusBar.getTransitionName());
-                        sharedElements.put(statusBar.getTransitionName(), statusBar);
-                    }
-                    if (navigationBar != null){
-                        names.add(navigationBar.getTransitionName());
-                        sharedElements.put(navigationBar.getTransitionName(), navigationBar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mCallback = new SharedElementCallback() {
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    /**
+                     * 如果是reenter状态,不用做任何事情,
+                     * 因为系统会默认return/reenter的element就是exiting/enter中共享的
+                     * 如果reenter的时候,需要共享的组件变了,那么就需要重新设置sharedElements了
+                     */
+                    if (isReenterState){
+                        isReenterState = false;
+                    } else {
+                        //如果是exiting状态,除了后面要共享的ImageView,这里添加状态栏和导航栏
+                        //防止闪屏
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            getWindow().setExitTransition(null);
+                        }
+                        View statusBar = findViewById(android.R.id.statusBarBackground);
+                        View navigationBar = findViewById(android.R.id.navigationBarBackground);
+                        if (statusBar != null){
+                            //应该系统控件默认set了transName的吧。。。。
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                names.add(statusBar.getTransitionName());
+                                sharedElements.put(statusBar.getTransitionName(), statusBar);
+                            }
+                        }
+                        if (navigationBar != null){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                names.add(navigationBar.getTransitionName());
+                                sharedElements.put(navigationBar.getTransitionName(), navigationBar);
+                            }
+                        }
                     }
                 }
-            }
-        };
-        setExitSharedElementCallback(mCallback);
+            };
+            setExitSharedElementCallback(mCallback);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

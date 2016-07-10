@@ -193,24 +193,27 @@ public class ClazzDetailActivityView extends BaseViewImpl {
         progressDialog.hide();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
     public void initCallBack(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.postponeEnterTransition();
         }
 //        //防止闪屏
-        activity.getWindow().setEnterTransition(null);
-        mCallBack = new SharedElementCallback() {
-            @Override
-            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                imageviewClazzdetailTop = getImageView();
-                if (imageviewClazzdetailTop == null){
-                    names.clear();
-                    sharedElements.clear();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().setEnterTransition(null);
+            mCallBack = new SharedElementCallback() {
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    imageviewClazzdetailTop = getImageView();
+                    if (imageviewClazzdetailTop == null){
+                        names.clear();
+                        sharedElements.clear();
+                    }
                 }
-            }
-        };
-        activity.setEnterSharedElementCallback(mCallBack);
+            };
+            activity.setEnterSharedElementCallback(mCallBack);
+        }
+
     }
 
     @Nullable
