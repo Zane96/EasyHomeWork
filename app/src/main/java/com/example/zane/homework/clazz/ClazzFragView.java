@@ -88,6 +88,7 @@ public class ClazzFragView extends BaseViewImpl {
                             .setInterpolator(new DecelerateInterpolator(2))
                             .start();
                 }
+
             }
         });
 
