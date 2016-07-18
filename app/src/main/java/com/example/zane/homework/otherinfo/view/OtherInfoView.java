@@ -69,6 +69,11 @@ public class OtherInfoView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar() {
         progressDialog = new ProgressDialog(activity);
         toolbarOtherinfo.setTitle("");

@@ -38,12 +38,12 @@ public class MessageViewHolder extends BaseListViewHolderImpl<MessageDetail>{
 
     @Override
     public void initView() {
-        avatar = $(R.id.image_message_top);
-        action = $(R.id.text_message_action);
-        state = $(R.id.text_message_state);
-        className = $(R.id.text_message_classname);
-        owner = $(R.id.text_message_owner);
-        text4 = $(R.id.text4_message);
+        avatar = get(R.id.image_message_top);
+        action = get(R.id.text_message_action);
+        state = get(R.id.text_message_state);
+        className = get(R.id.text_message_classname);
+        owner = get(R.id.text_message_owner);
+        text4 = get(R.id.text4_message);
     }
 
     @Override

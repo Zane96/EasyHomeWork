@@ -45,6 +45,11 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
         this.activity = activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     public void initHomeWorkRecycle(ClazzDetailHomeWorkAdapter adapter) {
         linearLayoutManager = new LinearLayoutManager(App.getInstance());
         recycleviewHomework.setAdapter(adapter);

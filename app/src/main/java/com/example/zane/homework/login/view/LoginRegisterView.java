@@ -48,6 +48,11 @@ public class LoginRegisterView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar(){
         toolbarLoginRegister.setTitle("登录注册");
         activity.setSupportActionBar(toolbarLoginRegister);

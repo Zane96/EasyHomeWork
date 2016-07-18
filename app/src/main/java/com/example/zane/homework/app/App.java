@@ -1,8 +1,10 @@
 package com.example.zane.homework.app;
 
 import android.app.Application;
+import android.webkit.CookieManager;
 
 import com.jude.utils.JUtils;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by Zane on 16/6/7.
@@ -18,6 +20,7 @@ public class App extends Application{
         super.onCreate();
         instance = this;
         JUtils.initialize(this);
+        LeakCanary.install(this);
     }
 
     public static App getInstance(){

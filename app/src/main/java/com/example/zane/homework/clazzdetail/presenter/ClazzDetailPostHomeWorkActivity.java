@@ -73,7 +73,8 @@ public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<Clazz
 
     @Override
     public void inDestory() {
-
+        handler.removeMessages(1);
+        handler.removeMessages(0);
     }
 
     @Override

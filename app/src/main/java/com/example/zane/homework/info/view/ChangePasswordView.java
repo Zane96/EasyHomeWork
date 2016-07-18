@@ -47,6 +47,11 @@ public class ChangePasswordView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar() {
         toolbarChangepassword.setTitle("修改信息");
         activity.setSupportActionBar(toolbarChangepassword);

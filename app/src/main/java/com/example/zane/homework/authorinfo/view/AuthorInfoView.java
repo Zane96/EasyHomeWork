@@ -35,6 +35,11 @@ public class AuthorInfoView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     public void initToolbar() {
         toolbarAuthorinfo.setTitle("关于作者");
         activity.setSupportActionBar(toolbarAuthorinfo);

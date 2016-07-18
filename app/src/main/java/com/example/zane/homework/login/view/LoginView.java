@@ -72,6 +72,11 @@ public class LoginView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     public void init(){
         progressDialog = new ProgressDialog(activity);
         radiogroupLogin.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

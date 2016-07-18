@@ -44,6 +44,11 @@ public class ChangeOtherInfoView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar() {
         toolbarChangotherinfo.setTitle("搜索班级");
         activity.setSupportActionBar(toolbarChangotherinfo);

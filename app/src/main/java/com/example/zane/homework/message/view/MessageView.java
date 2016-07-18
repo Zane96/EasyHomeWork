@@ -41,6 +41,11 @@ public class MessageView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar(){
         toolbarMessage.setTitle("我的消息");
         activity.setSupportActionBar(toolbarMessage);

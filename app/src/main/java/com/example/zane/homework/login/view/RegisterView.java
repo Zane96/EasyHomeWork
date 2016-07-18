@@ -68,6 +68,11 @@ public class RegisterView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     public void init(){
         radiogroupRegisterGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

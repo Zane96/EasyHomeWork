@@ -37,10 +37,10 @@ public class HomeWorkViewHolder extends BaseListViewHolderImpl<HomeWorkDetail>{
 
     @Override
     public void initView() {
-        postTime = $(R.id.textview_item_postime);
-        workName = $(R.id.textview_item_workname);
-        endTime = $(R.id.textview_item_endtime);
-        button = $(R.id.button_post_homework);
+        postTime = get(R.id.textview_item_postime);
+        workName = get(R.id.textview_item_workname);
+        endTime = get(R.id.textview_item_endtime);
+        button = get(R.id.button_post_homework);
     }
 
     @Override

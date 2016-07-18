@@ -24,8 +24,8 @@ public class NoticaViewHolder extends BaseListViewHolderImpl<NoticeDetail>{
 
     @Override
     public void initView() {
-        name = $(R.id.textview_item_notice);
-        postTime = $(R.id.textview_notice_postime);
+        name = get(R.id.textview_item_notice);
+        postTime = get(R.id.textview_notice_postime);
     }
 
     @Override

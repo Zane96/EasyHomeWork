@@ -73,6 +73,11 @@ public class SearchView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar() {
         toolbarSearch.setTitle("搜索班级");
         activity.setSupportActionBar(toolbarSearch);

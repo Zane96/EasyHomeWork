@@ -31,10 +31,10 @@ public class MemberViewHolder extends BaseListViewHolderImpl<MemberDetail>{
 
     @Override
     public void initView() {
-        avatar = $(R.id.imageview_item_member);
-        name = $(R.id.textview_item_membername);
-        number = $(R.id.textview_item_membernumber);
-        selfInfo = $(R.id.textview_item_selfinfo);
+        avatar = get(R.id.imageview_item_member);
+        name = get(R.id.textview_item_membername);
+        number = get(R.id.textview_item_membernumber);
+        selfInfo = get(R.id.textview_item_selfinfo);
     }
 
     @Override

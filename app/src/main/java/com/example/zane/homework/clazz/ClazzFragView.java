@@ -62,6 +62,11 @@ public class ClazzFragView extends BaseViewImpl {
         context = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+        EventBus.getDefault().unregister(this);
+    }
+
     public void initRecycleview(ClazzFragPresenter.ClazzRecyAdapterPresenter adapterPresenter) {
 
         manager = new LinearLayoutManager(App.getInstance());

@@ -92,6 +92,11 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     OnGetImageListener<Uri> listener = new OnGetImageListener<Uri>() {
         @Override
         public void getDataBack(Uri uri) {

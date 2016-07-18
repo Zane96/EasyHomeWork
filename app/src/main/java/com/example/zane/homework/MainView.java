@@ -69,6 +69,11 @@ public class MainView extends BaseViewImpl {
         layoutInflater = LayoutInflater.from(context);
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     public void init(ClazzFragPresenter clazzFragPresenter) {
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter);

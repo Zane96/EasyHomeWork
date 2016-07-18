@@ -45,6 +45,11 @@ public class HomeWorkDetailView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     public void initToolbar() {
         progressDialog = new ProgressDialog(activity);
 

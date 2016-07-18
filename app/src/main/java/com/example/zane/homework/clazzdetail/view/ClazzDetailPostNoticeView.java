@@ -47,6 +47,11 @@ public class ClazzDetailPostNoticeView extends BaseViewImpl {
         this.activity = (AppCompatActivity) activity;
     }
 
+    @Override
+    public void onPresenterDestory() {
+
+    }
+
     private void initToolbar() {
         toolbarPostnotice.setTitle("发布作业");
         activity.setSupportActionBar(toolbarPostnotice);
