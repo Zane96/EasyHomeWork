@@ -16,16 +16,14 @@ import android.view.MenuItem;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
-import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 

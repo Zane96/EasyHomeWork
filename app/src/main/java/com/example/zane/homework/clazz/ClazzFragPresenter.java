@@ -25,7 +25,7 @@ import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.entity.Clazz;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 import com.jude.utils.JUtils;
 

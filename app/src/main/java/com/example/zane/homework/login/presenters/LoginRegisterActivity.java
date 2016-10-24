@@ -3,14 +3,11 @@ package com.example.zane.homework.login.presenters;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.MainActivity;
-import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.login.view.LoginRegisterView;
-import com.example.zane.homework.utils.MySharedPre;
-import com.jude.utils.JUtils;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 /**
  * Created by Zane on 16/6/15.

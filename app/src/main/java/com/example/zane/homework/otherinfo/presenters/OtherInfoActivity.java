@@ -6,13 +6,12 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
-import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.otherinfo.view.OtherInfoView;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.jude.utils.JUtils;
 
 import java.lang.ref.WeakReference;

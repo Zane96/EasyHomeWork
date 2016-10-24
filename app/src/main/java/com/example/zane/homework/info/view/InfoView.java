@@ -30,7 +30,7 @@ import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.info.presenters.ChangPasswordActivity;
 import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
 import com.example.zane.homework.info.presenters.InfoActivity;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 import butterknife.Bind;
 

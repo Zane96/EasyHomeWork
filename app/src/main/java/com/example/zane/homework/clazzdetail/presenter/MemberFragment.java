@@ -1,19 +1,13 @@
 package com.example.zane.homework.clazzdetail.presenter;
 
-import android.annotation.TargetApi;
-
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.SharedElementCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Toast;
 
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
@@ -21,12 +15,11 @@ import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**

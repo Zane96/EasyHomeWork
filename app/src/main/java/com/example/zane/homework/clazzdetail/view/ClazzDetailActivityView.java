@@ -1,6 +1,5 @@
 package com.example.zane.homework.clazzdetail.view;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SharedElementCallback;
@@ -17,25 +16,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
-import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActivity;
-import com.example.zane.homework.custom.CircleTransform;
-import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
-import com.example.zane.homework.utils.MySharedPre;
-import com.example.zane.homework.utils.RandomBackImage;
-import com.jude.utils.JUtils;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

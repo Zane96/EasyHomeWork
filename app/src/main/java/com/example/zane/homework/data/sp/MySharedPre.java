@@ -1,11 +1,9 @@
-package com.example.zane.homework.utils;
+package com.example.zane.homework.data.sp;
 
 import android.content.Context;
 
 import com.example.zane.homework.app.App;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.zane.homework.utils.SecurePreferences;
 
 /**
  * Created by Zane on 16/6/15.

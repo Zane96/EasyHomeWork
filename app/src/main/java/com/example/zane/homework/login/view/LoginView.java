@@ -25,8 +25,7 @@ import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.RegisterEvent;
 import com.example.zane.homework.utils.JudgeSearch;
-import com.example.zane.homework.utils.MySharedPre;
-import com.jude.utils.JUtils;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 
 import org.greenrobot.eventbus.EventBus;

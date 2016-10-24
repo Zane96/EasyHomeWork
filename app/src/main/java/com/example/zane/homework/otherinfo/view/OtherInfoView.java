@@ -13,11 +13,8 @@ import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
-import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.custom.CircleTransform;
-import com.example.zane.homework.entity.MemberDetail;
-import com.example.zane.homework.entity.StudentLogin;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;

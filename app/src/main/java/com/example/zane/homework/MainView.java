@@ -1,10 +1,8 @@
 package com.example.zane.homework;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
@@ -31,7 +29,7 @@ import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.message.presenters.MessageActivity;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;

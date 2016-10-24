@@ -1,6 +1,5 @@
 package com.example.zane.homework.message.view;
 
-import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,10 +11,8 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.entity.MessageDetail;
-import com.example.zane.homework.utils.MySharedPre;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Zane on 16/6/16.
