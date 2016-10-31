@@ -3,13 +3,13 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Zane on 16/10/24.
+/**简要描述：搜索某个班级的班级信息
+ * Created by Zane on 16/10/31.
  * Email: zanebot96@gmail.com
  * Blog: zane96.github.io
  */
 
-public class SerClazz implements Parcelable {
+public class SerClassInfo implements Parcelable {
 
     /**
      * status : 200
@@ -138,24 +138,24 @@ public class SerClazz implements Parcelable {
         dest.writeParcelable(this.data, flags);
     }
 
-    public SerClazz() {
+    public SerClassInfo() {
     }
 
-    protected SerClazz(Parcel in) {
+    protected SerClassInfo(Parcel in) {
         this.status = in.readInt();
         this.message = in.readString();
         this.data = in.readParcelable(DataEntity.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<SerClazz> CREATOR = new Parcelable.Creator<SerClazz>() {
+    public static final Parcelable.Creator<SerClassInfo> CREATOR = new Parcelable.Creator<SerClassInfo>() {
         @Override
-        public SerClazz createFromParcel(Parcel source) {
-            return new SerClazz(source);
+        public SerClassInfo createFromParcel(Parcel source) {
+            return new SerClassInfo(source);
         }
 
         @Override
-        public SerClazz[] newArray(int size) {
-            return new SerClazz[size];
+        public SerClassInfo[] newArray(int size) {
+            return new SerClassInfo[size];
         }
     };
 }

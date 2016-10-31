@@ -55,7 +55,7 @@ public class HeaderInterceptors implements Interceptor {
             throw new ServiceConfigurationError("服务器错误："+e.getLocalizedMessage());
         }
 
-        //更改响应头,强制添加缓存
+        //更改响应头,根据Request的要求来强制添加不同的缓存策略
         String cacheControl = request.cacheControl().toString();
         return originalResponse.newBuilder()
                        .code(code)

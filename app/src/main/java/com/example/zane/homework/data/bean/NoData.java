@@ -3,13 +3,20 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**简要描述：学生修改班级信息
+/**简要描述：老师/学生申请进驻某班
+ * 学生修改班级信息
+ * 学生创建班级
+ * 发布公告
+ * 老师批改作业
+ * 同意学生/老师加入某班
+ * 学生提交作业
  * Created by Zane on 16/10/24.
  * Email: zanebot96@gmail.com
  * Blog: zane96.github.io
  */
 
-public class ChangeClassInfo implements Parcelable{
+public class NoData implements Parcelable {
+
     /**
      * status : 200
      * message : succssfully
@@ -56,24 +63,24 @@ public class ChangeClassInfo implements Parcelable{
         dest.writeString(this.data);
     }
 
-    public ChangeClassInfo() {
+    public NoData() {
     }
 
-    protected ChangeClassInfo(Parcel in) {
+    protected NoData(Parcel in) {
         this.status = in.readInt();
         this.message = in.readString();
         this.data = in.readString();
     }
 
-    public static final Parcelable.Creator<CreatClass> CREATOR = new Parcelable.Creator<CreatClass>() {
+    public static final Parcelable.Creator<NoData> CREATOR = new Parcelable.Creator<NoData>() {
         @Override
-        public CreatClass createFromParcel(Parcel source) {
-            return new CreatClass(source);
+        public NoData createFromParcel(Parcel source) {
+            return new NoData(source);
         }
 
         @Override
-        public CreatClass[] newArray(int size) {
-            return new CreatClass[size];
+        public NoData[] newArray(int size) {
+            return new NoData[size];
         }
     };
 }

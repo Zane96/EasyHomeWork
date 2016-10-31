@@ -3,27 +3,27 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**学生查看加入的班级：
- * Created by Zane on 16/10/24.
+/**某个学生的作业得分情况
+ * Created by Zane on 16/10/31.
  * Email: zanebot96@gmail.com
  * Blog: zane96.github.io
  */
 
-public class StuHaveClass implements Parcelable {
+public class StuWorkDetail implements Parcelable {
 
     /**
      * status : 200
-     * message : exist
-     * data : {"name":"2014级信息安全卓越班","creatime":"2016-06-13","creator":"sugar","description":"信安牛牛初长成"}
+     * message : ok
+     * data : {"absent":7,"score":"1.0762","total":"20","coursename":"数据库原理"}
      */
 
     private int status;
     private String message;
     /**
-     * name : 2014级信息安全卓越班
-     * creatime : 2016-06-13
-     * creator : sugar
-     * description : 信安牛牛初长成
+     * absent : 7
+     * score : 1.0762
+     * total : 20
+     * coursename : 数据库原理
      */
 
     private DataEntity data;
@@ -53,41 +53,41 @@ public class StuHaveClass implements Parcelable {
     }
 
     public static class DataEntity implements Parcelable {
-        private String name;
-        private String creatime;
-        private String creator;
-        private String description;
+        private int absent;
+        private String score;
+        private String total;
+        private String coursename;
 
-        public String getName() {
-            return name;
+        public int getAbsent() {
+            return absent;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setAbsent(int absent) {
+            this.absent = absent;
         }
 
-        public String getCreatime() {
-            return creatime;
+        public String getScore() {
+            return score;
         }
 
-        public void setCreatime(String creatime) {
-            this.creatime = creatime;
+        public void setScore(String score) {
+            this.score = score;
         }
 
-        public String getCreator() {
-            return creator;
+        public String getTotal() {
+            return total;
         }
 
-        public void setCreator(String creator) {
-            this.creator = creator;
+        public void setTotal(String total) {
+            this.total = total;
         }
 
-        public String getDescription() {
-            return description;
+        public String getCoursename() {
+            return coursename;
         }
 
-        public void setDescription(String description) {
-            this.description = description;
+        public void setCoursename(String coursename) {
+            this.coursename = coursename;
         }
 
         @Override
@@ -97,20 +97,20 @@ public class StuHaveClass implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.name);
-            dest.writeString(this.creatime);
-            dest.writeString(this.creator);
-            dest.writeString(this.description);
+            dest.writeInt(this.absent);
+            dest.writeString(this.score);
+            dest.writeString(this.total);
+            dest.writeString(this.coursename);
         }
 
         public DataEntity() {
         }
 
         protected DataEntity(Parcel in) {
-            this.name = in.readString();
-            this.creatime = in.readString();
-            this.creator = in.readString();
-            this.description = in.readString();
+            this.absent = in.readInt();
+            this.score = in.readString();
+            this.total = in.readString();
+            this.coursename = in.readString();
         }
 
         public static final Creator<DataEntity> CREATOR = new Creator<DataEntity>() {
@@ -138,24 +138,24 @@ public class StuHaveClass implements Parcelable {
         dest.writeParcelable(this.data, flags);
     }
 
-    public StuHaveClass() {
+    public StuWorkDetail() {
     }
 
-    protected StuHaveClass(Parcel in) {
+    protected StuWorkDetail(Parcel in) {
         this.status = in.readInt();
         this.message = in.readString();
         this.data = in.readParcelable(DataEntity.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<StuHaveClass> CREATOR = new Parcelable.Creator<StuHaveClass>() {
+    public static final Parcelable.Creator<StuWorkDetail> CREATOR = new Parcelable.Creator<StuWorkDetail>() {
         @Override
-        public StuHaveClass createFromParcel(Parcel source) {
-            return new StuHaveClass(source);
+        public StuWorkDetail createFromParcel(Parcel source) {
+            return new StuWorkDetail(source);
         }
 
         @Override
-        public StuHaveClass[] newArray(int size) {
-            return new StuHaveClass[size];
+        public StuWorkDetail[] newArray(int size) {
+            return new StuWorkDetail[size];
         }
     };
 }
