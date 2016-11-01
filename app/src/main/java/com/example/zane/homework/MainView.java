@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.constraint.ConstraintLayout;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -25,11 +25,11 @@ import com.example.zane.homework.clazz.ClazzFragPresenter;
 import com.example.zane.homework.config.MockStudentData;
 import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.message.presenters.MessageActivity;
-import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;
@@ -45,8 +45,6 @@ public class MainView extends BaseViewImpl {
     Toolbar toolbar;
     @Bind(R.id.main_fragment_replace)
     FrameLayout mainFragmentReplace;
-    @Bind(R.id.content_main)
-    ConstraintLayout contentMain;
     @Bind(R.id.nav_view)
     NavigationView navView;
     @Bind(R.id.drawer_layout)

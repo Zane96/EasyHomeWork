@@ -1,16 +1,14 @@
 package com.example.zane.homework.data.remote.service;
 
 import com.example.zane.homework.data.bean.Login;
-import com.example.zane.homework.data.bean.NoData;
 import com.example.zane.homework.data.bean.QuitLogin;
 import com.example.zane.homework.data.bean.Registe;
-import com.example.zane.homework.data.bean.StuHaveClass;
-
-import javax.crypto.interfaces.PBEKey;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -29,6 +27,7 @@ public interface LoginRegisteService {
     //学生/老师账号注册
     @POST("insert")
     @FormUrlEncoded
+    @Headers("Cache-Control: no-store")
     Observable<Registe> registe(@Field("sirstu") String sirstu,
                                 @Field("username") String userName,
                                 @Field("realname") String realName,
@@ -39,11 +38,13 @@ public interface LoginRegisteService {
     //学生／老师帐号登陆
     @POST("isvalid")
     @FormUrlEncoded
+    @Headers("Cache-Control: no-store")
     Observable<Login> login(@Field("username") String userName,
                             @Field("password") String password,
                             @Field("sirstu") String sirstu);
 
     //注销登陆
     @POST("quit")
+    @Headers("Cache-Control: no-store")
     Observable<QuitLogin> quitLogin();
 }

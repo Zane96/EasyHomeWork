@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.zane.easyimageprovider.OnGetImageListener;
+
 import com.example.zane.easyimageprovider.builder.ImageProviderBuilder;
 import com.example.zane.easyimageprovider.builder.core.EasyImage;
 import com.example.zane.easyimageprovider.builder.factory.EasyImageFactory;
 import com.example.zane.easyimageprovider.builder.factory.ProviderFactory;
+import com.example.zane.easyimageprovider.provider.listener.OnGetImageListener;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
@@ -136,14 +137,14 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                builder.userAlbum();
+                                builder.useAlbum();
                                 break;
                             case 1:
                                 builder.useCamera();
                                 break;
                         }
-                        EasyImageFactory factory = new ProviderFactory(builder);
-                        initImageProvider(factory);
+                        EasyImage easyImage = EasyImage.creat(builder);
+                        easyImage.execute();
                     }
                 }).show();
             }
@@ -175,11 +176,6 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
         cardInfoPassword.setOnClickListener(this);
         cardInfoSelfintro.setOnClickListener(this);
         cardInfoUsername.setOnClickListener(this);
-    }
-
-    private void initImageProvider(EasyImageFactory factory) {
-        image = factory.init();
-        image.execute();
     }
 
     public void OnActivityResult(int requestCode, int resultCode, Intent data) {

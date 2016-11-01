@@ -3,6 +3,7 @@ package com.example.zane.homework.app;
 import android.app.Application;
 import android.webkit.CookieManager;
 
+import com.facebook.stetho.Stetho;
 import com.jude.utils.JUtils;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -21,6 +22,7 @@ public class App extends Application{
         instance = this;
         JUtils.initialize(this);
         LeakCanary.install(this);
+        Stetho.initializeWithDefaults(this);
     }
 
     public static App getInstance(){

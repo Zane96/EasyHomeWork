@@ -192,6 +192,7 @@ public class LoginView extends BaseViewImpl {
             }
         });
     }
+
     private void setIdentity(int id){
         identity = id;
     }

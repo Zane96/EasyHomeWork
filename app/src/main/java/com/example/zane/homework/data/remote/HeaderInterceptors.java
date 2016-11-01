@@ -56,11 +56,12 @@ public class HeaderInterceptors implements Interceptor {
         }
 
         //更改响应头,根据Request的要求来强制添加不同的缓存策略
+        //这里先不要剥离外层数据
         String cacheControl = request.cacheControl().toString();
         return originalResponse.newBuilder()
                        .code(code)
                        .message(message)
-                       .body(ResponseBody.create(contentType, body))
+//                       .body(ResponseBody.create(contentType, body))
                        .header("Cache-Control", cacheControl)
                        .removeHeader("Pragma")
                        .build();
