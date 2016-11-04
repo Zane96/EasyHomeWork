@@ -26,6 +26,4 @@
         android:layout_weight="1"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-
 </LinearLayout>

@@ -42,28 +42,28 @@ public class RegisterLoginModel {
         private final static RegisterLoginModel instance = new RegisterLoginModel();
     }
 
-    public RegisterLoginModel getInstance(){
+    public static RegisterLoginModel getInstance(){
         return InstanceHolder.instance;
     }
 
     //注册
-    public Observable<Registe> register(String sirstu, String username, String realname, String password,
+    public Observable<Integer> register(String sirstu, String username, String realname, String password,
                                        String gender, String introduce){
         return serviceApi.registe(sirstu, username, realname, password, gender, introduce)
-                .compose(new SchedulerTransform<Registe>())
-                .compose(new ErrorTransForm<Registe>());
+                .compose(new SchedulerTransform<>())
+                .compose(new ErrorTransForm<>());
 
     }
 
     //登陆
-    public Observable<Login> login(String username, String password, String sirstu){
+    public Observable<Login.DataEntity> login(String username, String password, String sirstu){
         return serviceApi.login(username, password, sirstu)
                 .compose(new SchedulerTransform<>())
                 .compose(new ErrorTransForm<>());
     }
 
     //退出登陆
-    public Observable<QuitLogin> quitLogin(){
+    public Observable<QuitLogin.DataEntity> quitLogin(){
         return serviceApi.quitLogin()
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());

@@ -31,13 +31,13 @@ public class FinalSubscriber<T> extends Subscriber<T> implements ProgressCancelL
     }
 
 
-    public void showProgressDialog(){
+    private void showProgressDialog(){
         if (progressDialogHandler != null){
             progressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS).sendToTarget();
         }
     }
 
-    public void dissmissProgressDialog(){
+    private void dissmissProgressDialog(){
         if (progressDialogHandler != null){
             progressDialogHandler.obtainMessage(ProgressDialogHandler.DISSMISS_PROGRESS).sendToTarget();
         }
@@ -48,7 +48,6 @@ public class FinalSubscriber<T> extends Subscriber<T> implements ProgressCancelL
     @Override
     public void onStart() {
         showProgressDialog();
-        Log.i(TAG, "onStart");
     }
 
     //取消订阅

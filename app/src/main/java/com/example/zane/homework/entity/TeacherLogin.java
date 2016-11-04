@@ -90,12 +90,12 @@ public class TeacherLogin {
         editor.commit();
     }
 
-    public String getSessionid() {
-        return preferences.getString("sessionid", "");
+    public String getTid() {
+        return preferences.getString("tid", "");
     }
 
-    public void setSessionid(String sessionid) {
-        editor.putString("sessionid", sessionid);
+    public void setTid(String tid) {
+        editor.putString("tid", tid);
         editor.commit();
     }
 

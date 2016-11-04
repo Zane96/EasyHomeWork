@@ -15,6 +15,7 @@ import com.example.zane.homework.data.remote.SchedulerTransform;
 import com.example.zane.homework.data.remote.service.HomeWorkService;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -43,29 +44,29 @@ public class HomeWorkModel {
         private final static HomeWorkModel instance = new HomeWorkModel();
     }
 
-    public HomeWorkModel getInstance(){
+    public static HomeWorkModel getInstance(){
         return HomeWorkModel.InstanceHolder.instance;
     }
 
-    public Observable<NoDueHomeWork> showNoDueWork(){
+    public Observable<List<NoDueHomeWork.DataEntity>> showNoDueWork(){
         return serviceApi.showNoDueWork()
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<HoPerson> showHoPerson(String asid, String sid){
+    public Observable<List<HoPerson.DataEntity>> showHoPerson(String asid, String sid){
         return serviceApi.showHoPerson(asid, sid)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<NoData> judgeHomeWork(String grade, String addtion, String asid, String sid){
+    public Observable<String> judgeHomeWork(String grade, String addtion, String asid, String sid){
         return serviceApi.judgeHomeWork(grade, addtion, asid, sid)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<NoData> declareWork(String percentage, String deadline, String addtion, String jid, File file){
+    public Observable<String> declareWork(String percentage, String deadline, String addtion, String jid, File file){
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
@@ -75,25 +76,25 @@ public class HomeWorkModel {
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<GetStatistc> getStatistc(String jid, String sid){
+    public Observable<GetStatistc.DataEntity> getStatistc(String jid, String sid){
         return serviceApi.getStatistc(jid, sid)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<GetNoDueWork> getNoDueWork(){
+    public Observable<List<GetNoDueWork.DataEntity>> getNoDueWork(){
         return serviceApi.getNoDueWork()
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<GetHoWork> getHoWork(String asid){
+    public Observable<List<GetHoWork.DataEntity>> getHoWork(String asid){
         return serviceApi.getHoWork(asid)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<NoData> stuUpLoadFirst(String asid, File file){
+    public Observable<String> stuUpLoadFirst(String asid, File file){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
@@ -102,7 +103,7 @@ public class HomeWorkModel {
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<NoData> stuUpLoadAgain(String asid, File file){
+    public Observable<String> stuUpLoadAgain(String asid, File file){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 

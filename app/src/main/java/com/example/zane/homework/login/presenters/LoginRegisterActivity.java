@@ -34,8 +34,14 @@ public class LoginRegisterActivity extends BaseActivityPresenter<LoginRegisterVi
     }
 
     @Override
-    public void inDestory() {
+    public void onBackPressed() {
+        super.onBackPressed();
+        v.setToolbarTitle();
+    }
 
+    @Override
+    public void inDestory() {
+        v.unRegister();
     }
 
     @Override

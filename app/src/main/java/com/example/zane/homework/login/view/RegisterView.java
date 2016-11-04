@@ -20,6 +20,8 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.event.LoginEvent;
 import com.example.zane.homework.utils.JudgeSearch;
+import com.jakewharton.rxbinding.widget.RxRadioGroup;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -74,100 +76,102 @@ public class RegisterView extends BaseViewImpl {
     }
 
     public void init(){
-        radiogroupRegisterGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio_male){
-                    gender = "male";
-                } else if (checkedId == R.id.radio_female){
-                    gender = "female";
-                } else {
-                    gender = null;
-                }
+
+        RxRadioGroup.checkedChanges(radiogroupRegisterGender).subscribe(integer -> {
+            if (integer == R.id.radio_male){
+                gender = "男";
+            } else if (integer == R.id.radio_female){
+                gender = "女";
+            } else {
+                gender = null;
             }
         });
-        radiogroupRegisterIdentity.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio_register_student){
-                    identity = "student";
-                } else if (checkedId == R.id.radio_register_teacher){
-                    identity = "teacher";
-                } else {
-                    identity = null;
-                }
+
+        RxRadioGroup.checkedChanges(radiogroupRegisterIdentity).subscribe(integer -> {
+            if (integer == R.id.radio_register_student){
+                identity = "2";
+            } else if (integer == R.id.radio_register_teacher){
+                identity = "1";
+            } else {
+                identity = null;
             }
         });
-        editRegisterName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!JudgeSearch.isRight(s.toString())){
-                    textinputRegisterName.setError("真实姓名格式不正确");
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+
+        RxTextView.textChanges(editRegisterName).subscribe(s -> {
+            if (!JudgeSearch.isRight(s.toString())){
+                textinputRegisterName.setError("真实姓名格式不正确");
+            } else {
+                textinputRegisterName.setErrorEnabled(false);
             }
         });
-        editRegisterPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!JudgeSearch.isRight(s.toString())){
-                    textinputRegisterPassword.setError("密码格式不正确");
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+
+        RxTextView.textChanges(editRegisterPassword).subscribe(s -> {
+            if (!JudgeSearch.isRight(s.toString())){
+                textinputRegisterPassword.setError("密码格式不正确");
+            } else {
+                textinputRegisterPassword.setErrorEnabled(false);
             }
         });
-        editRegisterUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!JudgeSearch.isRight(s.toString())){
-                    textinputRegisterUsername.setError("用户名格式不正确");
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+
+        RxTextView.textChanges(editRegisterUsername).subscribe(s -> {
+            if (!JudgeSearch.isRight(s.toString())){
+                textinputRegisterUsername.setError("用户名格式不正确");
+            } else {
+                textinputRegisterUsername.setErrorEnabled(false);
             }
         });
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (gender != null && identity != null){
-                    if (identity.equals("teacher")){
-                        MockTeacherData.userName = editRegisterUsername.getText().toString();
-                        MockTeacherData.avatar = null;
-                        MockTeacherData.gender = gender;
-                        MockTeacherData.identity = identity;
-                        MockTeacherData.password = editRegisterPassword.getText().toString();
-                        MockTeacherData.selfIntro = editRegisterSelfintro.getText().toString();
-                        MockTeacherData.name = editRegisterName.getText().toString();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                activity.startActivity(new Intent(activity, MainActivity.class));
-                            }
-                        }, 1000);
-                    } else {
-                        // TODO: 16/6/15 student
-                    }
-                    EventBus.getDefault().post(new LoginEvent());
-                } else {
-                    Snackbar.make(textinputRegisterName, "信息输入不正确!", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
+
+//        buttonRegister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (gender != null && identity != null){
+//                    if (identity.equals("teacher")){
+//                        MockTeacherData.userName = editRegisterUsername.getText().toString();
+//                        MockTeacherData.avatar = null;
+//                        MockTeacherData.gender = gender;
+//                        MockTeacherData.identity = identity;
+//                        MockTeacherData.password = editRegisterPassword.getText().toString();
+//                        MockTeacherData.selfIntro = editRegisterSelfintro.getText().toString();
+//                        MockTeacherData.name = editRegisterName.getText().toString();
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                activity.startActivity(new Intent(activity, MainActivity.class));
+//                            }
+//                        }, 1000);
+//                    } else {
+//                        // TODO: 16/6/15 student
+//                    }
+//                    EventBus.getDefault().post(new LoginEvent());
+//                } else {
+//                    Snackbar.make(textinputRegisterName, "信息输入不正确!", Snackbar.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
+    public String getGnder(){
+        return gender;
+    }
+
+    public String getIdentity(){
+        return identity;
+    }
+
+    public String username(){
+        return editRegisterUsername.getText().toString();
+    }
+
+    public String realname(){
+        return editRegisterName.getText().toString();
+    }
+
+    public String password(){
+        return editRegisterPassword.getText().toString();
+    }
+
+    public String introduce(){
+        return editRegisterSelfintro.getText().toString();
+    }
 
 }

@@ -16,11 +16,16 @@ import android.view.MenuItem;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.data.bean.QuitLogin;
+import com.example.zane.homework.data.model.RegisterLoginModel;
+import com.example.zane.homework.data.remote.CommonProvider;
+import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.squareup.haha.perflib.Main;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -34,7 +39,6 @@ public class MainActivity extends BaseActivityPresenter<MainView>
     private InfoActivity infoActivity;
     private SharedElementCallback mCallback;
     private boolean isReenterState = false;
-
 
     @Override
     public Class<MainView> getRootViewClass() {
@@ -60,8 +64,7 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         v.init(clazzFragPresenter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                                                                        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -139,6 +142,19 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         }
     }
 
+    /**
+     * 退出登录，清除所有的cookie
+     */
+    private void quitLogin(){
+        FinalSubscriber<QuitLogin.DataEntity> subscriber = new FinalSubscriber<>(MainActivity.this, o -> {
+            MySharedPre.getInstance().setLogin(false);
+            CommonProvider.cookieJar.clear();
+            startActivity(new Intent(this, LoginRegisterActivity.class));
+            finish();
+        });
+        RegisterLoginModel.getInstance().quitLogin().subscribe(subscriber);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -156,9 +172,7 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         } else if (id == R.id.drawer_setting) {
 
         } else if (id == R.id.drawer_login){
-            startActivity(new Intent(this, LoginRegisterActivity.class));
-            MySharedPre.getInstance().setLogin(false);
-            finish();
+            quitLogin();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

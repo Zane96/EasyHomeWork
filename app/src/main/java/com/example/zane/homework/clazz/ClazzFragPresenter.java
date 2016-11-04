@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,10 @@ import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.data.bean.StuHaveClass;
+import com.example.zane.homework.data.bean.TeacherHavaClass;
+import com.example.zane.homework.data.model.ClassModel;
+import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.Clazz;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
@@ -49,10 +54,15 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
     public static final String IMAGE = "IMAGE";
     public static final String POSITION_SHARE = "position_share";
 
-    private ProgressHandler progressHandler;
-    private List<Clazz> datas;
+    //老师的驻班班级
+    private List<TeacherHavaClass.DataEntity> teaHaveClasses;
+    //学生的驻班班级
+    private List<StuHaveClass.DataEntity> stuHaveClasses;
+
     private ClazzRecyAdapterPresenter adapterPresenter;
     private boolean mIsDetailsActivityStarted;
+    private FinalSubscriber<List<TeacherHavaClass.DataEntity>> teaClassSubscriber;
+    private FinalSubscriber<List<StuHaveClass.DataEntity>> stuClassSubscriber;
 
     public static ClazzFragPresenter newInstance() {
         ClazzFragPresenter fragment = new ClazzFragPresenter();
@@ -75,50 +85,26 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         mIsDetailsActivityStarted = false;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        datas = new ArrayList<>();
-        progressHandler = new ProgressHandler(this);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapterPresenter = new ClazzRecyAdapterPresenter();
-        v.showProgress();
-
-        Message message = new Message();
-        message.what = 1;
-        progressHandler.sendMessageDelayed(message, 1500);
+        ClassModel classModel = ClassModel.getInstance();
+        Log.i(TAG, "request");
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+            teaClassSubscriber = new FinalSubscriber<>(getActivity(), datas -> {
+                teaHaveClasses = (List<TeacherHavaClass.DataEntity>) datas;
+                v.initRecycleview(adapterPresenter);
+            });
+            classModel.teaHaveClass().subscribe(teaClassSubscriber);
+        } else {
+            // TODO: 16/11/4 学生的需要将课程和班级的信息融合了之后才显示 
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        progressHandler.removeMessages(1);
-    }
-
-    private final static class ProgressHandler extends Handler {
-        private WeakReference<ClazzFragPresenter> reference;
-
-        public ProgressHandler(ClazzFragPresenter activity) {
-            reference = new WeakReference<ClazzFragPresenter>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (reference.get() != null) {
-                switch (msg.what) {
-                    case 1:
-                        reference.get().v.initRecycleview(reference.get().adapterPresenter);
-                        JUtils.Toast(reference.get().getResources().getString(R.string.finish_load));
-                        reference.get().v.dissmissProgress();
-                        break;
-                }
-            }
-        }
     }
 
     public class ClazzRecyAdapterPresenter extends RecyclerView.Adapter<ClazzRecyViewHolder> {
@@ -142,9 +128,10 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         @Override
         public int getItemCount() {
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-                return TeacherLogin.getInstacne().getClazz().length;
+                return teaHaveClasses.size();
             } else {
-                return StudentLogin.getInstacne().getCourse().length;
+                // TODO: 16/11/4 学生
+                return stuHaveClasses.size();
             }
         }
     }
@@ -181,11 +168,13 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
                 imageviewItemClazz.setTransitionName(String.valueOf(position));
             }
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-                textviewItemCouresename.setText(TeacherLogin.getInstacne().getCourse());
-                textviewItemClazzname.setText(TeacherLogin.getInstacne().getClazz()[position]);
-                textviewItemOwner.setText(TeacherLogin.getInstacne().getOwners()[position]);
-                textviewItemAsid.setText(TeacherLogin.getInstacne().getIds()[position]);
+                TeacherHavaClass.DataEntity data = teaHaveClasses.get(position);
+                textviewItemCouresename.setText(data.getCourse());
+                textviewItemClazzname.setText(data.getClassname());
+                textviewItemOwner.setText(data.getCreator());
+                textviewItemAsid.setText(data.getClassid());
                 TeacherLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
+
                 Glide.with(App.getInstance())
                         .load(TeacherLogin.getInstacne().getAvatar())
                         .transform(new CircleTransform(App.getInstance()))

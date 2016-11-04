@@ -74,9 +74,13 @@ public class MainView extends BaseViewImpl {
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter);
         fragmentTransaction.commit();
+
         View view = layoutInflater.inflate(R.layout.nav_header_main, navView);
+
         textView = (TextView) view.findViewById(R.id.text_main_welcom);
+
         imageView = (ImageView) view.findViewById(R.id.imageView_main_avatar);
+
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
             textView.setText(TeacherLogin.getInstacne().getUserName() + "老师, " + "你好!");
             if (MockTeacherData.avatar != null){

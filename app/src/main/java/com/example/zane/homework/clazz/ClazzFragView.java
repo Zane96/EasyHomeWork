@@ -36,14 +36,12 @@ import butterknife.Bind;
 
 public class ClazzFragView extends BaseViewImpl {
 
-
     @Bind(R.id.recycleview_clazz_info)
     RecyclerView recycleviewClazzInfo;
     @Bind(R.id.fab_clazzfragment)
     FloatingActionButton fabClazzfragment;
     private AppCompatActivity context;
     private LinearLayoutManager manager;
-    private ProgressDialog progressDialog;
 
     public ClazzFragView(){
         EventBus.getDefault().register(this);
@@ -77,17 +75,17 @@ public class ClazzFragView extends BaseViewImpl {
         recycleviewClazzInfo.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy < 0) {
+                if (dy >= 0) {
                     //fabClazzfragment.show();
                     fabClazzfragment.animate()
                             .translationY(fabClazzfragment.getHeight() + fabMarginBottm)
-                            .setInterpolator(new AccelerateInterpolator(2))
+                            .setInterpolator(new AccelerateInterpolator(1))
                             .start();
                 } else {
                     //fabClazzfragment.hide();
                     fabClazzfragment.animate()
                             .translationY(0)
-                            .setInterpolator(new DecelerateInterpolator(2))
+                            .setInterpolator(new DecelerateInterpolator(1))
                             .start();
                 }
 
@@ -123,14 +121,6 @@ public class ClazzFragView extends BaseViewImpl {
         });
     }
 
-    public void showProgress() {
-        progressDialog = new ProgressDialog(context);
-        progressDialog.show();
-    }
-
-    public void dissmissProgress() {
-        progressDialog.dismiss();
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onActivityReenter(ActivityReenterEvent event){

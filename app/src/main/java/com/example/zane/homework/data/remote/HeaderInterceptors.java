@@ -8,17 +8,22 @@ package com.example.zane.homework.data.remote;
 
 import android.util.Log;
 
+import com.example.zane.homework.data.sp.MySharedPre;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ServiceConfigurationError;
+import java.util.jar.Pack200;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import rx.Observable;
 
 /**
  * Created by Zane on 16/3/14.
@@ -31,12 +36,12 @@ public class HeaderInterceptors implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
 
-        Log.i(TAG, "拦截");
-
         Request request = chain.request();
-        Response originalResponse = chain.proceed(request);
-        MediaType contentType = originalResponse.body().contentType();
+        Response originalResponse;
 
+        originalResponse = chain.proceed(request);
+
+        MediaType contentType = originalResponse.body().contentType();
         //先解析一遍json数据，根据status和message去手动改状态码和描述
         String originalContent = originalResponse.body().string();
 
@@ -46,25 +51,34 @@ public class HeaderInterceptors implements Interceptor {
 
         JSONObject wrapper = null;
         try {
-            wrapper = new JSONObject(originalContent);
-            message = wrapper.getString("message");
-            code = wrapper.getInt("status");
-            //剥离外层数据
-            body = wrapper.getString("data");
+            Log.i("intercept", originalContent);
+
+           if (originalContent.contains("status")){
+               wrapper = new JSONObject(originalContent);
+               message = wrapper.getString("message");
+               code = wrapper.getInt("status");
+               //剥离外层数据
+               body = wrapper.getString("data");
+           } else {
+               body = originalContent;
+               code = 200;
+               message = "ss";
+           }
+
         } catch (JSONException e) {
-            throw new ServiceConfigurationError("服务器错误："+e.getLocalizedMessage());
+            Log.i("intercept", "解析错误" + e.getMessage());
+            throw new ServiceConfigurationError("解析错误："+e.getLocalizedMessage());
         }
 
         //更改响应头,根据Request的要求来强制添加不同的缓存策略
-        //这里先不要剥离外层数据
         String cacheControl = request.cacheControl().toString();
-        return originalResponse.newBuilder()
-                       .code(code)
-                       .message(message)
-//                       .body(ResponseBody.create(contentType, body))
-                       .header("Cache-Control", cacheControl)
-                       .removeHeader("Pragma")
-                       .build();
+        Response.Builder builder = originalResponse.newBuilder()
+                                           .code(code)
+                                           .message(message)
+                                           .body(ResponseBody.create(contentType, body))
+                                           .header("Cache-Control", cacheControl)
+                                           .removeHeader("Pragma");
 
+        return builder.build();
     }
 }

@@ -20,7 +20,7 @@ import rx.Observable;
 
 public interface LoginRegisteService {
 
-    String BASE_URL = "http://115.159.113.116/index.php/Login";
+    String BASE_URL = "http://115.159.113.116/index.php/Login/";
 
     //-----------------------Login/Registe-------------------------
 
@@ -28,7 +28,7 @@ public interface LoginRegisteService {
     @POST("insert")
     @FormUrlEncoded
     @Headers("Cache-Control: no-store")
-    Observable<Registe> registe(@Field("sirstu") String sirstu,
+    Observable<Integer> registe(@Field("sirstu") String sirstu,
                                 @Field("username") String userName,
                                 @Field("realname") String realName,
                                 @Field("password") String password,
@@ -39,12 +39,12 @@ public interface LoginRegisteService {
     @POST("isvalid")
     @FormUrlEncoded
     @Headers("Cache-Control: no-store")
-    Observable<Login> login(@Field("username") String userName,
+    Observable<Login.DataEntity> login(@Field("username") String userName,
                             @Field("password") String password,
                             @Field("sirstu") String sirstu);
 
     //注销登陆
     @POST("quit")
     @Headers("Cache-Control: no-store")
-    Observable<QuitLogin> quitLogin();
+    Observable<QuitLogin.DataEntity> quitLogin();
 }

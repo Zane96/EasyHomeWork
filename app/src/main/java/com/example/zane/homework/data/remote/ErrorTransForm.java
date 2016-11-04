@@ -29,7 +29,7 @@ public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
     public Observable<T> call(Observable<T> tObservable) {
         return tObservable.onErrorResumeNext(throwable -> {
             //判断异常是什么类型
-            Log.i(TAG, throwable.getClass().getName()+" "+throwable.getLocalizedMessage()+" "+throwable.getMessage());
+            Log.i(TAG, throwable+" "+throwable.getClass().getName()+" "+throwable.getLocalizedMessage()+" "+throwable.getMessage());
             String errorMessage = "";
             //通过状态码判断错误
             if (throwable instanceof HttpException) {

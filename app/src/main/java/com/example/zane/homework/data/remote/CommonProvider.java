@@ -30,7 +30,7 @@ public class CommonProvider {
     /**
      * 统一持久化管理Cookie
      */
-    private static final ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache()
+    public static final ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache()
                                                                   , new SharedPrefsCookiePersistor(App.getInstance()));
 
     private static final OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -40,7 +40,6 @@ public class CommonProvider {
     static {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     }
-
 
     private static OkHttpClient provideOkHttpClient(){
         //添加body日志打印，http，stetho调试的拦截器，管理cookie

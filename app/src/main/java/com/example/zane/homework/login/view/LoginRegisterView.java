@@ -52,7 +52,7 @@ public class LoginRegisterView extends BaseViewImpl {
     }
 
     private void initToolbar(){
-        toolbarLoginRegister.setTitle("登录注册");
+        toolbarLoginRegister.setTitle("登录");
         activity.setSupportActionBar(toolbarLoginRegister);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarLoginRegister.setNavigationOnClickListener(new View.OnClickListener() {
@@ -71,8 +71,10 @@ public class LoginRegisterView extends BaseViewImpl {
     }
 
     public void transToRegister(RegisterFragment fragment){
+        toolbarLoginRegister.setTitle("注册");
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_login_replace, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -86,8 +88,17 @@ public class LoginRegisterView extends BaseViewImpl {
     public void onRegister(RegisterEvent event){
         transToRegister(RegisterFragment.newInstance());
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLogin(LoginEvent event){
-        transToLogin(LoginFragment.newInstance());
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onLogin(LoginEvent event){
+//        transToLogin(LoginFragment.newInstance());
+//    }
+
+    public void setToolbarTitle(){
+        toolbarLoginRegister.setTitle("登陆");
+    }
+
+    public void unRegister(){
+        EventBus.getDefault().unregister(this);
     }
 }

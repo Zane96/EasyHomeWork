@@ -62,7 +62,6 @@ dependencies {
     compile 'com.github.Zane96:EasyMVP:v1.3.6'
     compile 'com.github.Zane96:EasyImage:v1.0.3-beta'
     compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.jude:utils:1.2.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -76,11 +75,16 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile "io.reactivex:rxandroid:$RX_VERSION"
     compile "io.reactivex:rxjava:$RX_VERSION"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.facebook.stetho:stetho-okhttp3:1.4.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
 }

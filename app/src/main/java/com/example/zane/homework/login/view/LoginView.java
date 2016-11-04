@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
@@ -26,11 +27,16 @@ import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.RegisterEvent;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.jakewharton.rxbinding.support.design.widget.RxTextInputLayout;
+import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxRadioGroup;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
+import rx.functions.Action1;
 
 /**
  * Created by Zane on 16/6/15.
@@ -38,6 +44,7 @@ import butterknife.Bind;
  */
 
 public class LoginView extends BaseViewImpl {
+
     @Bind(R.id.edit_login_username)
     EditText editLoginUsername;
     @Bind(R.id.textinput_login_username)
@@ -58,7 +65,6 @@ public class LoginView extends BaseViewImpl {
     TextView textRegister;
 
     private AppCompatActivity activity;
-    private ProgressDialog progressDialog;
     private int identity;//0, 1, 2 null, teacher, student
 
     @Override
@@ -77,123 +83,53 @@ public class LoginView extends BaseViewImpl {
     }
 
     public void init(){
-        progressDialog = new ProgressDialog(activity);
-        radiogroupLogin.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio_student){
-                    setIdentity(2);
-                } else if (checkedId == R.id.radio_teacher){
-                    setIdentity(1);
-                } else {
-                    setIdentity(0);
-                }
+
+
+        RxTextView.textChanges(editLoginUsername).subscribe(c -> {
+            if (!JudgeSearch.isRight(c.toString())){
+                textinputLoginUsername.setError("用户名格式不正确");
+            } else {
+                textinputLoginUsername.setErrorEnabled(false);
             }
         });
-        editLoginUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!JudgeSearch.isRight(s.toString())){
-                    textinputLoginUsername.setError("用户名格式不正确");
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+
+        RxTextView.textChanges(editLoginPassword).subscribe(c -> {
+            if (!JudgeSearch.isRight(c.toString())){
+                //Toast.makeText(activity, c.toString() + " string", Toast.LENGTH_SHORT).show();
+                textinputLoginPassword.setError("密码格式不正确");
+            } else {
+                textinputLoginPassword.setErrorEnabled(false);
             }
         });
-        editLoginPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!JudgeSearch.isRight(s.toString())){
-                    textinputLoginPassword.setError("密码格式不正确");
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+
+        RxRadioGroup.checkedChanges(radiogroupLogin).subscribe(integer -> {
+            if (integer == R.id.radio_student){
+                setIdentity(2);
+            } else if (integer == R.id.radio_teacher){
+                setIdentity(1);
+            } else {
+                setIdentity(0);
             }
         });
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editLoginUsername.getText().toString().equals(MockTeacherData.userName) &&
-                            editLoginPassword.getText().toString().equals(MockTeacherData.password) &&
-                        identity == 1){
-                    MySharedPre.getInstance().setIdentity("teacher");
-                    MySharedPre.getInstance().setLogin(true);
-                    progressDialog.show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialog.hide();
-                            //序列化存储保持登陆
-                            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                                TeacherLogin teacherLogin = TeacherLogin.getInstacne();
-                                teacherLogin.setAvatar(0);
-                                teacherLogin.setCourse(MockTeacherData.course);
-                                teacherLogin.setGender(MockTeacherData.gender);
-                                teacherLogin.setName(MockTeacherData.name);
-                                teacherLogin.setPsd(MockTeacherData.password);
-                                teacherLogin.setSelfIntro(MockTeacherData.selfIntro);
-                                teacherLogin.setSessionid(MockTeacherData.sessionId);
-                                teacherLogin.setUserName(MockTeacherData.userName);
-                                teacherLogin.setClazz(MockTeacherData.className);
-                                teacherLogin.setOwners(MockTeacherData.owners);
-                                teacherLogin.setIds(MockTeacherData.ids);
-                            }
-                            activity.startActivity(new Intent(activity, MainActivity.class));
-                            activity.finish();
-                        }
-                    }, 1000);
-                } else if (editLoginPassword.getText().toString().equals(MockStudentData.password) && editLoginUsername.getText().toString().equals(MockStudentData.userName) &&
-                              identity == 2){
-                    MySharedPre.getInstance().setIdentity("student");
-                    MySharedPre.getInstance().setLogin(true);
-                    progressDialog.show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialog.hide();
-                            //序列化存储保持登陆
-                            if (MySharedPre.getInstance().getIdentity().equals("student")){
-                                StudentLogin studentLogin = StudentLogin.getInstacne();
-                                studentLogin.setAvatar(0);
-                                studentLogin.setCourse(MockStudentData.courseNames);
-                                studentLogin.setGender(MockStudentData.gender);
-                                studentLogin.setLogin(true);
-                                studentLogin.setName(MockStudentData.name);
-                                studentLogin.setPsd(MockStudentData.password);
-                                studentLogin.setSelfIntro(MockStudentData.selfIntro);
-                                studentLogin.setSessionid(MockStudentData.sessionId);
-                                studentLogin.setUserName(MockStudentData.userName);
-                                studentLogin.setClazz(MockStudentData.clazzNames);
-                                studentLogin.setOwner(MockStudentData.owners);
-                                studentLogin.setIsOwner(MockStudentData.owner);
-                                studentLogin.setIds(MockStudentData.ids);
-                            }
-                            activity.startActivity(new Intent(activity, MainActivity.class));
-                            activity.finish();
-                        }
-                    }, 1000);
-                } else {
-                    Snackbar.make(textinputLoginPassword, "身份,用户名,密码错误!~", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-        textRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new RegisterEvent());
-            }
+
+        RxView.clicks(textRegister).subscribe(aVoid -> {
+            EventBus.getDefault().post(new RegisterEvent());
         });
     }
 
     private void setIdentity(int id){
         identity = id;
+    }
+
+    public int getIdentity(){
+        return identity;
+    }
+
+    public String userName(){
+        return editLoginUsername.getText().toString();
+    }
+
+    public String password(){
+        return editLoginPassword.getText().toString();
     }
 }
