@@ -53,18 +53,12 @@ public class HeaderInterceptors implements Interceptor {
         try {
             Log.i("intercept", originalContent);
 
-           if (originalContent.contains("status")){
-               wrapper = new JSONObject(originalContent);
-               message = wrapper.getString("message");
-               code = wrapper.getInt("status");
-               //剥离外层数据
-               body = wrapper.getString("data");
-           } else {
-               body = originalContent;
-               code = 200;
-               message = "ss";
-           }
-
+            wrapper = new JSONObject(originalContent);
+            message = wrapper.getString("message");
+            code = wrapper.getInt("status");
+            //剥离外层数据
+            body = wrapper.getString("data");
+            
         } catch (JSONException e) {
             Log.i("intercept", "解析错误" + e.getMessage());
             throw new ServiceConfigurationError("解析错误："+e.getLocalizedMessage());
@@ -72,13 +66,12 @@ public class HeaderInterceptors implements Interceptor {
 
         //更改响应头,根据Request的要求来强制添加不同的缓存策略
         String cacheControl = request.cacheControl().toString();
-        Response.Builder builder = originalResponse.newBuilder()
+        return originalResponse.newBuilder()
                                            .code(code)
                                            .message(message)
                                            .body(ResponseBody.create(contentType, body))
                                            .header("Cache-Control", cacheControl)
-                                           .removeHeader("Pragma");
-
-        return builder.build();
+                                           .removeHeader("Pragma")
+                                            .build();
     }
 }

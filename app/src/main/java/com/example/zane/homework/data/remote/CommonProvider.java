@@ -36,6 +36,8 @@ public class CommonProvider {
     private static final OkHttpClient.Builder builder = new OkHttpClient.Builder();
     private static final Cache cache = new Cache(FileUtils.getDiskCacheDir("homeworkcache"), 1024 * 1024 * 10);
     private static final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+    private static final HeaderInterceptors headerInerceptors = new HeaderInterceptors();
+    private static final StethoInterceptor stethoInterceptor = new StethoInterceptor();
 
     static {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -45,8 +47,8 @@ public class CommonProvider {
         //添加body日志打印，http，stetho调试的拦截器，管理cookie
         return builder
                 .addInterceptor(interceptor)
-                .addNetworkInterceptor(new HeaderInterceptors())
-                .addNetworkInterceptor(new StethoInterceptor())
+                .addNetworkInterceptor(headerInerceptors)
+                .addNetworkInterceptor(stethoInterceptor)
                 .cookieJar(cookieJar)
                 .cache(cache)
                 .build();
