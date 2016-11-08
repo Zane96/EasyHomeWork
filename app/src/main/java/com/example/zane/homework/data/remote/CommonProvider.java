@@ -1,5 +1,7 @@
 package com.example.zane.homework.data.remote;
 
+import android.util.Log;
+
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.utils.FileUtils;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -55,6 +57,7 @@ public class CommonProvider {
     }
 
     public static Retrofit.Builder provideRetrofit(){
+        Log.i("commonprovide", headerInerceptors+"");
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

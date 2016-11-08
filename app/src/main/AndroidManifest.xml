@@ -35,7 +35,7 @@
                   android:configChanges="orientation"/>
         <activity android:name=".otherinfo.presenters.OtherInfoActivity"
                   android:configChanges="orientation"/>
-        <activity android:name=".search.presenters.SearchActivity"
+        <activity android:name=".search.presenters.SearchClassActivity"
                   android:configChanges="orientation"/>
         <activity android:name=".info.presenters.ChangeOtherInfoActivity"
                   android:configChanges="orientation"/>

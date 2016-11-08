@@ -90,7 +90,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         super.onViewCreated(view, savedInstanceState);
         adapterPresenter = new ClazzRecyAdapterPresenter();
         ClassModel classModel = ClassModel.getInstance();
-        Log.i(TAG, "request");
+
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
             teaClassSubscriber = new FinalSubscriber<>(getActivity(), datas -> {
                 teaHaveClasses = (List<TeacherHavaClass.DataEntity>) datas;

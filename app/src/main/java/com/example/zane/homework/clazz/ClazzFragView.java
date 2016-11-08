@@ -1,7 +1,6 @@
 package com.example.zane.homework.clazz;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -20,7 +19,7 @@ import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.event.ActivityReenterEvent;
-import com.example.zane.homework.search.presenters.SearchActivity;
+import com.example.zane.homework.search.presenters.SearchClassActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
 
 import org.greenrobot.eventbus.EventBus;
@@ -97,23 +96,20 @@ public class ClazzFragView extends BaseViewImpl {
             @Override
             public void onClick(View v) {
                 if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                    Intent intent = new Intent(context, SearchActivity.class);
-                    intent.putExtra("STUDENT", 1);
+                    Intent intent = new Intent(context, SearchClassActivity.class);
                     context.startActivity(intent);
                 } else {
                     new AlertDialog.Builder(context).setItems(new String[]{"创建班级", "搜索班级"}, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(context, SearchActivity.class);
                             switch (which){
                                 case 0:
-                                    intent.putExtra("STUDENT", 0);
+                                    // TODO: 2016/11/8  创建班级的模块
                                     break;
                                 case 1:
-                                    intent.putExtra("STUDENT", 1);
+                                    context.startActivity(new Intent(context, SearchClassActivity.class));
                                     break;
                             }
-                            context.startActivity(intent);
                         }
                     }).show();
                 }

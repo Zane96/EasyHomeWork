@@ -6,6 +6,9 @@ import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
@@ -25,6 +29,7 @@ import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.squareup.haha.perflib.Main;
 
 import org.greenrobot.eventbus.EventBus;
@@ -178,5 +183,13 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.search_view);
+
+        return super.onCreateOptionsMenu(menu);
     }
 }
