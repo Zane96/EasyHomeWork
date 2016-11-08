@@ -34,7 +34,7 @@ public class HomeWorkModel {
 
     private HomeWorkModel(){
         context = App.getInstance();
-        serviceApi = CommonProvider.provideRetrofit()
+        serviceApi = CommonProvider.getRetrofitBuilder()
                              .baseUrl(HomeWorkService.BASE_URL)
                              .build()
                              .create(HomeWorkService.class);

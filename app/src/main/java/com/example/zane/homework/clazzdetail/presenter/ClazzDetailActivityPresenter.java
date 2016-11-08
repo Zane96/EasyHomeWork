@@ -54,6 +54,7 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
     private HomeWorkFragment homeWorkFragment;
     private MemberFragment memberFragment;
     private NoticeFragment noticeFragment;
+
     private ClazzDetailFragViewPagerAdapter adapter;
     //private ProgressHandler handler;
     private UpLoadFileService upLoadFileService;

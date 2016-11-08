@@ -28,40 +28,33 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CommonProvider {
 
     private CommonProvider(){}
+    public static PersistentCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache()
+                                                                                 , new SharedPrefsCookiePersistor(App.getInstance()));
+    private static final Retrofit.Builder RetrofitBuilderInstance = provideRetrofit();
 
-    /**
-     * 统一持久化管理Cookie
-     */
-    public static final ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache()
-                                                                  , new SharedPrefsCookiePersistor(App.getInstance()));
-
-    private static final OkHttpClient.Builder builder = new OkHttpClient.Builder();
-    private static final Cache cache = new Cache(FileUtils.getDiskCacheDir("homeworkcache"), 1024 * 1024 * 10);
-    private static final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-    private static final HeaderInterceptors headerInerceptors = new HeaderInterceptors();
-    private static final StethoInterceptor stethoInterceptor = new StethoInterceptor();
-
-    static {
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-    }
 
     private static OkHttpClient provideOkHttpClient(){
         //添加body日志打印，http，stetho调试的拦截器，管理cookie
-        return builder
-                .addInterceptor(interceptor)
-                .addNetworkInterceptor(headerInerceptors)
-                .addNetworkInterceptor(stethoInterceptor)
-                .cookieJar(cookieJar)
-                .cache(cache)
-                .build();
+        Log.i("common", "provider");
+
+        return new OkHttpClient.Builder()
+                       .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                       .addNetworkInterceptor(new HeaderInterceptors())
+                       .addNetworkInterceptor(new StethoInterceptor())
+                       .cookieJar(cookieJar)
+                       .cache(new Cache(FileUtils.getDiskCacheDir("homeworkcache"), 1024 * 1024 * 10))
+                       .build();
     }
 
-    public static Retrofit.Builder provideRetrofit(){
-        Log.i("commonprovide", headerInerceptors+"");
+    private static Retrofit.Builder provideRetrofit(){
         return new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(provideOkHttpClient());
+                       .addConverterFactory(GsonConverterFactory.create())
+                       .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                       .client(provideOkHttpClient());
+    }
+
+    public static Retrofit.Builder getRetrofitBuilder(){
+        return RetrofitBuilderInstance;
     }
 
 }

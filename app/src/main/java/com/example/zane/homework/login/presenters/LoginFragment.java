@@ -16,6 +16,7 @@ import com.example.zane.homework.data.bean.Login;
 import com.example.zane.homework.data.model.RegisterLoginModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.login.view.LoginView;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -60,7 +61,7 @@ public class LoginFragment extends BaseFragmentPresenter<LoginView>{
                     MySharedPre.getInstance().setIdentity("student");
                 }
 
-                MySharedPre.getInstance().setLogin(true);
+                 MySharedPre.getInstance().setLogin(true);
 
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();

@@ -172,7 +172,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
                 textviewItemCouresename.setText(data.getCourse());
                 textviewItemClazzname.setText(data.getClassname());
                 textviewItemOwner.setText(data.getCreator());
-                textviewItemAsid.setText(data.getClassid());
+                textviewItemAsid.setText(data.getCid());
                 TeacherLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
 
                 Glide.with(App.getInstance())

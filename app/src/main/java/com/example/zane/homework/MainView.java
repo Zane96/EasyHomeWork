@@ -115,9 +115,7 @@ public class MainView extends BaseViewImpl {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        //context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-//        context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
     public void transToClazzFragment(ClazzFragPresenter clazzFragPresenter) {

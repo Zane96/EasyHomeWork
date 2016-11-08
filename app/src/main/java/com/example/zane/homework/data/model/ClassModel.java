@@ -1,6 +1,7 @@
 package com.example.zane.homework.data.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.data.bean.ClassMemeber;
@@ -31,7 +32,7 @@ public class ClassModel {
 
     private ClassModel(){
         context = App.getInstance();
-        serviceApi = CommonProvider.provideRetrofit()
+        serviceApi = CommonProvider.getRetrofitBuilder()
                              .baseUrl(ClassService.BASE_URL)
                              .build()
                              .create(ClassService.class);

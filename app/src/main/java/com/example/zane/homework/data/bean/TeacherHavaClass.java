@@ -56,17 +56,26 @@ public class TeacherHavaClass implements Parcelable {
     }
 
     public static class DataEntity implements Parcelable {
-        private String classid;
+        private String jid;
+        private String cid;
         private String course;
         private String classname;
         private String creator;
 
-        public String getClassid() {
-            return classid;
+        public String getJid() {
+            return jid;
         }
 
-        public void setClassid(String classid) {
-            this.classid = classid;
+        public void setJid(String jid) {
+            this.jid = jid;
+        }
+
+        public String getCid() {
+            return cid;
+        }
+
+        public void setCid(String cid) {
+            this.cid = cid;
         }
 
         public String getCourse() {
@@ -100,7 +109,8 @@ public class TeacherHavaClass implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.classid);
+            dest.writeString(this.jid);
+            dest.writeString(this.cid);
             dest.writeString(this.course);
             dest.writeString(this.classname);
             dest.writeString(this.creator);
@@ -110,7 +120,8 @@ public class TeacherHavaClass implements Parcelable {
         }
 
         protected DataEntity(Parcel in) {
-            this.classid = in.readString();
+            this.jid = in.readString();
+            this.cid = in.readString();
             this.course = in.readString();
             this.classname = in.readString();
             this.creator = in.readString();

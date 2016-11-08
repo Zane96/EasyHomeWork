@@ -21,6 +21,8 @@ import com.example.zane.homework.app.App;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.search.presenters.SearchClassActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxAbsListView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -71,17 +73,16 @@ public class ClazzFragView extends BaseViewImpl {
         final int fabMarginBottm = lp.bottomMargin;
 
         recycleviewClazzInfo.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recycleviewClazzInfo.getLayoutManager();
         recycleviewClazzInfo.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy >= 0) {
-                    //fabClazzfragment.show();
+                if (dy < 0) {
                     fabClazzfragment.animate()
                             .translationY(fabClazzfragment.getHeight() + fabMarginBottm)
                             .setInterpolator(new AccelerateInterpolator(1))
                             .start();
                 } else {
-                    //fabClazzfragment.hide();
                     fabClazzfragment.animate()
                             .translationY(0)
                             .setInterpolator(new DecelerateInterpolator(1))
@@ -91,28 +92,24 @@ public class ClazzFragView extends BaseViewImpl {
             }
         });
 
-
-        fabClazzfragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                    Intent intent = new Intent(context, SearchClassActivity.class);
-                    context.startActivity(intent);
-                } else {
-                    new AlertDialog.Builder(context).setItems(new String[]{"创建班级", "搜索班级"}, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case 0:
-                                    // TODO: 2016/11/8  创建班级的模块
-                                    break;
-                                case 1:
-                                    context.startActivity(new Intent(context, SearchClassActivity.class));
-                                    break;
-                            }
+        RxView.clicks(fabClazzfragment).subscribe(aVoid -> {
+            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+                Intent intent = new Intent(context, SearchClassActivity.class);
+                context.startActivity(intent);
+            } else {
+                new AlertDialog.Builder(context).setItems(new String[]{"创建班级", "搜索班级"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                // TODO: 2016/11/8  创建班级的模块
+                                break;
+                            case 1:
+                                context.startActivity(new Intent(context, SearchClassActivity.class));
+                                break;
                         }
-                    }).show();
-                }
+                    }
+                }).show();
             }
         });
     }

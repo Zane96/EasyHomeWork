@@ -32,7 +32,7 @@ public class RegisterLoginModel {
 
     private RegisterLoginModel(){
         context = App.getInstance();
-        serviceApi = CommonProvider.provideRetrofit()
+        serviceApi = CommonProvider.getRetrofitBuilder()
                 .baseUrl(LoginRegisteService.BASE_URL)
                 .build()
                 .create(LoginRegisteService.class);

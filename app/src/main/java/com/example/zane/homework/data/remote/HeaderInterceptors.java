@@ -59,18 +59,6 @@ public class HeaderInterceptors implements Interceptor {
             //剥离外层数据
             body = wrapper.getString("data");
 
-//            if (originalContent.contains("status")){
-//                wrapper = new JSONObject(originalContent);
-//                message = wrapper.getString("message");
-//                code = wrapper.getInt("status");
-//                //剥离外层数据
-//                body = wrapper.getString("data");
-//            } else {
-//                message = "ss";
-//                code = 200;
-//                body = originalContent;
-//            }
-
         } catch (JSONException e) {
             Log.i("intercept", "解析错误" + e.getMessage());
             throw new ServiceConfigurationError("解析错误："+e.getLocalizedMessage());

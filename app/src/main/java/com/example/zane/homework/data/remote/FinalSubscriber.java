@@ -41,7 +41,6 @@ public class FinalSubscriber<T> extends Subscriber<T> implements ProgressCancelL
         if (progressDialogHandler != null){
             progressDialogHandler.obtainMessage(ProgressDialogHandler.DISSMISS_PROGRESS).sendToTarget();
         }
-        progressDialogHandler = null;
     }
 
     //当订阅者和发布者刚建立关系的时候调用这个方法

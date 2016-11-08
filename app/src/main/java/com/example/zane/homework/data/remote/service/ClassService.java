@@ -52,7 +52,7 @@ public interface ClassService{
     @POST("appClass")
     @FormUrlEncoded
     Observable<String> teaAppClass(@Field("cid") String cid,
-                                   @Field("sirsortu") String sirsortu,
+                                   @Field("sirorstu") String sirsortu,
                                    @Field("course") String course,
                                    @Field("addtion") String addtion);
 
@@ -60,7 +60,7 @@ public interface ClassService{
     @POST("appClass")
     @FormUrlEncoded
     Observable<String> stuAppClass(@Field("cid") String cid,
-                                   @Field("sirsortu") String sirsortu);
+                                   @Field("sirorstu") String sirsortu);
 
     //同意老师加入班级
     @POST("okApply/1")

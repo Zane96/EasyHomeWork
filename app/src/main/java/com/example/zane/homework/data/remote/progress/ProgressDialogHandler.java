@@ -26,7 +26,7 @@ public class ProgressDialogHandler extends Handler{
     public ProgressDialogHandler(Context context, ProgressCancelListener listener, boolean isCancel){
         //忘记了super()也没事，反正是在主线程
         super();
-        this.progressCancelListener = progressCancelListener;
+        this.progressCancelListener = listener;
         this.isCancel = isCancel;
         this.context = context;
     }

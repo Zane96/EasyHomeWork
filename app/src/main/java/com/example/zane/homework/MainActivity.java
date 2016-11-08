@@ -20,10 +20,13 @@ import android.widget.Toast;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.data.bean.PerInfo;
 import com.example.zane.homework.data.bean.QuitLogin;
 import com.example.zane.homework.data.model.RegisterLoginModel;
+import com.example.zane.homework.data.model.UserInfoModel;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.FinalSubscriber;
+import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivityPresenter<MainView>
     private InfoActivity infoActivity;
     private SharedElementCallback mCallback;
     private boolean isReenterState = false;
+    private final UserInfoModel userInfoModel = UserInfoModel.getInstance();
 
     @Override
     public Class<MainView> getRootViewClass() {
@@ -57,7 +61,28 @@ public class MainActivity extends BaseActivityPresenter<MainView>
     @Override
     protected void onResume() {
         super.onResume();
-        v.reFlashData(TeacherLogin.getInstacne().getUserName());
+        //请求个人信息并且设置到单例子保持类里面去，注意这里设置了缓存策略
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+            //这里并不应该使用Final......Subscriber
+            TeacherLogin teacherLogin = TeacherLogin.getInstacne();
+            userInfoModel.getPerInfo(1).subscribe(data -> {
+                teacherLogin.setUserName(data.getName());
+                teacherLogin.setName(data.getRealname());
+                teacherLogin.setGender(data.getGender());
+                teacherLogin.setSelfIntro(data.getSelfintro());
+                v.reFlashData(teacherLogin.getUserName());
+            });
+        } else {
+            StudentLogin studentLogin = StudentLogin.getInstacne();
+            userInfoModel.getPerInfo(2).subscribe(data -> {
+                studentLogin.setUserName(data.getName());
+                studentLogin.setName(data.getRealname());
+                studentLogin.setGender(data.getGender());
+                studentLogin.setSelfIntro(data.getSelfintro());
+                v.reFlashData(studentLogin.getUserName());
+            });
+        }
+     
     }
 
     @Override

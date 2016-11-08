@@ -3,6 +3,7 @@ package com.example.zane.homework.search.view;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,15 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,8 +27,10 @@ import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.search.presenters.SearchClassActivity;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.jakewharton.rxbinding.view.RxView;
 import com.jude.utils.JUtils;
 
 import java.util.Timer;
@@ -51,7 +58,10 @@ public class SearchClassView extends BaseViewImpl {
     @Bind(R.id.textview_search_creatime)
     TextView textviewSearchCreatime;
 
-    private AppCompatActivity activity;
+    private EditText teaCourse;
+    private EditText addtion;
+
+    private SearchClassActivity activity;
     private static final String RIGHT_ASID = "123";
 
     @Override
@@ -61,7 +71,7 @@ public class SearchClassView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (SearchClassActivity) activity;
     }
 
     @Override
@@ -73,16 +83,35 @@ public class SearchClassView extends BaseViewImpl {
         toolbarSearch.setTitle("搜索班级");
         activity.setSupportActionBar(toolbarSearch);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarSearch.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        toolbarSearch.setNavigationOnClickListener(v -> activity.finish());
     }
 
     public void init() {
         initToolbar();
+
+        RxView.clicks(clazzItem).subscribe(aVoid -> {
+            AlertDialog.Builder builder;
+            if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+                View root = LayoutInflater.from(activity).inflate(R.layout.dialog_search, null);
+                builder = new AlertDialog.Builder(activity).setView(root);
+                teaCourse = (EditText) root.findViewById(R.id.edit_search_course);
+                addtion = (EditText) root.findViewById(R.id.edit_search_reason);
+            } else {
+                View root = LayoutInflater.from(activity).inflate(R.layout.dialog_student_search, null);
+                builder = new AlertDialog.Builder(activity).setView(root);
+                addtion = (EditText) root.findViewById(R.id.edit_search_reason_stu);
+            }
+
+            builder.setPositiveButton("申请", ((dialog, which) -> {
+                //申请加入班级
+                if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+                    Log.i("SearchClass", teaCourse.getText().toString() + " text");
+                    activity.appToClazz(teaCourse.getText().toString(), addtion.getText().toString());
+                } else {
+                    activity.appToClazz("", addtion.getText().toString());
+                }
+            })).setNegativeButton("取消", (dialog, which) -> {}).create().show();
+        });
 
 //        if (activity.getIntent().getIntExtra("STUDENT", -1) == 0) {
 //            editSearch.setHint("输入你想要创建的班级名称");
@@ -183,5 +212,14 @@ public class SearchClassView extends BaseViewImpl {
         textviewSearchClazzname.setText(clazzName);
         textviewSearchOwner.setText(owner);
         textviewSearchCreatime.setText(creatTime);
+    }
+
+    public void showSuccess(){
+        clazzItem.setVisibility(View.VISIBLE);
+        Snackbar.make(clazzItem, "申请成功", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void showError(){
+        clazzItem.setVisibility(View.GONE);
     }
 }

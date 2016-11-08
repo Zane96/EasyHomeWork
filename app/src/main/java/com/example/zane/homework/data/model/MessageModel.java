@@ -27,7 +27,7 @@ public class MessageModel {
 
     private MessageModel(){
         context = App.getInstance();
-        serviceApi = CommonProvider.provideRetrofit()
+        serviceApi = CommonProvider.getRetrofitBuilder()
                              .baseUrl(MessageService.BASE_URL)
                              .build()
                              .create(MessageService.class);

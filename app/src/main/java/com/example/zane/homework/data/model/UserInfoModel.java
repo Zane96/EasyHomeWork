@@ -27,7 +27,7 @@ public class UserInfoModel {
 
     private UserInfoModel(){
         context = App.getInstance();
-        serviceApi = CommonProvider.provideRetrofit()
+        serviceApi = CommonProvider.getRetrofitBuilder()
                              .baseUrl(UserService.BASE_URL)
                              .build()
                              .create(UserService.class);

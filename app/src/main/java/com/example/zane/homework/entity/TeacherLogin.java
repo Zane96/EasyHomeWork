@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by Zane on 16/6/15.
  * Email: zanebot96@gmail.com
- * 单列保持登录类
+ * 单列保持老师登录类信息
  */
 
 public class TeacherLogin {
