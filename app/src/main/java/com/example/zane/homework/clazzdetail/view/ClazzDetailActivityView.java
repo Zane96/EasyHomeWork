@@ -29,6 +29,8 @@ import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActi
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
 
+import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
+import com.jakewharton.rxbinding.view.RxView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -92,45 +94,40 @@ public class ClazzDetailActivityView extends BaseViewImpl {
         collClazzdetail.setExpandedTitleColor(this.activity.getResources().getColor(R.color.transparent));
         activity.setSupportActionBar(toolbarClazzdetail);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarClazzdetail.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
+
+        RxToolbar.navigationClicks(toolbarClazzdetail).subscribe(aVoid -> {
+            activity.finish();
         });
-        fabClazzdetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                    builder.setItems(new String[]{"发布作业", "发布公告"}, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case 0:
-                                    activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
-                                    break;
-                                case 1:
-                                    activity.startActivity(new Intent(activity, ClazzDetailPostNoticeActivity.class));
-                                    break;
-                            }
+
+        RxView.clicks(fabClazzdetail).subscribe(aVoid -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+                builder.setItems(new String[]{"发布作业", "发布公告"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
+                                break;
+                            case 1:
+                                activity.startActivity(new Intent(activity, ClazzDetailPostNoticeActivity.class));
+                                break;
                         }
-                    }).show();
-                } else {
-                    builder.setItems(new String[]{"查看课程详情"}, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case 0:
-                                    Intent intent = new Intent(activity, OtherInfoActivity.class);
-                                    intent.putExtra(COURSENAME, courseName);
-                                    activity.startActivity(intent);
-                                    break;
-                            }
+                    }
+                }).show();
+            } else {
+                builder.setItems(new String[]{"查看课程详情"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                Intent intent = new Intent(activity, OtherInfoActivity.class);
+                                intent.putExtra(COURSENAME, courseName);
+                                activity.startActivity(intent);
+                                break;
                         }
-                    }).show();
-                }
+                    }
+                }).show();
             }
         });
     }

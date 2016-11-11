@@ -32,7 +32,6 @@ import java.util.Map;
 public class HomeWorkDetailActivity extends BaseActivityPresenter<HomeWorkDetailView>{
 
     private HomeWorkDetailViewpagerAdapter adapter;
-    private ProgressHandler handler;
 
     @Override
     public Class<HomeWorkDetailView> getRootViewClass() {
@@ -41,42 +40,19 @@ public class HomeWorkDetailActivity extends BaseActivityPresenter<HomeWorkDetail
 
     @Override
     public void inCreat(Bundle bundle) {
-        handler = new ProgressHandler(this);
         v.initToolbar();
-        v.showProgress();
         adapter = new HomeWorkDetailViewpagerAdapter(getSupportFragmentManager());
         adapter.addFinishedFragment(FinishedMemberFragment.newInstance(), "完成");
         adapter.addNoFinishedFragment(NoFinishedMemberFragment.newInstance(), "未完成");
-        Message message = new Message();
-        message.what = 1;
-        handler.sendMessageDelayed(message, 1500);
     }
 
     @Override
     public void inDestory() {
-        handler.removeMessages(1);
+
     }
 
     @Override
     public Activity getContext() {
         return this;
-    }
-
-    private final static class ProgressHandler extends Handler {
-        private WeakReference<HomeWorkDetailActivity> reference;
-        public ProgressHandler(HomeWorkDetailActivity activity){
-            reference = new WeakReference<HomeWorkDetailActivity>(activity);
-        }
-        @Override
-        public void handleMessage(Message msg) {
-            if (reference.get() != null){
-                switch (msg.what){
-                    case 1:
-                        reference.get().v.hideProgress();
-                        reference.get().v.initTabLayout(reference.get().adapter);
-                        break;
-                }
-            }
-        }
     }
 }

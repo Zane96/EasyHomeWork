@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +43,9 @@ public class ClazzFragView extends BaseViewImpl {
     RecyclerView recycleviewClazzInfo;
     @Bind(R.id.fab_clazzfragment)
     FloatingActionButton fabClazzfragment;
+    @Bind(R.id.swiplayout_clazz_info)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     private AppCompatActivity context;
     private LinearLayoutManager manager;
 
@@ -91,6 +96,12 @@ public class ClazzFragView extends BaseViewImpl {
 
             }
         });
+    }
+
+    public void init(){
+
+        ClazzFragPresenter fragment = (ClazzFragPresenter)context.getSupportFragmentManager().findFragmentByTag("clazzfrag");
+        swipeRefreshLayout.setOnRefreshListener(() -> fragment.refreshClazzData());
 
         RxView.clicks(fabClazzfragment).subscribe(aVoid -> {
             if (MySharedPre.getInstance().getIdentity().equals("teacher")){
@@ -112,6 +123,13 @@ public class ClazzFragView extends BaseViewImpl {
                 }).show();
             }
         });
+    }
+
+    /**
+     * 取消swipe刷新
+     */
+    public void cancleSwiprefresh(){
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 

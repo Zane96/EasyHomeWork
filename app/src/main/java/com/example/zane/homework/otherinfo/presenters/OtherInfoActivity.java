@@ -35,19 +35,19 @@ public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
     @Override
     public void inCreat(Bundle bundle) {
 
-        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            memberDetail = (MemberDetail) getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL);
-            v.init(memberDetail.getName(), memberDetail.getSelfIntro(), memberDetail.getAvatar());
-        } else if (MySharedPre.getInstance().getIdentity().equals("student")){
-            if (getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
-                memberDetail = (MemberDetail) getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL);
-                JUtils.Toast(memberDetail.getName());
-                v.init(memberDetail.getName(), memberDetail.getSelfIntro(), memberDetail.getAvatar());
-            } else {
-                courseName = getIntent().getStringExtra(ClazzDetailActivityView.COURSENAME);
-                v.init(StudentLogin.getInstacne().getUserName(), StudentLogin.getInstacne().getSelfIntro(), StudentLogin.getInstacne().getAvatar());
-            }
-        }
+//        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+//            memberDetail = (MemberDetail) getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL);
+//            v.init(memberDetail.getName(), memberDetail.getSelfIntro(), memberDetail.getAvatar());
+//        } else if (MySharedPre.getInstance().getIdentity().equals("student")){
+//            if (getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
+//                memberDetail = (MemberDetail) getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL);
+//                JUtils.Toast(memberDetail.getName());
+//                v.init(memberDetail.getName(), memberDetail.getSelfIntro(), memberDetail.getAvatar());
+//            } else {
+//                courseName = getIntent().getStringExtra(ClazzDetailActivityView.COURSENAME);
+//                v.init(StudentLogin.getInstacne().getUserName(), StudentLogin.getInstacne().getSelfIntro(), StudentLogin.getInstacne().getAvatar());
+//            }
+//        }
 
         v.showProgress();
         handler = new ProgressHandler(this);
@@ -73,19 +73,19 @@ public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
         }
         @Override
         public void handleMessage(Message msg) {
-            if (reference.get() != null){
-                MemberDetail data = reference.get().memberDetail;
-                switch (msg.what){
-                    case 1:
-                        reference.get().v.hideProgress();
-                        if (MySharedPre.getInstance().getIdentity().equals("teacher") || reference.get().getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
-                            reference.get().v.setData(data.getNumber(), data.getScore(), data.getWorks(), data.getNoWorks());
-                        } else {
-                            reference.get().v.setData(reference.get().courseName, "30分", "15分", "2次");
-                        }
-                        break;
-                }
-            }
+//            if (reference.get() != null){
+//                MemberDetail data = reference.get().memberDetail;
+//                switch (msg.what){
+//                    case 1:
+//                        reference.get().v.hideProgress();
+//                        if (MySharedPre.getInstance().getIdentity().equals("teacher") || reference.get().getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
+//                            reference.get().v.setData(data.getNumber(), data.getScore(), data.getWorks(), data.getNoWorks());
+//                        } else {
+//                            reference.get().v.setData(reference.get().courseName, "30分", "15分", "2次");
+//                        }
+//                        break;
+//                }
+//            }
         }
     }
 }

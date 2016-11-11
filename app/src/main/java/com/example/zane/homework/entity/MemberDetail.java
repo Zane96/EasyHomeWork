@@ -1,118 +1,48 @@
 package com.example.zane.homework.entity;
 
 import com.example.zane.easymvp.base.IListModel;
+import com.example.zane.homework.data.bean.ClassMemeber;
+import com.example.zane.homework.data.bean.HoPerson;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Zane on 16/6/8.
  * Email: zanebot96@gmail.com
  */
 
-public class MemberDetail implements IListModel, Serializable{
-    //个人id
-    private int studentId;
-    //姓名
-    private String name = "徐志";
-    //性别
-    private String gender;
-    //是否管理员
-    private String isAdmin;
-    //个人介绍
-    private String selfIntro = "爱生活爱编程";
-    //学号
-    private String number = "2014210876";
-    //得分
-    private String score = "50分";
-    //提交的作业次数
-    private String works = "15次";
-    //没有提交的昨夜次数
-    private String noWorks = "2次";
-    //头像id
-    private int avatar;
+public class MemberDetail implements IListModel{
 
-    public int getAvatar() {
-        return avatar;
+    private List<ClassMemeber.DataEntity> memebers;
+    private List<HoPerson.DataEntity> hoPersons;
+
+    public static final int HOMEWORK = 123;
+    public static final int MEMEBER = 321;
+
+    public List<ClassMemeber.DataEntity> getMemebers() {
+        return memebers;
     }
 
-    public void setAvatar(int avatar) {
-        this.avatar = avatar;
+    public void setMemebers(List<ClassMemeber.DataEntity> memebers) {
+        this.memebers = memebers;
     }
 
-    public String getWorks() {
-        return works;
+    public List<HoPerson.DataEntity> getHoPersons() {
+        return hoPersons;
     }
 
-    public void setWorks(String works) {
-        this.works = works;
-    }
-
-    public String getNoWorks() {
-        return noWorks;
-    }
-
-    public void setNoWorks(String noWorks) {
-        this.noWorks = noWorks;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public int getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getSelfIntro() {
-        return selfIntro;
-    }
-
-    public void setSelfIntro(String selfIntro) {
-        this.selfIntro = selfIntro;
-    }
-
-    public String getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(String isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setHoPersons(List<HoPerson.DataEntity> hoPersons) {
+        this.hoPersons = hoPersons;
     }
 
     @Override
     public int getModelViewType() {
-        return 0;
+        if (hoPersons != null){
+            return HOMEWORK;
+        } else {
+            return MEMEBER;
+        }
     }
 }

@@ -72,7 +72,7 @@ public class MainView extends BaseViewImpl {
 
     public void init(ClazzFragPresenter clazzFragPresenter) {
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter);
+        fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter, "clazzfrag");
         fragmentTransaction.commit();
 
         View view = layoutInflater.inflate(R.layout.nav_header_main, navView);
@@ -120,7 +120,7 @@ public class MainView extends BaseViewImpl {
 
     public void transToClazzFragment(ClazzFragPresenter clazzFragPresenter) {
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter);
+        fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter, "clazzfrag");
         fragmentTransaction.commit();
     }
 
@@ -130,13 +130,13 @@ public class MainView extends BaseViewImpl {
 
     public void reFlashData(String name){
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            textView.setText(TeacherLogin.getInstacne().getUserName() + "老师, " + "你好!");
+            textView.setText(name + " 老师, " + "你好!");
             Glide.with(context)
                     .load(MockTeacherData.avatar)
                     .transform(new CircleTransform(App.getInstance()))
                     .into(imageView);
         } else {
-            textView.setText(StudentLogin.getInstacne().getUserName() + "老师, " + "你好!");
+            textView.setText(name + " 同学, " + "你好!");
             Glide.with(context)
                     .load(MockStudentData.avatar)
                     .transform(new CircleTransform(App.getInstance()))

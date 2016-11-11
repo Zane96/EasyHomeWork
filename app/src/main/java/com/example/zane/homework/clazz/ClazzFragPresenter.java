@@ -4,8 +4,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
@@ -27,15 +25,11 @@ import com.example.zane.homework.data.bean.StuHaveClass;
 import com.example.zane.homework.data.bean.TeacherHavaClass;
 import com.example.zane.homework.data.model.ClassModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
-import com.example.zane.homework.entity.Clazz;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
-import com.jude.utils.JUtils;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -49,6 +43,7 @@ import butterknife.ButterKnife;
 public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
 
     private static final String TAG = ClazzFragPresenter.class.getSimpleName();
+
     public static final String CLAZZ_NAME = "clazzName";
     public static final String COURSE_NAME = "courseName";
     public static final String IMAGE = "IMAGE";
@@ -63,6 +58,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
     private boolean mIsDetailsActivityStarted;
     private FinalSubscriber<List<TeacherHavaClass.DataEntity>> teaClassSubscriber;
     private FinalSubscriber<List<StuHaveClass.DataEntity>> stuClassSubscriber;
+    private ClassModel classModel = ClassModel.getInstance();
 
     public static ClazzFragPresenter newInstance() {
         ClazzFragPresenter fragment = new ClazzFragPresenter();
@@ -88,8 +84,8 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        v.init();
         adapterPresenter = new ClazzRecyAdapterPresenter();
-        ClassModel classModel = ClassModel.getInstance();
 
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
             teaClassSubscriber = new FinalSubscriber<>(getActivity(), datas -> {
@@ -99,6 +95,22 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
             classModel.teaHaveClass().subscribe(teaClassSubscriber);
         } else {
             // TODO: 16/11/4 学生的需要将课程和班级的信息融合了之后才显示 
+        }
+    }
+
+    /**
+     * 后期可以加入DiffUtils优化
+     */
+    public void refreshClazzData(){
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+            Log.i("refresh", "refresh");
+            classModel.teaHaveClass().subscribe(newDatas -> {
+                teaHaveClasses = newDatas;
+                adapterPresenter.notifyDataSetChanged();
+                v.cancleSwiprefresh();
+            });
+        } else {
+            // TODO: 2016/11/9 学生模块刷新数据 
         }
     }
 
@@ -154,6 +166,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         ImageView imageOwner;
 
         private int itemPosition;
+        private TeacherHavaClass.DataEntity teaData;
 
         public ClazzRecyViewHolder(View itemView) {
             super(itemView);
@@ -167,12 +180,15 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 imageviewItemClazz.setTransitionName(String.valueOf(position));
             }
+
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-                TeacherHavaClass.DataEntity data = teaHaveClasses.get(position);
-                textviewItemCouresename.setText(data.getCourse());
-                textviewItemClazzname.setText(data.getClassname());
-                textviewItemOwner.setText(data.getCreator());
-                textviewItemAsid.setText(data.getCid());
+
+                teaData = teaHaveClasses.get(position);
+                textviewItemCouresename.setText(teaData.getCourse());
+                textviewItemClazzname.setText(teaData.getClassname());
+                textviewItemOwner.setText(teaData.getCreator());
+                textviewItemAsid.setText("CID " + teaData.getCid());
+
                 TeacherLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
 
                 Glide.with(App.getInstance())
@@ -180,13 +196,16 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
                         .transform(new CircleTransform(App.getInstance()))
                         .into(imageviewItemClazz);
             } else {
+
                 textviewItemCouresename.setText(StudentLogin.getInstacne().getCourse()[position]);
                 textviewItemClazzname.setText(StudentLogin.getInstacne().getClazz());
                 textviewItemOwner.setText(StudentLogin.getInstacne().getOwner());
                 textviewItemAsid.setText(StudentLogin.getInstacne().getIds()[0]);
+
                 if (StudentLogin.getInstacne().getIsOwner()){
                     imageOwner.setVisibility(View.VISIBLE);
                 }
+
                 StudentLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
                 Glide.with(App.getInstance())
                         .load(StudentLogin.getInstacne().getAvatar())
@@ -200,8 +219,8 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
             Intent intent = new Intent(getActivity(), ClazzDetailActivityPresenter.class);
             intent.putExtra(POSITION_SHARE, itemPosition);
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-                intent.putExtra(CLAZZ_NAME, TeacherLogin.getInstacne().getClazz()[itemPosition]);
-                intent.putExtra(COURSE_NAME, TeacherLogin.getInstacne().getCourse());
+                intent.putExtra(CLAZZ_NAME, teaData.getClassname());
+                intent.putExtra(COURSE_NAME, teaData.getCourse());
                 intent.putExtra(IMAGE, TeacherLogin.getInstacne().getAvatar());
             } else {
                 intent.putExtra(CLAZZ_NAME, StudentLogin.getInstacne().getClazz());

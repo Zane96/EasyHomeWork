@@ -82,7 +82,6 @@ public class MainActivity extends BaseActivityPresenter<MainView>
                 v.reFlashData(studentLogin.getUserName());
             });
         }
-     
     }
 
     @Override

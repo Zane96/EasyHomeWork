@@ -72,6 +72,7 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
 
     @Override
     public void inCreat(Bundle bundle) {
+
         v.initCallBack();
         EventBus.getDefault().register(this);
 
@@ -89,7 +90,7 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         v.initTablayout(adapter);
     }
 
-    public void initData(){
+    private void initData(){
         adapter = new ClazzDetailFragViewPagerAdapter(getSupportFragmentManager());
         adapter.addHomeWorkFrag(HomeWorkFragment.newInstance(), "作业");
         adapter.addMemberFrag(MemberFragment.newInstance(), "公告");
@@ -101,7 +102,6 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         Intent intent = new Intent();
         intent.putExtra(ClazzFragPresenter.POSITION_SHARE, String.valueOf(share_position));
         setResult(RESULT_OK, intent);
-        Log.i(TAG, "finish");
         super.finishAfterTransition();
     }
 

@@ -59,7 +59,7 @@ public class NoFinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilF
         super.onViewCreated(view, savedInstanceState);
         for (int i = 0; i < 10; i++){
             MemberDetail memberDetail = new MemberDetail();
-            memberDetail.setAvatar(RandomBackImage.getRandomAvatar());
+            //memberDetail.setAvatar(RandomBackImage.getRandomAvatar());
             datas.add(memberDetail);
         }
         adapter.addAll(datas);
@@ -68,7 +68,7 @@ public class NoFinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilF
             @Override
             public void onClick(View view, int i) {
                 Intent intent = new Intent(getActivity(), OtherInfoActivity.class);
-                intent.putExtra(MemberFragment.MEMBER_DETAIL, datas.get(i));
+               // intent.putExtra(MemberFragment.MEMBER_DETAIL, datas.get(i));
                 startActivity(intent);
             }
             @Override

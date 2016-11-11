@@ -50,8 +50,7 @@
             android:layout_below="@id/textview_item_clazzname"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="统计学"/>
+            android:layout_marginLeft="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,15 +61,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="徐志"/>
+            android:layout_marginLeft="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textview_item_asid"
             android:layout_toRightOf="@id/textview_item_owner"
-            android:text="223"
             android:layout_alignBaseline="@id/textview_item_owner"
             android:layout_marginLeft="140dp"
             android:textSize="20sp"

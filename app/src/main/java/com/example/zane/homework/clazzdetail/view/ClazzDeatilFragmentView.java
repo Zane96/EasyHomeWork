@@ -33,7 +33,6 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
     RecyclerView recycleviewHomework;
     private Activity activity;
     private LinearLayoutManager linearLayoutManager;
-    private ProgressDialog progressDialog;
 
     @Override
     public int getRootViewId() {
@@ -68,12 +67,4 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
         recycleviewHomework.setLayoutManager(linearLayoutManager);
     }
 
-    public void showProgress() {
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.show();
-    }
-
-    public void hideProgress() {
-        progressDialog.hide();
-    }
 }

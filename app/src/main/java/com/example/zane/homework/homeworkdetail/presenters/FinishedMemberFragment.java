@@ -14,6 +14,7 @@ import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailMemberAdapter;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
+import com.example.zane.homework.data.model.ClassModel;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
 import com.example.zane.homework.utils.RandomBackImage;
@@ -21,7 +22,7 @@ import com.example.zane.homework.utils.RandomBackImage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** 这里默认是所有学生的完成信息
  * Created by Zane on 16/6/13.
  * Email: zanebot96@gmail.com
  */
@@ -30,6 +31,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
 
     private List<MemberDetail> datas;
     private ClazzDetailMemberAdapter adapter;
+    private ClassModel model = ClassModel.getInstance();
 
     public static FinishedMemberFragment newInstance(){
         FinishedMemberFragment fragment = new FinishedMemberFragment();
@@ -46,12 +48,11 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
         return getActivity();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         datas = new ArrayList<>();
         adapter = new ClazzDetailMemberAdapter(App.getInstance());
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
         super.onViewCreated(view, savedInstanceState);
         for (int i = 0; i < 10; i++){
             MemberDetail memberDetail = new MemberDetail();
-            memberDetail.setAvatar(RandomBackImage.getRandomAvatar());
+            //memberDetail.setAvatar(RandomBackImage.getRandomAvatar());
             datas.add(memberDetail);
         }
         adapter.addAll(datas);
@@ -68,7 +69,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
             @Override
             public void onClick(View view, int i) {
                 Intent intent = new Intent(getActivity(), OtherInfoActivity.class);
-                intent.putExtra(MemberFragment.MEMBER_DETAIL, datas.get(i));
+                //intent.putExtra(MemberFragment.MEMBER_DETAIL, datas.get(i));
                 startActivity(intent);
             }
             @Override

@@ -3,6 +3,8 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.zane.homework.entity.MemberDetail;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class HoPerson implements Parcelable {
         this.data = data;
     }
 
-    public static class DataEntity implements Parcelable {
+    public static class DataEntity extends MemberDetail implements Parcelable {
         private String name;
         private String attach;
         private String finishtime;

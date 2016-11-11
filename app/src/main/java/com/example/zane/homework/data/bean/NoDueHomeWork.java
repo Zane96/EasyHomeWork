@@ -3,6 +3,9 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.zane.easymvp.base.IListModel;
+import com.example.zane.homework.entity.HomeWorkDetail;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +15,7 @@ import java.util.List;
  * Blog: zane96.github.io
  */
 
-public class NoDueHomeWork implements Parcelable {
+public class NoDueHomeWork implements Parcelable{
 
     /**
      * status : 200
@@ -58,7 +61,8 @@ public class NoDueHomeWork implements Parcelable {
         this.data = data;
     }
 
-    public static class DataEntity implements Parcelable {
+
+    public static class DataEntity extends HomeWorkDetail implements Parcelable ,IListModel{
         private String asid;
         private String cid;
         private String percentage;
