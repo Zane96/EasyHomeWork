@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.zane.homework.app.App;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Zane on 16/6/12.
@@ -36,5 +40,25 @@ public class FileUtils {
         }
 
         return new File(cachePath + File.separator + uniqueName);
+    }
+
+    /**
+     * 将文件写入SD卡私有外存
+     * @param inputStream
+     * @param file
+     */
+    public static void writeFile(InputStream inputStream, File file){
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int count = 0;
+            while ((count = inputStream.read(buffer)) >= 0){
+                fos.write(buffer, 0, count);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

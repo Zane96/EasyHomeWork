@@ -61,11 +61,7 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        for (int i = 0; i < 10; i++){
-//            MemberDetail memberDetail = new MemberDetail();
-//            memberDetail.setAvatar(RandomBackImage.getRandomAvatar());
-//            datas.add(memberDetail);
-//        }
+
         adapter.addAll(datas);
         v.initMemberRecycle(adapter);
         adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {

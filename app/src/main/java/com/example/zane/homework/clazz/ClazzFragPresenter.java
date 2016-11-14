@@ -218,15 +218,15 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), ClazzDetailActivityPresenter.class);
             intent.putExtra(POSITION_SHARE, itemPosition);
+
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
                 intent.putExtra(CLAZZ_NAME, teaData.getClassname());
                 intent.putExtra(COURSE_NAME, teaData.getCourse());
                 intent.putExtra(IMAGE, TeacherLogin.getInstacne().getAvatar());
             } else {
-                intent.putExtra(CLAZZ_NAME, StudentLogin.getInstacne().getClazz());
-                intent.putExtra(COURSE_NAME, StudentLogin.getInstacne().getCourse()[itemPosition]);
-                intent.putExtra(IMAGE, StudentLogin.getInstacne().getAvatar());
+                // TODO: 2016/11/14 学生模块的跳转
             }
+
             if (Build.VERSION.SDK_INT > 21) {
                 mIsDetailsActivityStarted = true;
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),

@@ -88,7 +88,6 @@ public class ClazzDetailActivityView extends BaseViewImpl {
     }
 
     public void init() {
-        progressDialog = new ProgressDialog(activity);
 
         collClazzdetail.setTitle("");
         collClazzdetail.setExpandedTitleColor(this.activity.getResources().getColor(R.color.transparent));
@@ -178,15 +177,6 @@ public class ClazzDetailActivityView extends BaseViewImpl {
         viewpagerClazzdetail.setAdapter(adapter);
         tablayoutClazzdetail.setupWithViewPager(viewpagerClazzdetail);
     }
-
-    public void showProgress() {
-        progressDialog.show();
-    }
-
-    public void hideProgress() {
-        progressDialog.hide();
-    }
-
 
     public void initCallBack(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

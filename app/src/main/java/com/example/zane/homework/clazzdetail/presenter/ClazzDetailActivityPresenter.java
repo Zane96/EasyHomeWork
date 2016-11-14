@@ -78,6 +78,8 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
 
         String clazzName = getIntent().getStringExtra(ClazzFragPresenter.CLAZZ_NAME);
         String courseName = getIntent().getStringExtra(ClazzFragPresenter.COURSE_NAME);
+
+
         share_position = getIntent().getIntExtra(ClazzFragPresenter.POSITION_SHARE, 0);
         //背景图写死了
         int image = getIntent().getIntExtra(ClazzFragPresenter.IMAGE, R.drawable.back1_re);

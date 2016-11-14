@@ -12,15 +12,25 @@ import com.example.zane.homework.data.bean.NoDueHomeWork;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.ErrorTransForm;
 import com.example.zane.homework.data.remote.SchedulerTransform;
+import com.example.zane.homework.data.remote.download.DownloadProgressInterceptor;
+import com.example.zane.homework.data.remote.download.DownloadProgressListener;
+import com.example.zane.homework.data.remote.service.DownLoadService;
 import com.example.zane.homework.data.remote.service.HomeWorkService;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Zane on 16/11/1.
@@ -110,5 +120,28 @@ public class HomeWorkModel {
         return serviceApi.stuUploadAgain(asid, body)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
+    }
+
+    public Observable<ResponseBody> downloadWork(String fileUrl, DownloadProgressListener listener){
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new DownloadProgressInterceptor(listener))
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(fileUrl)
+                .client(client)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+
+        return retrofit.create(DownLoadService.class)
+                       .downloadWork(fileUrl)
+                       .compose(new ErrorTransForm<>())
+                       .compose(new SchedulerTransform<>());
+
     }
 }

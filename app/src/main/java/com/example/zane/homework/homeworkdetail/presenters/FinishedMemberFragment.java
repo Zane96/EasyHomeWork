@@ -13,14 +13,23 @@ import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailMemberAdapter;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
+import com.example.zane.homework.clazzdetail.presenter.WorkJudgePresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
+import com.example.zane.homework.data.bean.ClassMemeber;
+import com.example.zane.homework.data.bean.HoPerson;
 import com.example.zane.homework.data.model.ClassModel;
+import com.example.zane.homework.data.model.HomeWorkModel;
+import com.example.zane.homework.data.remote.FinalSubscriber;
+import com.example.zane.homework.entity.HomeWorkDetail;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /** 这里默认是所有学生的完成信息
  * Created by Zane on 16/6/13.
@@ -29,12 +38,30 @@ import java.util.List;
 
 public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
 
-    private List<MemberDetail> datas;
+    private List<HoPerson.DataEntity> datas;
     private ClazzDetailMemberAdapter adapter;
-    private ClassModel model = ClassModel.getInstance();
+    private ClassModel classModel = ClassModel.getInstance();
+    private HomeWorkModel workModel = HomeWorkModel.getInstance();
+    private FinalSubscriber<List<ClassMemeber.DataEntity>> memberSubscriber;
 
-    public static FinishedMemberFragment newInstance(){
+    public static final String CID = "cid";
+    public static final String ASID = "asid";
+    public static final String ADDTION = "addtion";
+    public static final String DEGREE = "degree";
+    public static final String ATTACHMENT = "attachement";
+    public static final String STU_NAME = "stuname";
+
+    private String cid;
+    private String asid;
+
+    public static FinishedMemberFragment newInstance(String cid, String asid){
         FinishedMemberFragment fragment = new FinishedMemberFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(CID, cid);
+        bundle.putString(ASID, asid);
+        fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -51,25 +78,52 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+        getData();
+    }
+
+    private void init() {
         datas = new ArrayList<>();
         adapter = new ClazzDetailMemberAdapter(App.getInstance());
+        cid = getArguments().getString(CID);
+        asid = getArguments().getString(ASID);
+    }
+
+    public void getData(){
+        memberSubscriber = new FinalSubscriber<>(getActivity(), memberDatas -> {
+            for (ClassMemeber.DataEntity data : (List<ClassMemeber.DataEntity>) memberDatas){
+                workModel.showHoPerson(asid, data.getSid())
+                        .subscribe(dataEntities -> {
+                            MemberDetail memberDetail = (MemberDetail) dataEntities.get(0);
+                            memberDetail.setHoPersons(dataEntities);
+                            datas.add((HoPerson.DataEntity)dataEntities.get(0));
+                            adapter.add(memberDetail);
+                            adapter.notifyItemInserted(datas.size());
+                        });
+            }
+        });
+
+        classModel.classMemeber(cid).subscribe(memberSubscriber);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        for (int i = 0; i < 10; i++){
-            MemberDetail memberDetail = new MemberDetail();
-            //memberDetail.setAvatar(RandomBackImage.getRandomAvatar());
-            datas.add(memberDetail);
-        }
-        adapter.addAll(datas);
+
+        //adapter.addAll(datas);
         v.initMemberRecycle(adapter);
         adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-                Intent intent = new Intent(getActivity(), OtherInfoActivity.class);
-                //intent.putExtra(MemberFragment.MEMBER_DETAIL, datas.get(i));
+                HoPerson.DataEntity data = datas.get(i);
+                //跳转作业批改
+                Intent intent = new Intent(getActivity(), WorkJudgePresenter.class);
+                intent.putExtra(CID, cid);
+                intent.putExtra(ASID, asid);
+                intent.putExtra(STU_NAME, data.getName());
+                intent.putExtra(ADDTION, data.getAddtion());
+                intent.putExtra(ATTACHMENT, data.getAttach());
+                intent.putExtra(DEGREE, data.getGrade());
                 startActivity(intent);
             }
             @Override

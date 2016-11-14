@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
+import com.example.zane.homework.clazzdetail.presenter.HomeWorkFragment;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.homeworkdetail.HomeWorkDetailViewpagerAdapter;
 import com.example.zane.homework.homeworkdetail.view.HomeWorkDetailView;
@@ -42,8 +43,9 @@ public class HomeWorkDetailActivity extends BaseActivityPresenter<HomeWorkDetail
     public void inCreat(Bundle bundle) {
         v.initToolbar();
         adapter = new HomeWorkDetailViewpagerAdapter(getSupportFragmentManager());
-        adapter.addFinishedFragment(FinishedMemberFragment.newInstance(), "完成");
+        adapter.addFinishedFragment(FinishedMemberFragment.newInstance(getIntent().getStringExtra(HomeWorkFragment.CID), getIntent().getStringExtra(HomeWorkFragment.ASID)), "完成");
         adapter.addNoFinishedFragment(NoFinishedMemberFragment.newInstance(), "未完成");
+        v.initTabLayout(adapter);
     }
 
     @Override

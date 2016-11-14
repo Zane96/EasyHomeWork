@@ -46,7 +46,7 @@ public class WorkMemberViewHolder extends BaseListViewHolderImpl<HoPerson.DataEn
                 .transform(new CircleTransform(App.getInstance()))
                 .into(avatar);
         name.setText(dataEntity.getName());
-        finishtime.setText("完成时间 " + dataEntity.getFinishtime());
-        grade.setText("成绩 " + dataEntity.getGrade());
+        finishtime.setText("完成时间: " + dataEntity.getFinishtime());
+        grade.setText("成绩: " + dataEntity.getGrade());
     }
 }

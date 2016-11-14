@@ -38,9 +38,13 @@ import java.util.List;
 public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
 
     private ArrayList<HomeWorkDetail> datas;
+    private List<NoDueHomeWork.DataEntity> dataEntities;
     private ClazzDetailHomeWorkAdapter adapter;
     private HomeWorkModel model = HomeWorkModel.getInstance();
     private FinalSubscriber<List<NoDueHomeWork.DataEntity>> subscriber;
+
+    public static final String CID = "cid";
+    public static final String ASID = "asid";
 
     private static final String DATAS = "datas";
 
@@ -59,19 +63,11 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
         return getActivity();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        Log.i("homefrag", "attach");
-    }
-
     //必须在这里注册!
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        Log.i("homefrag", "creat");
         datas = new ArrayList<>();
         adapter = new ClazzDetailHomeWorkAdapter(getActivity());
         getData();
@@ -90,6 +86,8 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
             adapter.clear();
             adapter.addAll(datas);
             adapter.notifyDataSetChanged();
+
+            dataEntities = (List<NoDueHomeWork.DataEntity>) data;
         });
 
         model.showNoDueWork().subscribe(subscriber);
@@ -109,7 +107,10 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
             adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
                 @Override
                 public void onClick(View view, int i) {
-                    startActivity(new Intent(getActivity(), HomeWorkDetailActivity.class));
+                    Intent intent = new Intent(getActivity(), HomeWorkDetailActivity.class);
+                    intent.putExtra(CID, dataEntities.get(i).getCid());
+                    intent.putExtra(ASID, dataEntities.get(i).getAsid());
+                    startActivity(intent);
                 }
                 @Override
                 public void onLongClick(View view, final int i) {

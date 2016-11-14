@@ -59,6 +59,7 @@
 
 
         <ImageView
+            android:src="@drawable/ic_upload"
             android:id="@+id/button_post_homework"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
