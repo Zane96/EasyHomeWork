@@ -43,9 +43,11 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
     private ClassModel classModel = ClassModel.getInstance();
     private HomeWorkModel workModel = HomeWorkModel.getInstance();
     private FinalSubscriber<List<ClassMemeber.DataEntity>> memberSubscriber;
+    private List<String> sids;
 
     public static final String CID = "cid";
     public static final String ASID = "asid";
+    public static final String SID = "sid";
     public static final String ADDTION = "addtion";
     public static final String DEGREE = "degree";
     public static final String ATTACHMENT = "attachement";
@@ -87,11 +89,13 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
         adapter = new ClazzDetailMemberAdapter(App.getInstance());
         cid = getArguments().getString(CID);
         asid = getArguments().getString(ASID);
+        sids = new ArrayList<>();
     }
 
     public void getData(){
         memberSubscriber = new FinalSubscriber<>(getActivity(), memberDatas -> {
             for (ClassMemeber.DataEntity data : (List<ClassMemeber.DataEntity>) memberDatas){
+                sids.add(data.getSid());
                 workModel.showHoPerson(asid, data.getSid())
                         .subscribe(dataEntities -> {
                             MemberDetail memberDetail = (MemberDetail) dataEntities.get(0);
@@ -118,7 +122,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
                 HoPerson.DataEntity data = datas.get(i);
                 //跳转作业批改
                 Intent intent = new Intent(getActivity(), WorkJudgePresenter.class);
-                intent.putExtra(CID, cid);
+                intent.putExtra(SID, sids.get(i));
                 intent.putExtra(ASID, asid);
                 intent.putExtra(STU_NAME, data.getName());
                 intent.putExtra(ADDTION, data.getAddtion());

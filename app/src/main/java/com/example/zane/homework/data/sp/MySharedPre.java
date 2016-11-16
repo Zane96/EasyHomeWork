@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.utils.SecurePreferences;
 
+import java.io.File;
+
 /**加密本地序列化存储
  * Created by Zane on 16/6/15.
  * Email: zanebot96@gmail.com
@@ -48,12 +50,7 @@ public class MySharedPre {
         return preferences.getBoolean("login", false);
     }
 
-    public void setCookie(String cookie){
-        editor.putString("cookie", cookie);
-        editor.commit();
-    }
+    public void setDownLoadFile(File file){
 
-    public String getCookie(){
-        return preferences.getString("cookie", "");
     }
 }

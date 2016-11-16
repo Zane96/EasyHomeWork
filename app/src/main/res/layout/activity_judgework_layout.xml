@@ -33,25 +33,29 @@
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/text1"
                     android:gravity="center"
                     android:text="作业下载"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"/>
 
-                <ImageView
-                    android:id="@+id/image_workjudge_download"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_upload"
-                    android:layout_weight="3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                <Button
+                    android:background="@drawable/round_shape"
+                    android:text="下载"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/button_workjudge_download"
+                    android:layout_toRightOf="@id/text1"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -68,26 +72,31 @@
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/text2"
                     android:gravity="center"
                     android:text="作业等级"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"/>
 
                 <Spinner
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/text2"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:entries="@array/degree"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:id="@+id/spinner_workjudge"
-                    android:layout_weight="3"/>
+                    />
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -111,13 +120,14 @@
 
         </android.support.v7.widget.CardView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_workjudge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_menu_search"/>
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_workjudge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_menu_send"/>
 
 </android.support.design.widget.CoordinatorLayout>

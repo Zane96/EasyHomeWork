@@ -48,8 +48,8 @@ public class TeaWorkViewHolder extends BaseListViewHolderImpl<NoDueHomeWork.Data
     @Override
     public void setData(NoDueHomeWork.DataEntity dataEntity) {
 
-        percentage.setText("百分比： " + dataEntity.getPercentage());
-        endTime.setText("截止事件: " + dataEntity.getDeadline());
+        percentage.setText("百分比：" + dataEntity.getPercentage());
+        endTime.setText("截止时间: " + dataEntity.getDeadline());
         workName.setText(dataEntity.getCourse());
 
         if (dataEntity.getAttachement().equals("")){
@@ -61,7 +61,7 @@ public class TeaWorkViewHolder extends BaseListViewHolderImpl<NoDueHomeWork.Data
 //        RxView.clicks(button).subscribe(aVoid -> {
 //            UpLoadFileEvent event = new UpLoadFileEvent();
 //            event.setAsId(Integer.parseInt(dataEntity.getAsid()));
-//            event.setPosition(i);
+//            event.setPosition(0);
 //            EventBus.getDefault().post(event);
 //        });
     }

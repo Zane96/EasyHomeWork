@@ -6,20 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
-
 
 import com.example.zane.homework.R;
 import com.example.zane.homework.clazzdetail.presenter.WorkJudgePresenter;
 import com.example.zane.homework.data.bean.FileDownload;
 import com.example.zane.homework.data.model.HomeWorkModel;
-import com.example.zane.homework.data.remote.download.DownloadProgressListener;
+import com.example.zane.homework.event.DownloadFinishEvent;
+import com.example.zane.homework.event.DownloadingEvent;
 import com.example.zane.homework.utils.FileUtils;
 
-import java.io.File;
+import org.greenrobot.eventbus.EventBus;
 
-import okhttp3.ResponseBody;
-import rx.Subscriber;
+import java.io.File;
 
 /**
  * 下载学生作业的服务
@@ -37,13 +35,8 @@ public class DownloadFileService extends IntentService{
 
     private static final int ID = 0;
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public DownloadFileService(String name) {
-        super(name);
+    public DownloadFileService() {
+        super("DownloadFileService");
     }
 
     @Override
@@ -61,11 +54,15 @@ public class DownloadFileService extends IntentService{
         download(intent.getStringExtra(WorkJudgePresenter.DOWNLOAD_URL));
     }
 
-    private void download(String fileUrl){
+    private void download(String attachment){
 
-        File outputFile = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        EventBus.getDefault().post(new DownloadingEvent());
 
-        model.downloadWork(fileUrl, ((bytesRead, contentLength, done) -> {
+        //外存的公有存储空间
+        attachment = attachment.substring(0, attachment.length() - 1);
+        File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), attachment);
+
+        model.downloadWork(attachment, ((bytesRead, contentLength, done) -> {
             FileDownload download = new FileDownload();
             download.setTotalFileSize(contentLength);
             download.setCurrentFileSize(bytesRead);
@@ -75,7 +72,14 @@ public class DownloadFileService extends IntentService{
         })).subscribe(responseBody -> {
             downloadCompleted();
             FileUtils.writeFile(responseBody.byteStream(), outputFile);
+
+            //发布下载作业成功的事件
+            DownloadFinishEvent event = new DownloadFinishEvent();
+            event.setFilePath(outputFile.getAbsolutePath());
+            EventBus.getDefault().post(event);
         });
+
+
     }
 
     /**

@@ -122,7 +122,8 @@ public class HomeWorkModel {
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<ResponseBody> downloadWork(String fileUrl, DownloadProgressListener listener){
+    //老师下载学生的作业
+    public Observable<ResponseBody> downloadWork(String attachment, DownloadProgressListener listener){
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new DownloadProgressInterceptor(listener))
@@ -132,14 +133,13 @@ public class HomeWorkModel {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(fileUrl)
                 .client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(DownLoadService.BASE_URL)
                 .build();
 
-
         return retrofit.create(DownLoadService.class)
-                       .downloadWork(fileUrl)
+                       .downloadWork(attachment, "2")
                        .compose(new ErrorTransForm<>())
                        .compose(new SchedulerTransform<>());
 

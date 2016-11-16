@@ -2,11 +2,16 @@ package com.example.zane.homework.clazzdetail.view;
 
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
@@ -28,8 +33,8 @@ public class WorkJudgeActivityView extends BaseViewImpl {
 
     @Bind(R.id.toolbar_workjudge)
     Toolbar toolbarWorkjudge;
-    @Bind(R.id.image_workjudge_download)
-    ImageView imageWorkjudgeDownload;
+    @Bind(R.id.button_workjudge_download)
+    Button buttonWorkjudgeDownload;
     @Bind(R.id.spinner_workjudge)
     Spinner spinnerWorkjudge;
     @Bind(R.id.edit_workjudge_addtion)
@@ -50,7 +55,7 @@ public class WorkJudgeActivityView extends BaseViewImpl {
         this.activity = (WorkJudgePresenter) activity;
     }
 
-    public void init(String name, String addtion, String attach){
+    public void init(String name, String addtion, String attach, String attachDB){
         toolbarWorkjudge.setTitle("批改" + name + "同学作业");
         activity.setSupportActionBar(toolbarWorkjudge);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,24 +68,57 @@ public class WorkJudgeActivityView extends BaseViewImpl {
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {activity.judgeWork(degree, editWorkjudgeAddtion.getText().toString());});
 
-        spinnerWorkjudge.setOnItemClickListener(((parent, view1, position, id) -> {
-            String[] degrees = activity.getResources().getStringArray(R.array.degree);
-            degree = degrees[position];
-        }));
+
+        spinnerWorkjudge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] degrees = activity.getResources().getStringArray(R.array.degree);
+                degree = degrees[position];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         editWorkjudgeAddtion.setHint(addtion);
 
-        if (attach != null){
-            imageWorkjudgeDownload.setImageResource(R.drawable.d_green);
-            imageWorkjudgeDownload.setClickable(true);
+        if (attachDB != null) {
+            if (attachDB.equals(attach)) {
+                openFile();
+            } else if (attach != null) {
+                downloadFile();
+            } else {
+                buttonWorkjudgeDownload.setClickable(false);
+                Snackbar.make(fabWorkjudge, "该同学未上传作业", Snackbar.LENGTH_SHORT).show();
+            }
         } else {
-            imageWorkjudgeDownload.setImageResource(R.drawable.d_gray);
-            imageWorkjudgeDownload.setClickable(false);
+            downloadFile();
         }
+    }
 
-        RxView.clicks(imageWorkjudgeDownload)
+    public void downloadFile(){
+        buttonWorkjudgeDownload.setText("下载");
+
+        RxView.clicks(buttonWorkjudgeDownload)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {});
+                .subscribe(aVoid -> {activity.downloadWork();});
+    }
+
+    public void openFile(){
+        buttonWorkjudgeDownload.setText("打开");
+
+        RxView.clicks(buttonWorkjudgeDownload)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {activity.openFile();});
+    }
+
+    public void judgeSuccess(){
+        Snackbar.make(fabWorkjudge, "批改成功", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void downloading(){
+        buttonWorkjudgeDownload.setText("下载中");
+        buttonWorkjudgeDownload.setClickable(false);
     }
 
     @Override

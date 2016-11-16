@@ -1,44 +1,44 @@
 package com.example.zane.homework;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.SharedElementCallback;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
-import android.view.Menu;
-import android.view.View;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
-import com.example.zane.homework.data.bean.PerInfo;
 import com.example.zane.homework.data.bean.QuitLogin;
 import com.example.zane.homework.data.model.RegisterLoginModel;
 import com.example.zane.homework.data.model.UserInfoModel;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.FinalSubscriber;
+import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
-import com.example.zane.homework.data.sp.MySharedPre;
-import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
-import com.squareup.haha.perflib.Main;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
+
 
 public class MainActivity extends BaseActivityPresenter<MainView>
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,6 +56,11 @@ public class MainActivity extends BaseActivityPresenter<MainView>
 
     public void initFragment(){
         clazzFragPresenter = ClazzFragPresenter.newInstance();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -86,6 +91,9 @@ public class MainActivity extends BaseActivityPresenter<MainView>
 
     @Override
     public void inCreat(Bundle bundle) {
+
+        requestPermission();
+
         Toolbar toolbar = (Toolbar) v.get(R.id.toolbar);
         setSupportActionBar(toolbar);
         initCallBack();
@@ -99,6 +107,13 @@ public class MainActivity extends BaseActivityPresenter<MainView>
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void requestPermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission_group.STORAGE);
+        if (permissionCheck == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
     }
 
     void initCallBack(){
