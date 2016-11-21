@@ -19,6 +19,7 @@
     >
 
     <LinearLayout
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -56,17 +57,6 @@
                 android:layout_height="wrap_content"
                 android:text="百分比：0.21"/>
         </LinearLayout>
-
-
-        <ImageView
-            android:src="@drawable/ic_upload"
-            android:id="@+id/button_post_homework"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"/>
-
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

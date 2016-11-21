@@ -66,7 +66,7 @@ public class LoginRegisterView extends BaseViewImpl {
     public void init(LoginFragment fragment){
         initToolbar();
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_login_replace, fragment);
+        transaction.replace(R.id.fragment_login_replace, fragment, "login");
         transaction.commit();
     }
 

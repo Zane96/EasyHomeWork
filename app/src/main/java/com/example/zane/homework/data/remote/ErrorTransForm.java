@@ -15,6 +15,7 @@ import java.io.EOFException;
 import java.util.ServiceConfigurationError;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Func1;
 
 public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
@@ -58,7 +59,7 @@ public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
             } else if (throwable instanceof ServiceConfigurationError){
                 errorMessage = "服务器错误";
             } else if (throwable instanceof EOFException){
-                errorMessage = "成功";
+                errorMessage = "成功～";
             } else {
                 errorMessage = "网络错误";
             }

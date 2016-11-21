@@ -32,7 +32,6 @@ public class CommonProvider {
                                                                                  , new SharedPrefsCookiePersistor(App.getInstance()));
     private static final Retrofit.Builder RetrofitBuilderInstance = provideRetrofit();
 
-
     private static OkHttpClient provideOkHttpClient(){
         //添加body日志打印，http，stetho调试的拦截器，管理cookie
         Log.i("common", "provider");

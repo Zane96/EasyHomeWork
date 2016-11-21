@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.data.bean.GetDetailMessage;
+import com.example.zane.homework.data.bean.GetMessage;
 import com.example.zane.homework.entity.NoticeDetail;
 
 /**
@@ -13,24 +15,25 @@ import com.example.zane.homework.entity.NoticeDetail;
  * Email: zanebot96@gmail.com
  */
 
-public class NoticaViewHolder extends BaseListViewHolderImpl<NoticeDetail>{
+public class NoticeViewHolder extends BaseListViewHolderImpl<GetMessage.DataEntity>{
 
     private TextView name;
-    private TextView postTime;
+    private TextView mid;
 
-    public NoticaViewHolder(ViewGroup parent, @LayoutRes int res) {
+    public NoticeViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
     }
 
     @Override
     public void initView() {
         name = get(R.id.textview_item_notice);
-        postTime = get(R.id.textview_notice_postime);
+        mid = get(R.id.textview_notice_mid);
     }
 
     @Override
-    public void setData(NoticeDetail noticeDetail) {
-        name.setText(noticeDetail.getContent());
-        postTime.setText(noticeDetail.getPostTime());
+    public void setData(GetMessage.DataEntity noticeDetail) {
+        name.setText("消息公告");
+        mid.setText("消息号：" + noticeDetail.getMid());
+        //postTime.setText(noticeDetail.getPostTime());
     }
 }

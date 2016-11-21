@@ -48,6 +48,8 @@ import butterknife.Bind;
 public class ClazzDetailActivityView extends BaseViewImpl {
 
     public static final String COURSENAME = "courseName";
+    public static final String CID = "cid";
+    public static final String JID = "jid";
 
     @Bind(R.id.imageview_clazzdetail_top)
     ImageView imageviewClazzdetailTop;
@@ -87,7 +89,7 @@ public class ClazzDetailActivityView extends BaseViewImpl {
 
     }
 
-    public void init() {
+    public void init(String cid, String jid) {
 
         collClazzdetail.setTitle("");
         collClazzdetail.setExpandedTitleColor(this.activity.getResources().getColor(R.color.transparent));
@@ -106,10 +108,14 @@ public class ClazzDetailActivityView extends BaseViewImpl {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
-                                activity.startActivity(new Intent(activity, ClazzDetailPostHomeWorkActivity.class));
+                                Intent intentWork = new Intent(activity, ClazzDetailPostHomeWorkActivity.class);
+                                intentWork.putExtra(JID, jid);
+                                activity.startActivity(intentWork);
                                 break;
                             case 1:
-                                activity.startActivity(new Intent(activity, ClazzDetailPostNoticeActivity.class));
+                                Intent intent = new Intent(activity, ClazzDetailPostNoticeActivity.class);
+                                intent.putExtra(CID, cid);
+                                activity.startActivity(intent);
                                 break;
                         }
                     }

@@ -15,31 +15,31 @@ import java.util.List;
 
 public class MemberDetail implements IListModel{
 
-    private List<ClassMemeber.DataEntity> memebers;
-    private List<HoPerson.DataEntity> hoPersons;
+    private ClassMemeber.DataEntity memeber;
+    private HoPerson.DataEntity hoPerson;
 
     public static final int HOMEWORK = 123;
     public static final int MEMEBER = 321;
 
-    public List<ClassMemeber.DataEntity> getMemebers() {
-        return memebers;
+    public ClassMemeber.DataEntity getMemeber() {
+        return memeber;
     }
 
-    public void setMemebers(List<ClassMemeber.DataEntity> memebers) {
-        this.memebers = memebers;
+    public void setMemeber(ClassMemeber.DataEntity memeber) {
+        this.memeber = memeber;
     }
 
-    public List<HoPerson.DataEntity> getHoPersons() {
-        return hoPersons;
+    public HoPerson.DataEntity getHoPerson() {
+        return hoPerson;
     }
 
-    public void setHoPersons(List<HoPerson.DataEntity> hoPersons) {
-        this.hoPersons = hoPersons;
+    public void setHoPerson(HoPerson.DataEntity hoPerson) {
+        this.hoPerson = hoPerson;
     }
 
     @Override
     public int getModelViewType() {
-        if (hoPersons != null){
+        if (hoPerson != null){
             return HOMEWORK;
         } else {
             return MEMEBER;

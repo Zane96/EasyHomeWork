@@ -25,6 +25,8 @@ import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.RegisterEvent;
+import com.example.zane.homework.login.presenters.LoginFragment;
+import com.example.zane.homework.login.presenters.LoginRegisterActivity;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.example.zane.homework.data.sp.MySharedPre;
 import com.jakewharton.rxbinding.support.design.widget.RxTextInputLayout;
@@ -65,6 +67,7 @@ public class LoginView extends BaseViewImpl {
     TextView textRegister;
 
     private AppCompatActivity activity;
+    private LoginFragment fragment;
     private int identity;//0, 1, 2 null, teacher, student
 
     @Override
@@ -74,7 +77,8 @@ public class LoginView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (LoginRegisterActivity) activity;
+        fragment = (LoginFragment) ((LoginRegisterActivity) activity).getSupportFragmentManager().findFragmentByTag("login");
     }
 
     @Override
@@ -115,6 +119,8 @@ public class LoginView extends BaseViewImpl {
         RxView.clicks(textRegister).subscribe(aVoid -> {
             EventBus.getDefault().post(new RegisterEvent());
         });
+
+        RxView.clicks(buttonLogin).subscribe(aVoid -> fragment.login());
     }
 
     private void setIdentity(int id){

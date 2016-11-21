@@ -52,16 +52,6 @@ public interface HomeWorkService {
                                      @Field("asid") String asid,
                                      @Field("sid") String sid);
 
-    //老师发布作业
-    @POST("sirUpload")
-    @FormUrlEncoded
-    @Multipart
-    Observable<String> declareWork(@Field("percentage") String percentage,
-                                   @Field("deadline") String deadLine,
-                                   @Field("addtion") String addtion,
-                                   @Field("jid") String jid,
-                                   @Part MultipartBody.Part uploadFile);
-
     //某个学生的作业得分情况
     @GET("getStatistc/{jid}/{sid}")
     Observable<GetStatistc.DataEntity> getStatistc(@Path("jid") String jid,
@@ -74,20 +64,5 @@ public interface HomeWorkService {
     //学生查看自己提交的某份作业详情
     @GET("getHo/{asid}")
     Observable<List<GetHoWork.DataEntity>> getHoWork(@Path("asid") String asid);
-
-    //提交作业
-    @POST("stuUpload/1")
-    @FormUrlEncoded
-    @Multipart
-    Observable<String> stuUpload(@Field("asid") String asid,
-                                 @Part MultipartBody.Part file);
-
-    //再次提交作业
-    @POST("stuUpload/2")
-    @FormUrlEncoded
-    @Multipart
-    Observable<String> stuUploadAgain(@Field("asid") String asid,
-                                      @Part MultipartBody.Part file);
-
 
 }

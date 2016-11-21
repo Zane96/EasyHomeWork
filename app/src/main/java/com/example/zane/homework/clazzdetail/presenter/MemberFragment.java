@@ -12,11 +12,19 @@ import android.view.ViewGroup;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
+import com.example.zane.homework.data.bean.ClassMemeber;
+import com.example.zane.homework.data.model.ClassModel;
+import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.entity.StudentLogin;
+import com.example.zane.homework.event.MemberRefreshEvent;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
+import com.jakewharton.rxbinding.support.design.widget.RxSnackbar;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +38,21 @@ import java.util.List;
 public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
 
     public static final String MEMBER_DETAIL = "memberDetail";
+    private static final String CID = "cid";
 
-    private List<MemberDetail> datas;
     private ClazzDetailMemberAdapter adapter;
+    private String cid;
+    private FinalSubscriber<List<ClassMemeber.DataEntity>> memberSubscriber;
+    private ClassModel model = ClassModel.getInstance();
+    private List<MemberDetail> datas;
 
-    public static MemberFragment newInstance(){
+    public static MemberFragment newInstance(String cid){
         MemberFragment fragment = new MemberFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(CID, cid);
+        fragment.setArguments(bundle);
         return fragment;
     }
-
 
     @Override
     public Class<ClazzDeatilFragmentView> getRootViewClass() {
@@ -50,20 +64,41 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
         return getActivity();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        datas = new ArrayList<>();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         adapter = new ClazzDetailMemberAdapter(getActivity());
-        return super.onCreateView(inflater, container, savedInstanceState);
+        cid = getArguments().getString(CID);
+        datas = new ArrayList<>();
+        getData();
+    }
+
+    public void getData(){
+        memberSubscriber = new FinalSubscriber<>(getActivity(), dataEnties -> {
+            adapter.clear();
+            List<ClassMemeber.DataEntity> members = (List<ClassMemeber.DataEntity>) dataEnties;
+            for (ClassMemeber.DataEntity data : members){
+                MemberDetail memberDetail = (MemberDetail) data;
+                memberDetail.setMemeber(data);
+                datas.add(memberDetail);
+            }
+            adapter.addAll(datas);
+            adapter.notifyDataSetChanged();
+        });
+        model.classMemeber(cid).subscribe(memberSubscriber);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRefresh(MemberRefreshEvent event){
+        v.finishRefresh();
+        getData();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter.addAll(datas);
-        v.initMemberRecycle(adapter);
+        v.initMemberRecycle(adapter, "member");
         adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
@@ -74,12 +109,9 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
             @Override
             public void onLongClick(View view, final int i) {
                 if (MySharedPre.getInstance().getIdentity().equals("student") && StudentLogin.getInstacne().getIsOwner()){
-                    Snackbar.make(view, "您想要删除这位成员嘛?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            adapter.remove(i);
-                            adapter.notifyDataSetChanged();
-                        }
+                    Snackbar.make(view, "您想要删除这位成员嘛?~", Snackbar.LENGTH_LONG).setAction("确定", v -> {
+                        adapter.remove(i);
+                        adapter.notifyItemRemoved(i);
                     }).show();
                 }
             }
@@ -89,5 +121,8 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (memberSubscriber != null){
+            memberSubscriber.cancelProgress();
+        }
     }
 }

@@ -45,7 +45,7 @@ public class MemberViewHolder extends BaseListViewHolderImpl<ClassMemeber.DataEn
                 .transform(new CircleTransform(App.getInstance()))
                 .into(avatar);
         name.setText(memberDetail.getName());
-        number.setText("ID " + memberDetail.getSid());
+        number.setText("SID：" + memberDetail.getSid());
         selfInfo.setText(memberDetail.getSelfintro());
     }
 }

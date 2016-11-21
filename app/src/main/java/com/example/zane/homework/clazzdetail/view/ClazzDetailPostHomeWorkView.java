@@ -10,15 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
 import com.example.zane.homework.event.PostHomeWorkEvent;
 import com.example.zane.homework.utils.FileUtils;
 import com.example.zane.homework.utils.TimeUtils;
+import com.jakewharton.rxbinding.view.RxView;
 import com.jude.utils.JUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +44,10 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
     Button buttonPosthomework;
     @Bind(R.id.edit_text_posthomework)
     EditText editTextPosthomework;
-    private AppCompatActivity activity;
+    @Bind(R.id.edit_posthomework_percentage)
+    EditText editPosthomeworkPercentage;
+
+    private ClazzDetailPostHomeWorkActivity activity;
     private String endTime;
     private String file = "null";
 
@@ -55,7 +58,7 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (ClazzDetailPostHomeWorkActivity) activity;
     }
 
     @Override
@@ -78,55 +81,25 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
     public void init() {
         initToolbar();
         final Calendar calendar = Calendar.getInstance();
-        buttonChooseTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        endTime = TimeUtils.DateFormat(year, monthOfYear + 1, dayOfMonth);
 
-                    }
-                }, calendar.get(Calendar.YEAR),
-                                            calendar.get(Calendar.MONTH),
-                                            calendar.get(Calendar.DAY_OF_MONTH) + 1).show();
-            }
+        RxView.clicks(buttonChooseTime).subscribe(aVoid -> {
+            new DatePickerDialog(activity, (view1, year, month, dayOfMonth) -> {
+                endTime = TimeUtils.DateFormat(year, month + 1, dayOfMonth);
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) + 1).show();
         });
-        buttonChooseFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FileUtils.openFileManager(activity);
-            }
+
+        RxView.clicks(buttonChooseFile).subscribe(aVoid -> {
+            FileUtils.openFileManager(activity);
+            loading();
         });
-        buttonPosthomework.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
-                progressDialog.show();
-                new Handler(activity.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.hide();
-                        activity.finish();
 
-                        PostHomeWorkEvent event = new PostHomeWorkEvent();
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTimeInMillis(System.currentTimeMillis());
-                        String postTime = TimeUtils.DateFormat(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-                        event.setPostTime(postTime);
-                        event.setEndTime(endTime);
-                        event.setAddtion(editTextPosthomework.getText().toString());
-                        event.setAttachement(file);
-                        EventBus.getDefault().post(event);
-
-                        JUtils.Toast("发布成功~");
-                    }
-                }, 1500);
-            }
+        RxView.clicks(buttonPosthomework).subscribe(aVoid -> {
+            activity.startPostWork(editPosthomeworkPercentage.getText().toString(),
+                    endTime, editTextPosthomework.getText().toString());
         });
     }
 
-    public void loading() {
+    private void loading() {
         buttonChooseFile.setImageResource(R.drawable.ic_upload_1);
         file = "loading";
     }

@@ -7,7 +7,9 @@ import com.example.zane.homework.data.bean.NoData;
 import java.util.List;
 
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -26,16 +28,21 @@ public interface MessageService {
 
     //发布消息
     @POST("postMessage")
+    @FormUrlEncoded
     Observable<String> postMessage(@Field("type") String type,
                                    @Field("id") String id,
                                    @Field("content") String content);
 
-    //查看消息列表(分页加载)
+    //学生查看消息列表(分页加载)
     @GET("getMess/{num}")
-    Observable<List<GetMessage.DataEntity>> getMessage(@Path("num") int num);
+    Observable<List<GetMessage.DataEntity>> getStuMessage(@Path("num") int num);
 
+    //老师查看消息列表(分页加载)
+    @GET("getMesste/{num}")
+    Observable<List<GetMessage.DataEntity>> getTeaMessage(@Path("num") int num);
 
     //查看消息的具体内容
     @GET("getDetail/{num}")
+    @Headers("Cache-Control:max-age=86400")
     Observable<GetDetailMessage.DataEntity> getDetailMessage(@Path("num") int num);
 }

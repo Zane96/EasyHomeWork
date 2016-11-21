@@ -29,17 +29,15 @@
             android:layout_height="wrap_content"
             android:textColor="@color/red"
             android:textSize="18sp"
-            android:text="明天上课记得带书!"
             android:paddingLeft="10dp"
             android:maxLines="1"
             android:ellipsize="end"/>
         <TextView
-            android:id="@+id/textview_notice_postime"
+            android:id="@+id/textview_notice_mid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="05月31日 16:56"/>
+            android:paddingTop="10dp"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

@@ -42,6 +42,8 @@ public class DownLoadResponseBody extends ResponseBody{
         return responseBody.contentLength();
     }
 
+
+
     @Override
     public BufferedSource source() {
         if (bufferedSource == null) {

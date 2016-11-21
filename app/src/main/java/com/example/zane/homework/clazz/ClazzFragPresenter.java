@@ -47,6 +47,8 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
     public static final String CLAZZ_NAME = "clazzName";
     public static final String COURSE_NAME = "courseName";
     public static final String IMAGE = "IMAGE";
+    public static final String CID = "cid";
+    public static final String JID = "jid";
     public static final String POSITION_SHARE = "position_share";
 
     //老师的驻班班级
@@ -223,6 +225,8 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
                 intent.putExtra(CLAZZ_NAME, teaData.getClassname());
                 intent.putExtra(COURSE_NAME, teaData.getCourse());
                 intent.putExtra(IMAGE, TeacherLogin.getInstacne().getAvatar());
+                intent.putExtra(CID, teaData.getCid());
+                intent.putExtra(JID, teaData.getJid());
             } else {
                 // TODO: 2016/11/14 学生模块的跳转
             }

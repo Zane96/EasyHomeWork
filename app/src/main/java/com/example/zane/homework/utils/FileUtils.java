@@ -52,9 +52,9 @@ public class FileUtils {
      * @param file
      */
     public static void writeFile(InputStream inputStream, File file){
-        Log.i("fileutils", inputStream+" " + file.getAbsolutePath());
+        FileOutputStream fos = null;
         try {
-            FileOutputStream fos = new FileOutputStream(file);
+            fos = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
             int count = 0;
             while ((count = inputStream.read(buffer)) >= 0){
@@ -64,6 +64,12 @@ public class FileUtils {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

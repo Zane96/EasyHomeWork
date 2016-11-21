@@ -1,4 +1,4 @@
-package com.example.zane.homework.data.bean;
+package com.example.zane.homework.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,7 +10,7 @@ import android.os.Parcelable;
  * Blog: zane96.github.io
  */
 
-public class FileDownload implements Parcelable{
+public class FileDownUpload implements Parcelable{
     private int progress;
     private long currentFileSize;
     private long totalFileSize;
@@ -51,24 +51,24 @@ public class FileDownload implements Parcelable{
         dest.writeLong(this.totalFileSize);
     }
 
-    public FileDownload() {
+    public FileDownUpload() {
     }
 
-    protected FileDownload(Parcel in) {
+    protected FileDownUpload(Parcel in) {
         this.progress = in.readInt();
         this.currentFileSize = in.readLong();
         this.totalFileSize = in.readLong();
     }
 
-    public static final Creator<FileDownload> CREATOR = new Creator<FileDownload>() {
+    public static final Creator<FileDownUpload> CREATOR = new Creator<FileDownUpload>() {
         @Override
-        public FileDownload createFromParcel(Parcel source) {
-            return new FileDownload(source);
+        public FileDownUpload createFromParcel(Parcel source) {
+            return new FileDownUpload(source);
         }
 
         @Override
-        public FileDownload[] newArray(int size) {
-            return new FileDownload[size];
+        public FileDownUpload[] newArray(int size) {
+            return new FileDownUpload[size];
         }
     };
 }

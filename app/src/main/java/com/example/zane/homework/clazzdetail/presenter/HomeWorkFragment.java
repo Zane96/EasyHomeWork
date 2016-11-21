@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
+import com.example.zane.homework.R;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.data.bean.NoDueHomeWork;
 import com.example.zane.homework.data.model.HomeWorkModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.HomeWorkDetail;
 import com.example.zane.homework.event.FinishUpLoadEvent;
+import com.example.zane.homework.event.HomeWorkRefreshEvent;
 import com.example.zane.homework.event.PostHomeWorkEvent;
 import com.example.zane.homework.homeworkdetail.presenters.HomeWorkDetailActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
@@ -127,6 +130,12 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onFinishRefresh(HomeWorkRefreshEvent event){
+        v.finishRefresh();
+        getData();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onFinish(FinishUpLoadEvent event){
 
 //        if (event.isFinished()){
@@ -160,30 +169,5 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
             subscriber.cancelProgress();
         }
     }
-
-
-    //    private final static class ProgressHandler extends Handler{
-//        private WeakReference<HomeWorkFragment> reference;
-//        public ProgressHandler(HomeWorkFragment fragment){
-//            reference = new WeakReference<HomeWorkFragment>(fragment);
-//        }
-//
-//        @Override
-//        public void handleMessage(MessageDetail msg) {
-//            if (reference.get() != null){
-//                HomeWorkFragment fragment = reference.get();
-//                switch (msg.what){
-//                    case 1:
-//                        //fragment.v.initHomeWorkRecycle(reference.get().adapter);
-//                        for (int i = 0; i < 10; i++) {
-//                            fragment.datas.add(new HomeWorkDetail());
-//                        }
-//                        fragment.adapter.addAll(fragment.datas);
-//                        fragment.v.initHomeWorkRecycle(fragment.adapter);
-//                        break;
-//                }
-//            }
-//        }
-//    }
 
 }

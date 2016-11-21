@@ -5,11 +5,12 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.zane.homework.R;
 import com.example.zane.homework.clazzdetail.presenter.WorkJudgePresenter;
-import com.example.zane.homework.data.bean.FileDownload;
+import com.example.zane.homework.entity.FileDownUpload;
 import com.example.zane.homework.data.model.HomeWorkModel;
 import com.example.zane.homework.event.DownloadFinishEvent;
 import com.example.zane.homework.event.DownloadingEvent;
@@ -28,7 +29,7 @@ import java.io.File;
 
 public class DownloadFileService extends IntentService{
 
-    private HomeWorkModel model = HomeWorkModel.getInstance();
+    private final HomeWorkModel model = HomeWorkModel.getInstance();
 
     private NotificationCompat.Builder notificationBuilder;
     private NotificationManager notificationManager;
@@ -58,12 +59,11 @@ public class DownloadFileService extends IntentService{
 
         EventBus.getDefault().post(new DownloadingEvent());
 
-        //外存的公有存储空间
-        attachment = attachment.substring(0, attachment.length() - 1);
-        File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), attachment);
+        //外存的公有存储空间(doc)
+        File outputFile = getFile(attachment);
 
         model.downloadWork(attachment, ((bytesRead, contentLength, done) -> {
-            FileDownload download = new FileDownload();
+            FileDownUpload download = new FileDownUpload();
             download.setTotalFileSize(contentLength);
             download.setCurrentFileSize(bytesRead);
             int progress = (int) ((bytesRead * 100) / contentLength);
@@ -82,6 +82,16 @@ public class DownloadFileService extends IntentService{
 
     }
 
+    @NonNull
+    private File getFile(String attachment) {
+        String end = attachment.substring(attachment.lastIndexOf(".") + 1, attachment.length()).toLowerCase();
+        String fileAttachment = attachment;
+        if (end.equals("docx")){
+            fileAttachment = attachment.substring(0, attachment.length() - 1);
+        }
+        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileAttachment);
+    }
+
     /**
      * 下载完成，刷新通知栏
      */
@@ -96,7 +106,7 @@ public class DownloadFileService extends IntentService{
      * 刷新通知栏
      * @param download
      */
-    private void sendNotification(FileDownload download){
+    private void sendNotification(FileDownUpload download){
         notificationBuilder.setProgress(100, download.getProgress(), false);
         notificationManager.notify(ID, notificationBuilder.build());
     }

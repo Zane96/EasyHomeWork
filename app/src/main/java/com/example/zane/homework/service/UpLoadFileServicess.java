@@ -12,9 +12,7 @@ import com.example.zane.homework.event.FinishUpLoadEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +20,7 @@ import java.util.Map;
  * Email: zanebot96@gmail.com
  */
 
-public class UpLoadFileService extends Service{
+public class UpLoadFileServicess extends Service{
 
     private int percent = 0;
     private Map<Integer, Integer> maps;
@@ -71,8 +69,8 @@ public class UpLoadFileService extends Service{
 
 
     public class MyBinder extends Binder{
-        public UpLoadFileService getServiceContext(){
-            return UpLoadFileService.this;
+        public UpLoadFileServicess getServiceContext(){
+            return UpLoadFileServicess.this;
         }
     }
 

@@ -22,8 +22,13 @@ import com.example.zane.homework.data.model.HomeWorkModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.HomeWorkDetail;
 import com.example.zane.homework.entity.MemberDetail;
+import com.example.zane.homework.event.WorkDetailRefreshEvent;
 import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
 import com.example.zane.homework.utils.RandomBackImage;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +85,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         init();
         getData();
     }
@@ -99,8 +105,9 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
                 workModel.showHoPerson(asid, data.getSid())
                         .subscribe(dataEntities -> {
                             MemberDetail memberDetail = (MemberDetail) dataEntities.get(0);
-                            memberDetail.setHoPersons(dataEntities);
+                            memberDetail.setHoPerson(dataEntities.get(0));
                             datas.add((HoPerson.DataEntity)dataEntities.get(0));
+                            adapter.clear();
                             adapter.add(memberDetail);
                             adapter.notifyItemInserted(datas.size());
                         });
@@ -114,8 +121,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //adapter.addAll(datas);
-        v.initMemberRecycle(adapter);
+        v.initMemberRecycle(adapter, "work");
         adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
@@ -136,8 +142,18 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
         });
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRefresh(WorkDetailRefreshEvent event){
+        v.finishRefresh();
+        getData();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        if (memberSubscriber != null){
+            memberSubscriber.cancelProgress();
+        }
     }
 }

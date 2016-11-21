@@ -48,9 +48,16 @@ public class MessageModel {
                        .compose(new ErrorTransForm<>());
     }
 
-    //查看消息列表
-    public Observable<List<GetMessage.DataEntity>> getMessage(int num){
-        return serviceApi.getMessage(num)
+    //学生查看消息列表
+    public Observable<List<GetMessage.DataEntity>> getStuMessage(int num){
+        return serviceApi.getStuMessage(num)
+                       .compose(new SchedulerTransform<>())
+                       .compose(new ErrorTransForm<>());
+    }
+
+    //老师查看消息列表
+    public Observable<List<GetMessage.DataEntity>> getTeaMessage(int num){
+        return serviceApi.getTeaMessage(num)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }

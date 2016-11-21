@@ -3,6 +3,7 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.zane.easymvp.base.IListModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class GetMessage implements Parcelable {
         this.data = data;
     }
 
-    public static class DataEntity implements Parcelable {
+    public static class DataEntity implements Parcelable, IListModel {
         private String mid;
         private String poster;
         private String reciever;
@@ -130,6 +131,11 @@ public class GetMessage implements Parcelable {
                 return new DataEntity[size];
             }
         };
+
+        @Override
+        public int getModelViewType() {
+            return 0;
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,25 +52,24 @@ public class LoginFragment extends BaseFragmentPresenter<LoginView>{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         v.init();
+    }
 
-        //登陆
-        RxView.clicks(v.get(R.id.button_login)).subscribe(aVoid -> {
-             subscriber = new FinalSubscriber<Login.DataEntity>(getActivity(), o -> {
-                if (v.getIdentity() == 1){
-                    MySharedPre.getInstance().setIdentity("teacher");
-                } else if (v.getIdentity() == 2){
-                    MySharedPre.getInstance().setIdentity("student");
-                }
+    public void login(){
+        subscriber = new FinalSubscriber<Login.DataEntity>(getActivity(), o -> {
+            if (v.getIdentity() == 1){
+                MySharedPre.getInstance().setIdentity("teacher");
+            } else if (v.getIdentity() == 2){
+                MySharedPre.getInstance().setIdentity("student");
+            }
 
-                 MySharedPre.getInstance().setLogin(true);
+            MySharedPre.getInstance().setLogin(true);
 
-                startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish();
-            });
-
-            model.login(v.userName(), v.password(), v.getIdentity()+"")
-                    .subscribe(subscriber);
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
         });
+
+        model.login(v.userName(), v.password(), v.getIdentity()+"")
+                .subscribe(subscriber);
     }
 
     @Nullable

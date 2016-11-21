@@ -17,7 +17,6 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
@@ -46,14 +45,13 @@
                 android:id="@+id/button_choose_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/round_shape_2"
                 android:text="选择"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:layout_marginLeft="80dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 />
         </LinearLayout>
 
@@ -61,10 +59,9 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         app:cardCornerRadius="4dp"
         app:cardBackgroundColor="#fff"
         app:cardElevation="2dp"
@@ -90,11 +87,47 @@
                 android:id="@+id/button_choose_file"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_upload"
                 />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#fff"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="百分比:"
+                android:padding="10dp"
+                android:layout_marginLeft="30dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                />
+
+            <EditText
+                android:id="@+id/edit_posthomework_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="作业所占百分比"
+                android:layout_marginLeft="80dp"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
@@ -128,7 +161,7 @@
             <EditText
                 android:id="@+id/edit_text_posthomework"
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
+                android:layout_height="150dp"
                 android:layout_margin="10dp"
                 android:textSize="20sp"
                 android:hint="作业说明"
@@ -143,7 +176,7 @@
         android:layout_margin="10dp"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/round_shape_2"
         android:text="发布"
         android:textColor="@color/white"
         android:layout_gravity="center_horizontal"/>

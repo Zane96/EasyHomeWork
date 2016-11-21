@@ -7,7 +7,6 @@ import com.example.zane.homework.data.bean.GetHoWork;
 import com.example.zane.homework.data.bean.GetNoDueWork;
 import com.example.zane.homework.data.bean.GetStatistc;
 import com.example.zane.homework.data.bean.HoPerson;
-import com.example.zane.homework.data.bean.NoData;
 import com.example.zane.homework.data.bean.NoDueHomeWork;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.ErrorTransForm;
@@ -16,6 +15,8 @@ import com.example.zane.homework.data.remote.download.DownloadProgressIntercepto
 import com.example.zane.homework.data.remote.download.DownloadProgressListener;
 import com.example.zane.homework.data.remote.service.DownLoadService;
 import com.example.zane.homework.data.remote.service.HomeWorkService;
+import com.example.zane.homework.data.remote.upload.UploadCommonProvider;
+import com.example.zane.homework.data.remote.upload.UploadProgressListener;
 
 import java.io.File;
 import java.util.List;
@@ -30,7 +31,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Zane on 16/11/1.
@@ -76,14 +76,17 @@ public class HomeWorkModel {
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<String> declareWork(String percentage, String deadline, String addtion, String jid, File file){
+    public Observable<String> declareWork(String percentage, String deadline, String addtion, String jid, File file, UploadProgressListener listener){
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        RequestBody percentageBody = RequestBody.create(MediaType.parse("multipart/form-data"), percentage);
+        RequestBody deadlineBody = RequestBody.create(MediaType.parse("multipart/form-data"), deadline);
+        RequestBody addtionBody = RequestBody.create(MediaType.parse("multipart/form-data"), addtion);
+        RequestBody jidBody = RequestBody.create(MediaType.parse("multipart/form-data"), jid);
 
-        return serviceApi.declareWork(percentage, deadline, addtion, jid, body)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return UploadCommonProvider.getServiceApi(listener).declareWork(percentageBody, deadlineBody, addtionBody, jidBody, body)
+                       .compose(new SchedulerTransform<>());
     }
 
     public Observable<GetStatistc.DataEntity> getStatistc(String jid, String sid){
@@ -104,20 +107,20 @@ public class HomeWorkModel {
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<String> stuUpLoadFirst(String asid, File file){
+    public Observable<String> stuUpLoadFirst(String asid, File file, UploadProgressListener listener){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        return serviceApi.stuUpload(asid, body)
+        return UploadCommonProvider.getServiceApi(listener).stuUpload(asid, body)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }
 
-    public Observable<String> stuUpLoadAgain(String asid, File file){
+    public Observable<String> stuUpLoadAgain(String asid, File file, UploadProgressListener listener){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        return serviceApi.stuUploadAgain(asid, body)
+        return UploadCommonProvider.getServiceApi(listener).stuUploadAgain(asid, body)
                        .compose(new SchedulerTransform<>())
                        .compose(new ErrorTransForm<>());
     }

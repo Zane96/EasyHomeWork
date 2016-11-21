@@ -31,7 +31,7 @@ public class TeaWorkViewHolder extends BaseListViewHolderImpl<NoDueHomeWork.Data
     private TextView percentage;
     private TextView workName;
     private TextView endTime;
-    private ImageView button;
+//    private ImageView button;
 
     public TeaWorkViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -42,21 +42,21 @@ public class TeaWorkViewHolder extends BaseListViewHolderImpl<NoDueHomeWork.Data
         percentage = get(R.id.textview_item_percentage);
         workName = get(R.id.textview_item_workname);
         endTime = get(R.id.textview_item_endtime);
-        button = get(R.id.button_post_homework);
+        //button = get(R.id.button_post_homework);
     }
 
     @Override
     public void setData(NoDueHomeWork.DataEntity dataEntity) {
 
         percentage.setText("百分比：" + dataEntity.getPercentage());
-        endTime.setText("截止时间: " + dataEntity.getDeadline());
+        endTime.setText("截止时间：" + dataEntity.getDeadline());
         workName.setText(dataEntity.getCourse());
 
-        if (dataEntity.getAttachement().equals("")){
-            button.setImageResource(R.drawable.ic_upload);
-        } else {
-            button.setImageResource(R.drawable.ic_upload_2);
-        }
+//        if (dataEntity.getAttachement().equals("")){
+//            button.setImageResource(R.drawable.ic_upload);
+//        } else {
+//            button.setImageResource(R.drawable.ic_upload_2);
+//        }
 
 //        RxView.clicks(button).subscribe(aVoid -> {
 //            UpLoadFileEvent event = new UpLoadFileEvent();

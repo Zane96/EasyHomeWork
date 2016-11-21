@@ -3,6 +3,8 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.zane.easymvp.base.IListModel;
+
 /**
  * Created by Zane on 16/10/31.
  * Email: zanebot96@gmail.com
@@ -49,7 +51,7 @@ public class GetDetailMessage implements Parcelable {
         this.data = data;
     }
 
-    public static class DataEntity implements Parcelable {
+    public static class DataEntity implements Parcelable, IListModel{
         private String content;
 
         public String getContent() {
@@ -88,6 +90,11 @@ public class GetDetailMessage implements Parcelable {
                 return new DataEntity[size];
             }
         };
+
+        @Override
+        public int getModelViewType() {
+            return 0;
+        }
     }
 
     @Override

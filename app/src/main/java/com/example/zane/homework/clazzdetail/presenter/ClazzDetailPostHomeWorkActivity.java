@@ -10,11 +10,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailPostHomeWorkView;
+import com.example.zane.homework.event.PostWorkFinishEvent;
+import com.example.zane.homework.event.UpLoadFileEvent;
 import com.example.zane.homework.service.PostHomeWorkService;
+import com.example.zane.homework.service.UploadFileService;
+import com.example.zane.homework.utils.Uri2File;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
 import java.lang.ref.WeakReference;
 
 import static com.example.zane.homework.utils.FileUtils.OPEN_FFILE;
@@ -27,54 +38,43 @@ import static com.example.zane.homework.utils.FileUtils.OPEN_FFILE;
 public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<ClazzDetailPostHomeWorkView>{
 
     private PostHomeWorkService postService;
-    private ProgressHandler handler;
+    public static final String TYPE = "postHomeWork";
+    public static final String PERCENTAGE = "percentage";
+    public static final String DEADLINE = "deadline";
+    public static final String ADDTION = "addtion";
+    public static final String JID = "jid";
+    public static final String FILE  = "file";
+
+    private File uploadFile = null;
+    private String jid;
 
     @Override
     public Class<ClazzDetailPostHomeWorkView> getRootViewClass() {
         return ClazzDetailPostHomeWorkView.class;
     }
 
-    private ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, final IBinder service) {
-            PostHomeWorkService.MyBinder binder = (PostHomeWorkService.MyBinder) service;
-            ClazzDetailPostHomeWorkActivity.this.postService = binder.getServiceContext();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Message message = new Message();
-                    message.what = 0;
-                    handler.sendMessage(message);
-                    while (postService.getPercent() < 100){
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Message message1 = new Message();
-                    message1.what = 1;
-                    handler.sendMessage(message1);
-                    ClazzDetailPostHomeWorkActivity.this.postService.stopSelf();
-                }
-            }).start();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-        }
-    };
-
     @Override
     public void inCreat(Bundle bundle) {
+        EventBus.getDefault().register(this);
         v.init();
-        handler = new ProgressHandler(this);
+        jid = getIntent().getStringExtra(ClazzDetailActivityView.JID);
     }
 
     @Override
     public void inDestory() {
-        handler.removeMessages(1);
-        handler.removeMessages(0);
+        EventBus.getDefault().unregister(this);
+    }
+
+    //开启服务进行作业的发布
+    public void startPostWork(String percentage, String deadline, String addtion){
+        Intent intent = new Intent(ClazzDetailPostHomeWorkActivity.this, UploadFileService.class);
+        intent.putExtra(TYPE, "posthomework");
+        intent.putExtra(PERCENTAGE, percentage);
+        intent.putExtra(DEADLINE, deadline);
+        intent.putExtra(ADDTION, addtion);
+        intent.putExtra(JID, jid);
+        intent.putExtra(FILE, uploadFile);
+        startService(intent);
     }
 
     @Override
@@ -83,15 +83,17 @@ public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<Clazz
         if (resultCode == Activity.RESULT_OK){
             switch (requestCode){
                 case OPEN_FFILE:
-                    String filePath = Uri.decode(data.getDataString());
-                    filePath = filePath.substring(7, filePath.length());
-                    //开启服务上传文件
-                    Intent intent = new Intent(ClazzDetailPostHomeWorkActivity.this, PostHomeWorkService.class);
-                    startService(intent);
-                    bindService(intent, connection, Context.BIND_AUTO_CREATE);
+                    String filePath = Uri2File.getFileAbsolutePath(ClazzDetailPostHomeWorkActivity.this, Uri.parse(Uri.decode(data.getDataString())));
+                    uploadFile = new File(filePath);
+                    Log.i("ClazzDetailPost", filePath+"");
                     break;
             }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void uploadFinish(PostWorkFinishEvent event){
+        v.loaded();
     }
 
     @Override
@@ -99,23 +101,5 @@ public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<Clazz
         return this;
     }
 
-    private final static class ProgressHandler extends Handler {
-        private WeakReference<ClazzDetailPostHomeWorkActivity> reference;
-        public ProgressHandler(ClazzDetailPostHomeWorkActivity activity){
-            reference = new WeakReference<ClazzDetailPostHomeWorkActivity>(activity);
-        }
-        @Override
-        public void handleMessage(Message msg) {
-            if (reference.get() != null){
-                switch (msg.what){
-                    case 0:
-                        reference.get().v.loading();
-                        break;
-                    case 1:
-                        reference.get().v.loaded();
-                        break;
-                }
-            }
-        }
-    }
+
 }
