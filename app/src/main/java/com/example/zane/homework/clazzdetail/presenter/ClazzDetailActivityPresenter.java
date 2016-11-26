@@ -73,16 +73,16 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         //handler = new ProgressHandler(this);
         positions = new ArrayList<>();
         v.init(cid, jid);
-        initData(cid);
+        initData(cid, jid);
         v.setText(clazzName, courseName, image, share_position);
         v.initTablayout(adapter);
     }
 
-    private void initData(String cid){
+    private void initData(String cid, String jid){
         adapter = new ClazzDetailFragViewPagerAdapter(getSupportFragmentManager());
         adapter.addHomeWorkFrag(HomeWorkFragment.newInstance(), "作业");
         adapter.addNoticeFrag(NoticeFragment.newInstance(), "消息");
-        adapter.addMemberFrag(MemberFragment.newInstance(cid), "成员");
+        adapter.addMemberFrag(MemberFragment.newInstance(cid, jid), "成员");
     }
 
     @Override

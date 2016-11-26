@@ -3,7 +3,7 @@ package com.example.zane.homework.entity;
 import android.content.Context;
 
 import com.example.zane.homework.app.App;
-import com.example.zane.homework.utils.SecurePreferences;
+import com.example.zane.homework.data.sp.SecurePreferences;
 
 import java.util.HashSet;
 import java.util.Iterator;

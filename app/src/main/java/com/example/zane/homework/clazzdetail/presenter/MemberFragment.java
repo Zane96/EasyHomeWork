@@ -39,17 +39,23 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
 
     public static final String MEMBER_DETAIL = "memberDetail";
     private static final String CID = "cid";
+    public static final String SID = "sid";
+    public static final String JID = "jid";
+    public static final String NAME = "name";
+    public static final String INTRO = "intro";
 
     private ClazzDetailMemberAdapter adapter;
     private String cid;
+    private String jid;
     private FinalSubscriber<List<ClassMemeber.DataEntity>> memberSubscriber;
     private ClassModel model = ClassModel.getInstance();
     private List<MemberDetail> datas;
 
-    public static MemberFragment newInstance(String cid){
+    public static MemberFragment newInstance(String cid, String jid){
         MemberFragment fragment = new MemberFragment();
         Bundle bundle = new Bundle();
         bundle.putString(CID, cid);
+        bundle.putString(JID, jid);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -69,6 +75,7 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
         super.onCreate(savedInstanceState);
         adapter = new ClazzDetailMemberAdapter(getActivity());
         cid = getArguments().getString(CID);
+        jid = getArguments().getString(JID);
         datas = new ArrayList<>();
         getData();
     }
@@ -102,8 +109,12 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
         adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
             @Override
             public void onClick(View view, int i) {
+                ClassMemeber.DataEntity data = datas.get(i).getMemeber();
                 Intent intent = new Intent(getActivity(), OtherInfoActivity.class);
-                //intent.putExtra(MEMBER_DETAIL, datas.get(i));
+                intent.putExtra(JID, jid);
+                intent.putExtra(SID, data.getSid());
+                intent.putExtra(NAME, data.getName());
+                intent.putExtra(INTRO, data.getSelfintro());
                 startActivity(intent);
             }
             @Override

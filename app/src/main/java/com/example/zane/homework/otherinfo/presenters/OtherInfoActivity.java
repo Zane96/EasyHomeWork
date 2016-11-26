@@ -8,10 +8,14 @@ import android.os.Message;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
+import com.example.zane.homework.data.bean.GetStatistc;
+import com.example.zane.homework.data.model.HomeWorkModel;
+import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.MemberDetail;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.otherinfo.view.OtherInfoView;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.example.zane.homework.utils.RandomBackImage;
 import com.jude.utils.JUtils;
 
 import java.lang.ref.WeakReference;
@@ -24,8 +28,9 @@ import java.lang.ref.WeakReference;
 public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
 
     private MemberDetail memberDetail;
-    private ProgressHandler handler;
     private String courseName;
+    private final HomeWorkModel model = HomeWorkModel.getInstance();
+    private FinalSubscriber<GetStatistc.DataEntity> subscriber;
 
     @Override
     public Class<OtherInfoView> getRootViewClass() {
@@ -34,31 +39,25 @@ public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
 
     @Override
     public void inCreat(Bundle bundle) {
+        String name = getIntent().getStringExtra(MemberFragment.NAME);
+        String intro = getIntent().getStringExtra(MemberFragment.INTRO);
+        v.init(name, intro, RandomBackImage.getRandomAvatar());
+        getData(getIntent().getStringExtra(MemberFragment.JID), getIntent().getStringExtra(MemberFragment.SID));
+    }
 
-//        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-//            memberDetail = (MemberDetail) getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL);
-//            v.init(memberDetail.getName(), memberDetail.getSelfIntro(), memberDetail.getAvatar());
-//        } else if (MySharedPre.getInstance().getIdentity().equals("student")){
-//            if (getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
-//                memberDetail = (MemberDetail) getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL);
-//                JUtils.Toast(memberDetail.getName());
-//                v.init(memberDetail.getName(), memberDetail.getSelfIntro(), memberDetail.getAvatar());
-//            } else {
-//                courseName = getIntent().getStringExtra(ClazzDetailActivityView.COURSENAME);
-//                v.init(StudentLogin.getInstacne().getUserName(), StudentLogin.getInstacne().getSelfIntro(), StudentLogin.getInstacne().getAvatar());
-//            }
-//        }
-
-        v.showProgress();
-        handler = new ProgressHandler(this);
-        Message message = new Message();
-        message.what = 1;
-        handler.sendMessageDelayed(message, 1500);
+    public void getData(String jid, String sid){
+        subscriber = new FinalSubscriber<>(this, dataEntity -> {
+            GetStatistc.DataEntity data = (GetStatistc.DataEntity) dataEntity;
+            v.setData(data.getCoursename(), data.getTotal(), data.getScore(), String.valueOf(data.getAbsent()));
+        });
+        model.getStatistc(jid, sid).subscribe(subscriber);
     }
 
     @Override
     public void inDestory() {
-        handler.removeMessages(1);
+        if (subscriber != null){
+            subscriber.cancelProgress();
+        }
     }
 
     @Override
@@ -66,26 +65,4 @@ public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
         return this;
     }
 
-    private final static class ProgressHandler extends Handler {
-        private WeakReference<OtherInfoActivity> reference;
-        public ProgressHandler(OtherInfoActivity activity){
-            reference = new WeakReference<OtherInfoActivity>(activity);
-        }
-        @Override
-        public void handleMessage(Message msg) {
-//            if (reference.get() != null){
-//                MemberDetail data = reference.get().memberDetail;
-//                switch (msg.what){
-//                    case 1:
-//                        reference.get().v.hideProgress();
-//                        if (MySharedPre.getInstance().getIdentity().equals("teacher") || reference.get().getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
-//                            reference.get().v.setData(data.getNumber(), data.getScore(), data.getWorks(), data.getNoWorks());
-//                        } else {
-//                            reference.get().v.setData(reference.get().courseName, "30分", "15分", "2次");
-//                        }
-//                        break;
-//                }
-//            }
-        }
-    }
 }

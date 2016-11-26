@@ -66,17 +66,10 @@ public class MainActivity extends BaseActivityPresenter<MainView>
     @Override
     protected void onResume() {
         super.onResume();
-        //请求个人信息并且设置到单例子保持类里面去，注意这里设置了缓存策略
+        //注意这里设置了缓存策略
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
             //这里并不应该使用Final......Subscriber
-            TeacherLogin teacherLogin = TeacherLogin.getInstacne();
-            userInfoModel.getPerInfo(1).subscribe(data -> {
-                teacherLogin.setUserName(data.getName());
-                teacherLogin.setName(data.getRealname());
-                teacherLogin.setGender(data.getGender());
-                teacherLogin.setSelfIntro(data.getSelfintro());
-                v.reFlashData(teacherLogin.getUserName());
-            });
+            v.reFlashData(MySharedPre.getInstance().getName());
         } else {
             StudentLogin studentLogin = StudentLogin.getInstacne();
             userInfoModel.getPerInfo(2).subscribe(data -> {
@@ -87,6 +80,17 @@ public class MainActivity extends BaseActivityPresenter<MainView>
                 v.reFlashData(studentLogin.getUserName());
             });
         }
+    }
+
+    private void getTeaInfo() {
+        userInfoModel.getPerInfo(1).subscribe(data -> {
+            MySharedPre sp = MySharedPre.getInstance();
+            sp.setGender(data.getGender());
+            sp.setIntro(data.getSelfintro());
+            sp.setName(data.getName());
+            sp.setRealName(data.getRealname());
+            v.reFlashData(data.getName());
+        });
     }
 
     @Override
@@ -107,6 +111,12 @@ public class MainActivity extends BaseActivityPresenter<MainView>
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if ("first".equals(getIntent().getStringExtra(LoginRegisterActivity.LOGIN))){
+            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+                getTeaInfo();
+            }
+        }
     }
 
     private void requestPermission() {

@@ -1,12 +1,10 @@
 package com.example.zane.homework.info.view;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,8 +15,6 @@ import com.bumptech.glide.Glide;
 
 import com.example.zane.easyimageprovider.builder.ImageProviderBuilder;
 import com.example.zane.easyimageprovider.builder.core.EasyImage;
-import com.example.zane.easyimageprovider.builder.factory.EasyImageFactory;
-import com.example.zane.easyimageprovider.builder.factory.ProviderFactory;
 import com.example.zane.easyimageprovider.provider.listener.OnGetImageListener;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
@@ -32,6 +28,7 @@ import com.example.zane.homework.info.presenters.ChangPasswordActivity;
 import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 
 import butterknife.Bind;
 
@@ -73,14 +70,14 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
     @Bind(R.id.card_info_password)
     CardView cardInfoPassword;
     @Bind(R.id.text_info_course)
-    TextView textInfoCourse;
+    TextView textInfoGender;
     @Bind(R.id.card_info_course)
-    CardView cardInfoCourse;
+    CardView cardInfoGender;
     @Bind(R.id.toolbar_info)
     Toolbar toolbarInfo;
     @Bind(R.id.text6)
-    TextView text6;
-    private AppCompatActivity activity;
+
+    private InfoActivity activity;
     private EasyImage image;
 
     @Override
@@ -90,7 +87,7 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (InfoActivity) activity;
     }
 
     @Override
@@ -105,25 +102,21 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                     .load(uri)
                     .transform(new CircleTransform(App.getInstance()))
                     .into(imagetSelfAvatar);
-            if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-                MockTeacherData.avatar = uri;
-            } else {
-                MockStudentData.avatar = uri;
-            }
+//            if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+//                MockTeacherData.avatar = uri;
+//            } else {
+//                MockStudentData.avatar = uri;
+//            }
         }
     };
 
-    public void init() {
+    public void init(String name) {
 
         toolbarInfo.setTitle("我的信息");
         activity.setSupportActionBar(toolbarInfo);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarInfo.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+
+        RxToolbar.navigationClicks(toolbarInfo).subscribe(aVoid -> {activity.finish();});
 
         cardInfoAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,50 +125,46 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                                                              .with(activity)
                                                              .setGetImageListener("uri", listener)
                                                              .useCrop(200, 200);
-                new AlertDialog.Builder(activity).setItems(new String[]{"相册", "相机"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                builder.useAlbum();
-                                break;
-                            case 1:
-                                builder.useCamera();
-                                break;
-                        }
-                        EasyImage easyImage = EasyImage.creat(builder);
-                        easyImage.execute();
-                    }
-                }).show();
+                new AlertDialog.Builder(activity).setItems(new String[]{"相册", "相机"}, (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    builder.useAlbum();
+                                    break;
+                                case 1:
+                                    builder.useCamera();
+                                    break;
+                            }
+                            EasyImage easyImage = EasyImage.creat(builder);
+                            easyImage.execute();
+                        }).show();
             }
         });
 
-        if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+        if (!name.equals("")){
             textInfoName.setText(TeacherLogin.getInstacne().getName());
-            textInfoCourse.setText(TeacherLogin.getInstacne().getCourse());
+            textInfoGender.setText(TeacherLogin.getInstacne().getCourse());
             textInfoUsername.setText(TeacherLogin.getInstacne().getUserName());
             textInfoSelfintro.setText(TeacherLogin.getInstacne().getSelfIntro());
-            Glide.with(activity)
-                    .load(MockTeacherData.avatar)
-                    .transform(new CircleTransform(App.getInstance()))
-                    .into(imagetSelfAvatar);
         } else {
-            textInfoName.setText(StudentLogin.getInstacne().getName());
-            text6.setText("所属班级");
-            textInfoCourse.setText(StudentLogin.getInstacne().getClazz());
-            textInfoUsername.setText(StudentLogin.getInstacne().getUserName());
-            textInfoSelfintro.setText(StudentLogin.getInstacne().getSelfIntro());
-            Glide.with(activity)
-                    .load(MockStudentData.avatar)
-                    .transform(new CircleTransform(App.getInstance()))
-                    .into(imagetSelfAvatar);
+            activity.refreshData();
         }
+//        Glide.with(activity)
+//                .load(MockTeacherData.avatar)
+//                .transform(new CircleTransform(App.getInstance()))
+//                .into(imagetSelfAvatar);
 
-        cardInfoCourse.setOnClickListener(this);
+        cardInfoGender.setOnClickListener(this);
         cardInfoName.setOnClickListener(this);
-        cardInfoPassword.setOnClickListener(this);
+        //cardInfoPassword.setOnClickListener(this);
         cardInfoSelfintro.setOnClickListener(this);
         cardInfoUsername.setOnClickListener(this);
+    }
+
+    public void refreshData(String name, String realName, String gender, String intro){
+        textInfoGender.setText(gender);
+        textInfoName.setText(realName);
+        textInfoSelfintro.setText(intro);
+        textInfoUsername.setText(name);
     }
 
     public void OnActivityResult(int requestCode, int resultCode, Intent data) {
@@ -213,7 +202,7 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                         case COURSE_CODE:
                             MockTeacherData.course = str;
                             TeacherLogin.getInstacne().setCourse(str);
-                            textInfoCourse.setText(str);
+                            textInfoGender.setText(str);
                             break;
                     }
                 } else {
@@ -237,12 +226,12 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                         case COURSE_CODE:
                             MockStudentData.clazzNames = str;
                             StudentLogin.getInstacne().setClazz(str);
-                            textInfoCourse.setText(str);
+                            textInfoGender.setText(str);
                             break;
                     }
                 }
             }
-            Snackbar.make(cardInfoCourse, "修改成功~", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(cardInfoGender, "修改成功~", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -256,7 +245,7 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                 activity.startActivityForResult(intentPassword, PASSWORD_CODE);
                 break;
             case R.id.card_info_course:
-                intent.putExtra(CHANGE_CONTENT, textInfoCourse.getText());
+                intent.putExtra(CHANGE_CONTENT, textInfoGender.getText());
                 activity.startActivityForResult(intent, COURSE_CODE);
                 break;
             case R.id.card_info_name:

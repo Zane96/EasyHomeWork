@@ -34,6 +34,8 @@ public class LoginFragment extends BaseFragmentPresenter<LoginView>{
     private static RegisterLoginModel model = RegisterLoginModel.getInstance();
     private FinalSubscriber<Login.DataEntity> subscriber;
 
+    public static final String LOGIN = "login";
+
     public static LoginFragment newInstance(){
         return new LoginFragment();
     }
@@ -64,21 +66,15 @@ public class LoginFragment extends BaseFragmentPresenter<LoginView>{
 
             MySharedPre.getInstance().setLogin(true);
 
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.putExtra(LoginRegisterActivity.LOGIN, "first");
+            startActivity(intent);
             getActivity().finish();
         });
 
         model.login(v.userName(), v.password(), v.getIdentity()+"")
                 .subscribe(subscriber);
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-
 
     @Override
     public void onDestroy() {

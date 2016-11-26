@@ -93,7 +93,7 @@ public interface ClassService{
 
     //查看某个班的成员信息
     @GET("oneClass/{cid}")
-    @Headers("Cache-Control: no-cache")
+    @Headers("Cache-Control: max-age=86400")
     Observable<List<ClassMemeber.DataEntity>> showClassMemeber(@Path("cid") String cid);
 
     //搜索某个班级的班级信息

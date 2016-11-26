@@ -15,6 +15,7 @@ import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.example.zane.homework.otherinfo.presenters.OtherInfoActivity;
 import com.example.zane.homework.utils.RandomBackImage;
 
 import butterknife.Bind;
@@ -26,6 +27,7 @@ import butterknife.Bind;
 
 public class OtherInfoView extends BaseViewImpl {
 
+
     @Bind(R.id.imageview_otherinfo_top)
     ImageView imageviewOtherinfoTop;
     @Bind(R.id.imageview_otherinfo_avatar)
@@ -36,25 +38,16 @@ public class OtherInfoView extends BaseViewImpl {
     TextView textviewOtherifoName;
     @Bind(R.id.textview_otherinfo_self)
     TextView textviewOtherinfoSelf;
-    @Bind(R.id.text_otherinfo_number)
-    TextView textOtherinfoNumber;
+    @Bind(R.id.text_otherinfo_coursename)
+    TextView textOtherinfoCoursename;
+    @Bind(R.id.text_otherinfo_total)
+    TextView textOtherinfoTotal;
     @Bind(R.id.text_otherinfo_score)
     TextView textOtherinfoScore;
-    @Bind(R.id.text_otherinfo_noworktimes)
-    TextView textOtherinfoNoworktimes;
-    @Bind(R.id.text_otherinfo_worktimes)
-    TextView textOtherinfoWorktimes;
-    @Bind(R.id.textview_0)
-    TextView textview0;
-    @Bind(R.id.textview_1)
-    TextView textview1;
-    @Bind(R.id.textview_2)
-    TextView textview2;
-    @Bind(R.id.textview_3)
-    TextView textview3;
+    @Bind(R.id.text_otherinfo_absent)
+    TextView textOtherinfoAbsent;
 
-    private AppCompatActivity activity;
-    private ProgressDialog progressDialog;
+    private OtherInfoActivity activity;
 
     @Override
     public int getRootViewId() {
@@ -63,7 +56,7 @@ public class OtherInfoView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (OtherInfoActivity) activity;
     }
 
     @Override
@@ -72,7 +65,6 @@ public class OtherInfoView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        progressDialog = new ProgressDialog(activity);
         toolbarOtherinfo.setTitle("");
         activity.setSupportActionBar(toolbarOtherinfo);
         activity.setSupportActionBar(toolbarOtherinfo);
@@ -94,26 +86,19 @@ public class OtherInfoView extends BaseViewImpl {
                 .load(avatar)
                 .transform(new CircleTransform(App.getInstance()))
                 .into(imageviewOtherinfoAvatar);
-        if (MySharedPre.getInstance().getIdentity().equals("student") && activity.getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null){
-            textview0.setText("课程名:");
-            textview1.setText("课程总分:");
-            textview2.setText("已获得分数:");
-            textview3.setText("未交作业次数:");
-        }
+//        if (MySharedPre.getInstance().getIdentity().equals("student") && activity.getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null) {
+//            textview0.setText("课程名:");
+//            textview1.setText("课程总分:");
+//            textview2.setText("已获得分数:");
+//            textview3.setText("未交作业次数:");
+//        }
     }
 
-    public void setData(String number, String score, String works, String noWorks) {
-        textOtherinfoNumber.setText(number);
+    public void setData(String couseName, String total, String score, String absent) {
+        textOtherinfoCoursename.setText(couseName);
         textOtherinfoScore.setText(score);
-        textOtherinfoWorktimes.setText(works);
-        textOtherinfoNoworktimes.setText(noWorks);
+        textOtherinfoTotal.setText(total);
+        textOtherinfoAbsent.setText(absent);
     }
 
-    public void showProgress() {
-        progressDialog.show();
-    }
-
-    public void hideProgress() {
-        progressDialog.hide();
-    }
 }

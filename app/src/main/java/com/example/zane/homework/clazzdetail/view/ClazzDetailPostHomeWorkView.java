@@ -1,8 +1,11 @@
 package com.example.zane.homework.clazzdetail.view;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;

@@ -110,13 +110,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="学号: "
+                android:text="课程名: "
                 android:padding="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 />
 
             <TextView
-                android:id="@+id/text_otherinfo_number"
+                android:id="@+id/text_otherinfo_coursename"
                 android:layout_toRightOf="@id/textview_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="已获得成绩: "
+                android:text="作业总次数: "
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:paddingBottom="20dp"
@@ -141,8 +141,8 @@
                 />
 
             <TextView
-                android:layout_below="@id/text_otherinfo_number"
-                android:id="@+id/text_otherinfo_score"
+                android:layout_below="@id/text_otherinfo_coursename"
+                android:id="@+id/text_otherinfo_total"
                 android:layout_toRightOf="@id/textview_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="未交作业次数: "
+                android:text="已获得分数: "
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:paddingBottom="20dp"
@@ -169,8 +169,8 @@
                 />
 
             <TextView
-                android:layout_below="@id/text_otherinfo_score"
-                android:id="@+id/text_otherinfo_noworktimes"
+                android:layout_below="@id/text_otherinfo_total"
+                android:id="@+id/text_otherinfo_score"
                 android:layout_toRightOf="@id/textview_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="已交作业次数: "
+                android:text="已旷课次数: "
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:paddingBottom="20dp"
@@ -197,8 +197,8 @@
                 />
 
             <TextView
-                android:layout_below="@id/text_otherinfo_noworktimes"
-                android:id="@+id/text_otherinfo_worktimes"
+                android:layout_below="@id/text_otherinfo_score"
+                android:id="@+id/text_otherinfo_absent"
                 android:layout_toRightOf="@id/textview_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

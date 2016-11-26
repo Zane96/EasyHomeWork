@@ -3,9 +3,6 @@ package com.example.zane.homework.data.sp;
 import android.content.Context;
 
 import com.example.zane.homework.app.App;
-import com.example.zane.homework.utils.SecurePreferences;
-
-import java.io.File;
 
 /**加密本地序列化存储
  * Created by Zane on 16/6/15.
@@ -50,7 +47,40 @@ public class MySharedPre {
         return preferences.getBoolean("login", false);
     }
 
-    public void setDownLoadFile(File file){
-
+    public void setName(String name){
+        editor.putString("name", name);
+        editor.commit();
     }
+
+    public String getName(){
+        return preferences.getString("name", "");
+    }
+
+    public void setRealName(String realName){
+        editor.putString("realname", realName);
+        editor.commit();
+    }
+
+    public String getRealName(){
+        return preferences.getString("realname", "");
+    }
+
+    public void setIntro(String intro){
+        editor.putString("intro", intro);
+        editor.commit();
+    }
+
+    public String getIntro(){
+        return preferences.getString("intro", "");
+    }
+
+    public void setGender(String gender){
+        editor.putString("gender", gender);
+        editor.commit();
+    }
+
+    public String getGender(){
+        return preferences.getString("gender", "");
+    }
+
 }

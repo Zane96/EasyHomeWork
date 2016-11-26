@@ -17,6 +17,7 @@ import com.example.zane.homework.data.sp.MySharedPre;
 public class LoginRegisterActivity extends BaseActivityPresenter<LoginRegisterView>{
 
     private static final String TAG = LoginRegisterActivity.class.getSimpleName();
+    public static final String LOGIN = "login";
 
     @Override
     public Class<LoginRegisterView> getRootViewClass() {
@@ -26,7 +27,9 @@ public class LoginRegisterActivity extends BaseActivityPresenter<LoginRegisterVi
     @Override
     public void inCreat(Bundle bundle) {
         if (MySharedPre.getInstance().getLogin()){
-            startActivity(new Intent(this, MainActivity.class));
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(LOGIN, "not first");
+            startActivity(intent);
             finish();
         } else {
             v.init(LoginFragment.newInstance());

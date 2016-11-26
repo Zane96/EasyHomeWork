@@ -69,14 +69,14 @@ public class RegisterFragment extends BaseFragmentPresenter<RegisterView>{
                 }
 
                 MySharedPre.getInstance().setLogin(true);
-
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra(LoginRegisterActivity.LOGIN, "first");
+                startActivity(intent);
                 getActivity().finish();
             });
 
             model.register(v.getIdentity(), v.username(), v.realname(), v.password(), v.getGnder(),
                     v.introduce()).flatMap(integer -> {
-                Log.i("RegisterFragment", integer+ " registe");
                         return model.login(v.username(), v.password(), v.getIdentity());
                     }).subscribe(loginSubscriber);
 

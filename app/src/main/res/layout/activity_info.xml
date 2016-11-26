@@ -235,7 +235,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="任教课程"
+                android:text="性别"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>

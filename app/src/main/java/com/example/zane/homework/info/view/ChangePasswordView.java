@@ -14,6 +14,8 @@ import android.widget.EditText;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
+import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
+import com.jakewharton.rxbinding.view.RxView;
 import com.jude.utils.JUtils;
 
 import butterknife.Bind;
@@ -53,39 +55,21 @@ public class ChangePasswordView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        toolbarChangepassword.setTitle("修改信息");
+        toolbarChangepassword.setTitle("修改密码");
         activity.setSupportActionBar(toolbarChangepassword);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarChangepassword.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        RxToolbar.navigationClicks(toolbarChangepassword).subscribe(aVoid -> {activity.finish();});
     }
 
     public void init(){
         initToolbar();
-        progressDialog = new ProgressDialog(activity);
-        buttonPostNewpassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                if (editChangeNewpassword.getText().toString().equals(editChangeNewpasswordAgain.getText().toString())){
-                    progressDialog.show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialog.hide();
-                            Intent intent = new Intent(activity, MainActivity.class);
-                            intent.putExtra(PASSWORD_RESULT, editChangeNewpassword.getText().toString());
-                            activity.setResult(Activity.RESULT_OK, intent);
-                            activity.finish();
-                        }
-                    }, 1000);
-                } else {
-                    Snackbar.make(v, "前后密码填写不一致!~", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
+        RxView.clicks(buttonPostNewpassword).subscribe(aVoid -> {if (editChangeNewpassword.getText().toString().equals(editChangeNewpasswordAgain.getText().toString())){
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(PASSWORD_RESULT, editChangeNewpassword.getText().toString());
+            activity.setResult(Activity.RESULT_OK, intent);
+            activity.finish();
+        } else {
+            Snackbar.make(buttonPostNewpassword, "前后新密码填写不一致!~", Snackbar.LENGTH_SHORT).show();
+        }});
     }
 }

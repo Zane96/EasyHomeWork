@@ -1,4 +1,4 @@
-package com.example.zane.homework.utils;
+package com.example.zane.homework.data.sp;
 
 import android.content.Context;
 import android.content.SharedPreferences;

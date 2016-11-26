@@ -14,6 +14,9 @@ import android.widget.EditText;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
+import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
+import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
+import com.jakewharton.rxbinding.view.RxView;
 
 import butterknife.Bind;
 
@@ -29,8 +32,7 @@ public class ChangeOtherInfoView extends BaseViewImpl {
     Button buttonPostNewotherinfo;
     @Bind(R.id.toolbar_changotherinfo)
     Toolbar toolbarChangotherinfo;
-    private AppCompatActivity activity;
-    private ProgressDialog progressDialog;
+    private ChangeOtherInfoActivity activity;
 
     public static final String OTHER_RESULT = "otherResult";
 
@@ -41,7 +43,7 @@ public class ChangeOtherInfoView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (ChangeOtherInfoActivity) activity;
     }
 
     @Override
@@ -50,36 +52,20 @@ public class ChangeOtherInfoView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        toolbarChangotherinfo.setTitle("搜索班级");
+        toolbarChangotherinfo.setTitle("修改信息");
         activity.setSupportActionBar(toolbarChangotherinfo);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarChangotherinfo.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        RxToolbar.navigationClicks(toolbarChangotherinfo).subscribe(aVoid -> {activity.finish();});
     }
 
     public void init(String oldData){
         initToolbar();
         editChangeOtherinfo.setHint(oldData.toString());
-        progressDialog = new ProgressDialog(activity);
-        buttonPostNewotherinfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                progressDialog.show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.hide();
-                        Intent intent = new Intent(activity, MainActivity.class);
-                        intent.putExtra(OTHER_RESULT, editChangeOtherinfo.getText().toString());
-                        activity.setResult(Activity.RESULT_OK, intent);
-                        activity.finish();
-                    }
-                }, 1000);
-            }
+        RxView.clicks(buttonPostNewotherinfo).subscribe(aVoid -> {
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(OTHER_RESULT, editChangeOtherinfo.getText().toString());
+            activity.setResult(Activity.RESULT_OK, intent);
+            activity.finish();
         });
     }
 }
