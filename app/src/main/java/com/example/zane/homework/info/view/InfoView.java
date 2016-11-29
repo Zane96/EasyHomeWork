@@ -3,6 +3,7 @@ package com.example.zane.homework.info.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -29,6 +30,8 @@ import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
+
+import java.util.logging.Handler;
 
 import butterknife.Bind;
 
@@ -75,7 +78,6 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
     CardView cardInfoGender;
     @Bind(R.id.toolbar_info)
     Toolbar toolbarInfo;
-    @Bind(R.id.text6)
 
     private InfoActivity activity;
     private EasyImage image;
@@ -98,6 +100,9 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
     OnGetImageListener<Uri> listener = new OnGetImageListener<Uri>() {
         @Override
         public void getDataBack(Uri uri) {
+            Looper.prepare();
+            android.os.Handler handler = new android.os.Handler();
+            Looper.loop();
             Glide.with(activity)
                     .load(uri)
                     .transform(new CircleTransform(App.getInstance()))

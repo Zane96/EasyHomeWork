@@ -14,6 +14,7 @@ import com.example.zane.homework.data.bean.TeacherHavaClass;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.ErrorTransForm;
 import com.example.zane.homework.data.remote.SchedulerTransform;
+import com.example.zane.homework.data.remote.TransForm;
 import com.example.zane.homework.data.remote.service.ClassService;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import rx.Observable;
  */
 
 public class ClassModel {
+
     private Context context;
     private ClassService serviceApi;
 
@@ -48,78 +50,54 @@ public class ClassModel {
 
     //创建班级
     public Observable<String> creatClass(String name, String description){
-        return serviceApi.creatClass(name, description)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.creatClass(name, description));
     }
 
     //修改班级信息
     public Observable<String> modiClass(String name, String description, String cid){
-        return serviceApi.modiClass(name, description, cid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.modiClass(name, description, cid));
     }
 
     //学生查看加入的班级
     public Observable<StuHaveClass.DataEntity> stuClass(){
-        return serviceApi.stuClass()
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.stuClass());
     }
 
     //老师申请进驻班级
     public Observable<String> teaAppClass(String cid, String sirstu, String course, String addtion){
-        return serviceApi.teaAppClass(cid, sirstu, course, addtion)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.teaAppClass(cid, sirstu, course, addtion));
     }
 
     //学生申请进驻班级
     public Observable<String> stuAppClass(String cid, String sirsourt){
-        return serviceApi.stuAppClass(cid, sirsourt)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.stuAppClass(cid, sirsourt));
     }
 
     public Observable<String> okTeaApply(String cid, String tid, String course, String addtion){
-        return serviceApi.applyTea(cid, tid, course, addtion)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.applyTea(cid, tid, course, addtion));
     }
 
     public Observable<String> okStuApply(String cid, String sid){
-        return serviceApi.applyStu(cid, sid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.applyStu(cid, sid));
     }
 
     public Observable<List<TeacherHavaClass.DataEntity>> teaHaveClass(){
-        return serviceApi.teaHaveClass()
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.teaHaveClass());
     }
 
     public Observable<List<StuHaveCourse.DataEntity>> stuHaveCourse(){
-        return serviceApi.stuHaveCourse()
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.stuHaveCourse());
     }
 
     public Observable<ShowApply.DataEntity> showApply(String cid){
-        return serviceApi.showApply(cid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.showApply(cid));
     }
 
     public Observable<List<ClassMemeber.DataEntity>> classMemeber(String cid){
-        return serviceApi.showClassMemeber(cid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.showClassMemeber(cid));
     }
 
     public Observable<SerClassInfo.DataEntity> serClassInfo(String cid){
-        return serviceApi.serClassInfo(cid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.serClassInfo(cid));
     }
 }

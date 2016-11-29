@@ -11,6 +11,7 @@ import com.example.zane.homework.data.bean.Registe;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.ErrorTransForm;
 import com.example.zane.homework.data.remote.SchedulerTransform;
+import com.example.zane.homework.data.remote.TransForm;
 import com.example.zane.homework.data.remote.service.LoginRegisteService;
 
 import okhttp3.OkHttpClient;
@@ -49,24 +50,18 @@ public class RegisterLoginModel {
     //注册
     public Observable<Integer> register(String sirstu, String username, String realname, String password,
                                        String gender, String introduce){
-        return serviceApi.registe(sirstu, username, realname, password, gender, introduce)
-                .compose(new SchedulerTransform<>())
-                .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.registe(sirstu, username, realname, password, gender, introduce));
 
     }
 
     //登陆
     public Observable<Login.DataEntity> login(String username, String password, String sirstu){
-        return serviceApi.login(username, password, sirstu)
-                .compose(new SchedulerTransform<>())
-                .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.login(username, password, sirstu));
     }
 
     //退出登陆
     public Observable<QuitLogin.DataEntity> quitLogin(){
-        return serviceApi.quitLogin()
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.quitLogin());
     }
 
 }

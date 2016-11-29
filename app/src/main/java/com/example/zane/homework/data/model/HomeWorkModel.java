@@ -13,6 +13,7 @@ import com.example.zane.homework.data.bean.NoDueHomeWork;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.ErrorTransForm;
 import com.example.zane.homework.data.remote.SchedulerTransform;
+import com.example.zane.homework.data.remote.TransForm;
 import com.example.zane.homework.data.remote.download.DownloadProgressInterceptor;
 import com.example.zane.homework.data.remote.download.DownloadProgressListener;
 import com.example.zane.homework.data.remote.service.DownLoadService;
@@ -61,21 +62,15 @@ public class HomeWorkModel {
     }
 
     public Observable<List<NoDueHomeWork.DataEntity>> showNoDueWork(){
-        return serviceApi.showNoDueWork()
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.showNoDueWork());
     }
 
     public Observable<List<HoPerson.DataEntity>> showHoPerson(String asid, String sid){
-        return serviceApi.showHoPerson(asid, sid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.showHoPerson(asid, sid));
     }
 
     public Observable<String> judgeHomeWork(String grade, String addtion, String asid, String sid){
-        return serviceApi.judgeHomeWork(grade, addtion, asid, sid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.judgeHomeWork(grade, addtion, asid, sid));
     }
 
     public Observable<String> declareWork(String percentage, String deadline, String addtion, String jid, File file, UploadProgressListener listener){
@@ -92,39 +87,29 @@ public class HomeWorkModel {
     }
 
     public Observable<GetStatistc.DataEntity> getStatistc(String jid, String sid){
-        return serviceApi.getStatistc(jid, sid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.getStatistc(jid, sid));
     }
 
     public Observable<List<GetNoDueWork.DataEntity>> getNoDueWork(){
-        return serviceApi.getNoDueWork()
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.getNoDueWork());
     }
 
     public Observable<List<GetHoWork.DataEntity>> getHoWork(String asid){
-        return serviceApi.getHoWork(asid)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.getHoWork(asid));
     }
 
     public Observable<String> stuUpLoadFirst(String asid, File file, UploadProgressListener listener){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        return UploadCommonProvider.getServiceApi(listener).stuUpload(asid, body)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(UploadCommonProvider.getServiceApi(listener).stuUpload(asid, body));
     }
 
     public Observable<String> stuUpLoadAgain(String asid, File file, UploadProgressListener listener){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        return UploadCommonProvider.getServiceApi(listener).stuUploadAgain(asid, body)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(UploadCommonProvider.getServiceApi(listener).stuUploadAgain(asid, body));
     }
 
     //老师下载学生的作业

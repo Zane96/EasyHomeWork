@@ -9,6 +9,7 @@ import com.example.zane.homework.data.bean.NoData;
 import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.ErrorTransForm;
 import com.example.zane.homework.data.remote.SchedulerTransform;
+import com.example.zane.homework.data.remote.TransForm;
 import com.example.zane.homework.data.remote.service.MessageService;
 
 import java.util.List;
@@ -43,29 +44,21 @@ public class MessageModel {
 
     //发消息
     public Observable<String> postMessage(String type, String id, String content){
-        return serviceApi.postMessage(type, id, content)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.postMessage(type, id, content));
     }
 
     //学生查看消息列表
     public Observable<List<GetMessage.DataEntity>> getStuMessage(int num){
-        return serviceApi.getStuMessage(num)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.getStuMessage(num));
     }
 
     //老师查看消息列表
     public Observable<List<GetMessage.DataEntity>> getTeaMessage(int num){
-        return serviceApi.getTeaMessage(num)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.getTeaMessage(num));
     }
 
     //查看消息详细信息
     public Observable<GetDetailMessage.DataEntity> getDetailMessage(int num){
-        return serviceApi.getDetailMessage(num)
-                       .compose(new SchedulerTransform<>())
-                       .compose(new ErrorTransForm<>());
+        return TransForm.transform(serviceApi.getDetailMessage(num));
     }
 }
