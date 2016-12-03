@@ -31,6 +31,7 @@ import com.example.zane.homework.data.sp.MySharedPre;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 import com.jakewharton.rxbinding.view.RxView;
+import com.jude.utils.JUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -95,6 +96,8 @@ public class ClazzDetailActivityView extends BaseViewImpl {
         collClazzdetail.setExpandedTitleColor(this.activity.getResources().getColor(R.color.transparent));
         activity.setSupportActionBar(toolbarClazzdetail);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        textviewClazzdetailCoursename.setPadding(0, 0, 0, JUtils.px2dip(JUtils.getStatusBarHeight()));
 
         RxToolbar.navigationClicks(toolbarClazzdetail).subscribe(aVoid -> {
             activity.finish();

@@ -41,7 +41,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".clazzdetail.presenter.ClazzDetailActivityPresenter"
-                  android:configChanges="orientation"/>
+                  android:configChanges="orientation"
+                  android:theme="@style/AppTheme2"/>
         <activity android:name=".clazzdetail.presenter.ClazzDetailPostHomeWorkActivity"
                   android:configChanges="orientation"/>
         <activity android:name=".clazzdetail.presenter.ClazzDetailPostNoticeActivity"
