@@ -31,6 +31,7 @@ public interface UserService {
     Observable<String> modiInfo(@Field("flag") String flag,
                                 @Field("gender") String gender,
                                 @Field("realname") String realname,
+                                @Field("name") String name,
                                 @Field("selfintro") String selfintro);
 
 }

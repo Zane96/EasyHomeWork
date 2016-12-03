@@ -56,7 +56,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
     //学生的驻班班级
     private List<StuHaveClass.DataEntity> stuHaveClasses;
 
-    private ClazzRecyAdapterPresenter adapterPresenter;
+    private ClazzTeaRecyAdapterPresenter adapterPresenter;
     private boolean mIsDetailsActivityStarted;
     private FinalSubscriber<List<TeacherHavaClass.DataEntity>> teaClassSubscriber;
     private FinalSubscriber<List<StuHaveClass.DataEntity>> stuClassSubscriber;
@@ -87,7 +87,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         v.init();
-        adapterPresenter = new ClazzRecyAdapterPresenter();
+        adapterPresenter = new ClazzTeaRecyAdapterPresenter();
 
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
             teaClassSubscriber = new FinalSubscriber<>(getActivity(), datas -> {
@@ -121,21 +121,21 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         super.onDestroy();
     }
 
-    public class ClazzRecyAdapterPresenter extends RecyclerView.Adapter<ClazzRecyViewHolder> {
+    public class ClazzTeaRecyAdapterPresenter extends RecyclerView.Adapter<ClazzTeaRecyViewHolder> {
 
         private LayoutInflater mInflater;
 
-        public ClazzRecyAdapterPresenter() {
+        public ClazzTeaRecyAdapterPresenter() {
             mInflater = LayoutInflater.from(getActivity());
         }
 
         @Override
-        public ClazzRecyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ClazzRecyViewHolder(mInflater.inflate(R.layout.item_clazz, parent, false));
+        public ClazzTeaRecyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ClazzTeaRecyViewHolder(mInflater.inflate(R.layout.item_clazz, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(ClazzRecyViewHolder holder, int position) {
+        public void onBindViewHolder(ClazzTeaRecyViewHolder holder, int position) {
             holder.onBind(position);
         }
 
@@ -150,7 +150,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         }
     }
 
-    public class ClazzRecyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ClazzTeaRecyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Bind(R.id.imageview_item_clazz)
         ImageView imageviewItemClazz;
@@ -170,7 +170,7 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         private int itemPosition;
         private TeacherHavaClass.DataEntity teaData;
 
-        public ClazzRecyViewHolder(View itemView) {
+        public ClazzTeaRecyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
@@ -198,16 +198,6 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
                         .transform(new CircleTransform(App.getInstance()))
                         .into(imageviewItemClazz);
             } else {
-
-                textviewItemCouresename.setText(StudentLogin.getInstacne().getCourse()[position]);
-                textviewItemClazzname.setText(StudentLogin.getInstacne().getClazz());
-                textviewItemOwner.setText(StudentLogin.getInstacne().getOwner());
-                textviewItemAsid.setText(StudentLogin.getInstacne().getIds()[0]);
-
-                if (StudentLogin.getInstacne().getIsOwner()){
-                    imageOwner.setVisibility(View.VISIBLE);
-                }
-
                 StudentLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
                 Glide.with(App.getInstance())
                         .load(StudentLogin.getInstacne().getAvatar())

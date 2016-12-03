@@ -20,22 +20,13 @@ import com.example.zane.easyimageprovider.provider.listener.OnGetImageListener;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
-import com.example.zane.homework.config.MockStudentData;
-import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.custom.CircleTransform;
-import com.example.zane.homework.entity.StudentLogin;
-import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.info.presenters.ChangPasswordActivity;
 import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
 import com.example.zane.homework.info.presenters.InfoActivity;
-import com.example.zane.homework.data.sp.MySharedPre;
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 
-import java.util.logging.Handler;
-
 import butterknife.Bind;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Zane on 16/6/14.
@@ -50,7 +41,7 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
     public static final int NAME_CODE = 222;
     public static final int SELFINTRO_CODE = 333;
     public static final int PASSWORD_CODE = 444;
-    public static final int COURSE_CODE = 555;
+    public static final int GENDER_CODE = 555;
 
     @Bind(R.id.imaget_self_avatar)
     ImageView imagetSelfAvatar;
@@ -72,9 +63,9 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
     TextView textInfoPassword;
     @Bind(R.id.card_info_password)
     CardView cardInfoPassword;
-    @Bind(R.id.text_info_course)
+    @Bind(R.id.text_info_gender)
     TextView textInfoGender;
-    @Bind(R.id.card_info_course)
+    @Bind(R.id.card_info_gender)
     CardView cardInfoGender;
     @Bind(R.id.toolbar_info)
     Toolbar toolbarInfo;
@@ -107,15 +98,10 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                     .load(uri)
                     .transform(new CircleTransform(App.getInstance()))
                     .into(imagetSelfAvatar);
-//            if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-//                MockTeacherData.avatar = uri;
-//            } else {
-//                MockStudentData.avatar = uri;
-//            }
         }
     };
 
-    public void init(String name) {
+    public void init() {
 
         toolbarInfo.setTitle("我的信息");
         activity.setSupportActionBar(toolbarInfo);
@@ -139,24 +125,11 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                                     builder.useCamera();
                                     break;
                             }
-                            EasyImage easyImage = EasyImage.creat(builder);
-                            easyImage.execute();
+                            image = EasyImage.creat(builder);
+                            image.execute();
                         }).show();
             }
         });
-
-        if (!name.equals("")){
-            textInfoName.setText(TeacherLogin.getInstacne().getName());
-            textInfoGender.setText(TeacherLogin.getInstacne().getCourse());
-            textInfoUsername.setText(TeacherLogin.getInstacne().getUserName());
-            textInfoSelfintro.setText(TeacherLogin.getInstacne().getSelfIntro());
-        } else {
-            activity.refreshData();
-        }
-//        Glide.with(activity)
-//                .load(MockTeacherData.avatar)
-//                .transform(new CircleTransform(App.getInstance()))
-//                .into(imagetSelfAvatar);
 
         cardInfoGender.setOnClickListener(this);
         cardInfoName.setOnClickListener(this);
@@ -176,68 +149,6 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
         if (image != null) {
             image.onActivityResult(requestCode, resultCode, data);
         }
-        if (resultCode == RESULT_OK) {
-            if (requestCode == PASSWORD_CODE) {
-                if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                    MockTeacherData.password = data.getStringExtra(ChangePasswordView.PASSWORD_RESULT);
-                    TeacherLogin.getInstacne().setPsd(data.getStringExtra(ChangePasswordView.PASSWORD_RESULT));
-                } else {
-                    MockStudentData.password = data.getStringExtra(ChangePasswordView.PASSWORD_RESULT);
-                    StudentLogin.getInstacne().setPsd(data.getStringExtra(ChangePasswordView.PASSWORD_RESULT));
-                }
-            } else {
-                if (MySharedPre.getInstance().equals("teacher")){
-                    String str = data.getStringExtra(ChangeOtherInfoView.OTHER_RESULT);
-                    switch (requestCode) {
-                        case USERNAME_CODE:
-                            MockTeacherData.userName = str;
-                            TeacherLogin.getInstacne().setUserName(str);
-                            textInfoUsername.setText(str);
-                            break;
-                        case NAME_CODE:
-                            MockTeacherData.name = str;
-                            TeacherLogin.getInstacne().setName(str);
-                            textInfoName.setText(str);
-                            break;
-                        case SELFINTRO_CODE:
-                            MockTeacherData.selfIntro = str;
-                            TeacherLogin.getInstacne().setSelfIntro(str);
-                            textInfoSelfintro.setText(str);
-                            break;
-                        case COURSE_CODE:
-                            MockTeacherData.course = str;
-                            TeacherLogin.getInstacne().setCourse(str);
-                            textInfoGender.setText(str);
-                            break;
-                    }
-                } else {
-                    String str = data.getStringExtra(ChangeOtherInfoView.OTHER_RESULT);
-                    switch (requestCode) {
-                        case USERNAME_CODE:
-                            MockStudentData.userName = str;
-                            StudentLogin.getInstacne().setUserName(str);
-                            textInfoUsername.setText(str);
-                            break;
-                        case NAME_CODE:
-                            MockStudentData.name = str;
-                            StudentLogin.getInstacne().setName(str);
-                            textInfoName.setText(str);
-                            break;
-                        case SELFINTRO_CODE:
-                            MockStudentData.selfIntro = str;
-                            StudentLogin.getInstacne().setSelfIntro(str);
-                            textInfoSelfintro.setText(str);
-                            break;
-                        case COURSE_CODE:
-                            MockStudentData.clazzNames = str;
-                            StudentLogin.getInstacne().setClazz(str);
-                            textInfoGender.setText(str);
-                            break;
-                    }
-                }
-            }
-            Snackbar.make(cardInfoGender, "修改成功~", Snackbar.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -249,9 +160,9 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                 intentPassword.putExtra(CHANGE_CONTENT, textInfoPassword.getText());
                 activity.startActivityForResult(intentPassword, PASSWORD_CODE);
                 break;
-            case R.id.card_info_course:
+            case R.id.card_info_gender:
                 intent.putExtra(CHANGE_CONTENT, textInfoGender.getText());
-                activity.startActivityForResult(intent, COURSE_CODE);
+                activity.startActivityForResult(intent, GENDER_CODE);
                 break;
             case R.id.card_info_name:
                 intent.putExtra(CHANGE_CONTENT, textInfoName.getText());
@@ -266,5 +177,34 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                 activity.startActivityForResult(intent, USERNAME_CODE);
                 break;
         }
+    }
+
+    public String getName(){
+        return textInfoUsername.getText().toString();
+    }
+
+    public String getRealName(){
+        return textInfoName.getText().toString();
+    }
+
+    public String getGneder(){
+        return textInfoGender.getText().toString();
+    }
+
+    public String getIntro(){
+        return textInfoSelfintro.getText().toString();
+    }
+
+
+    public void showSuccess(String gender, String realName, String name, String intro){
+        Snackbar.make(textInfoGender, "信息修改成功～", Snackbar.LENGTH_SHORT).show();
+        textInfoUsername.setText(name);
+        textInfoName.setText(realName);
+        textInfoGender.setText(gender);
+        textInfoSelfintro.setText(intro);
+    }
+
+    public void showFaile(){
+        Snackbar.make(textInfoGender, "信息修改失败～", Snackbar.LENGTH_SHORT).show();
     }
 }

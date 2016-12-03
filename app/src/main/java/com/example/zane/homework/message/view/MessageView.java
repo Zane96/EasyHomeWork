@@ -29,7 +29,6 @@ public class MessageView extends BaseViewImpl {
 
     private AppCompatActivity activity;
     private GridLayoutManager manager;
-    private ProgressDialog progressDialog;
 
     @Override
     public int getRootViewId() {
@@ -60,7 +59,6 @@ public class MessageView extends BaseViewImpl {
 
     public void init(){
         initToolbar();
-        progressDialog = new ProgressDialog(activity);
         manager = new GridLayoutManager(activity, 2);
     }
 
@@ -84,11 +82,4 @@ public class MessageView extends BaseViewImpl {
         });
     }
 
-    public void showProgress(){
-        progressDialog.show();
-    }
-
-    public void dismissProgress(){
-        progressDialog.hide();
-    }
 }

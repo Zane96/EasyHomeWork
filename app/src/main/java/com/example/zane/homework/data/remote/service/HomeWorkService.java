@@ -15,6 +15,7 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -37,10 +38,12 @@ public interface HomeWorkService {
 
     //老师查看自己布置的未过期的作业列表
     @GET("noDueHo")
+    @Headers("Cache-Control: no-cache")
     Observable<List<NoDueHomeWork.DataEntity>> showNoDueWork();
 
     //查看学生的完成作业情况
     @GET("hoPerson/{asid}/{sid}")
+    @Headers("Cache-Control: no-cache")
     Observable<List<HoPerson.DataEntity>> showHoPerson(@Path("asid") String asid,
                                                        @Path("sid") String sid);
 
@@ -59,10 +62,12 @@ public interface HomeWorkService {
 
     //学生查看未过期作业列表
     @GET("getNodue")
+    @Headers("Cache-Control: no-cache")
     Observable<List<GetNoDueWork.DataEntity>> getNoDueWork();
 
     //学生查看自己提交的某份作业详情
     @GET("getHo/{asid}")
+    @Headers("Cache-Control: no-cache")
     Observable<List<GetHoWork.DataEntity>> getHoWork(@Path("asid") String asid);
 
 }

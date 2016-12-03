@@ -59,7 +59,7 @@ public class ClassModel {
     }
 
     //学生查看加入的班级
-    public Observable<StuHaveClass.DataEntity> stuClass(){
+    public Observable<List<StuHaveClass.DataEntity>> stuClass(){
         return TransForm.transform(serviceApi.stuClass());
     }
 

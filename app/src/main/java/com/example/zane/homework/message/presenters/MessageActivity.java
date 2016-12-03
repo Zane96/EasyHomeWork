@@ -9,6 +9,11 @@ import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.data.bean.ShowApply;
+import com.example.zane.homework.data.bean.StuHaveClass;
+import com.example.zane.homework.data.model.ClassModel;
+import com.example.zane.homework.data.remote.FinalSubscriber;
+import com.example.zane.homework.entity.ApplyDetail;
 import com.example.zane.homework.entity.Clazz;
 import com.example.zane.homework.entity.MessageDetail;
 import com.example.zane.homework.message.view.MessageView;
@@ -19,6 +24,10 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.functions.Func0;
+import rx.functions.Func1;
+
 /**
  * Created by Zane on 16/6/16.
  * Email: zanebot96@gmail.com
@@ -28,7 +37,10 @@ public class MessageActivity extends BaseActivityPresenter<MessageView>{
 
     private MessageRecyAdapter adapter;
     private List<MessageDetail> datas;
-    private ProgressHandler handler;
+    private final ClassModel model = ClassModel.getInstance();
+
+    private final List<String> cids = new ArrayList<>();
+    private FinalSubscriber<List<StuHaveClass.DataEntity>> subscriber;
 
     @Override
     public Class<MessageView> getRootViewClass() {
@@ -39,17 +51,56 @@ public class MessageActivity extends BaseActivityPresenter<MessageView>{
     public void inCreat(Bundle bundle) {
         adapter = new MessageRecyAdapter(App.getInstance());
         datas = new ArrayList<>();
-        handler = new ProgressHandler(this);
         v.init();
-        v.showProgress();
-        Message message = new Message();
-        message.what = 1;
-        handler.sendMessageDelayed(message, 1000);
+        v.initAdapter(adapter);
+        getData();
+    }
+
+    public void getData(){
+        adapter.clear();
+        subscriber = new FinalSubscriber<>(this, dataEnties -> {
+            List<StuHaveClass.DataEntity> datas = (List<StuHaveClass.DataEntity>) dataEnties;
+            Observable.from(datas)
+                    .filter(dataEntity2 -> {
+                        if ("ture".equals(dataEntity2.getCreator())){
+                            return true;
+                        }
+                        return false;
+                    }).subscribe(dataEntity -> {
+                        model.showApply(dataEntity.getCid()).subscribe(dataEntity3 -> {
+                            ShowApply.DataEntity dataEntity1 = (ShowApply.DataEntity) dataEntity3;
+
+                            Observable.from(dataEntity1.getTeach())
+                                    .map(teachEntity -> {
+                                        ApplyDetail applyDetail = (ApplyDetail) teachEntity;
+                                        return applyDetail;
+                                    }).subscribe(applyDetail -> {
+                                        adapter.addCid(dataEntity.getCid());
+                                        adapter.add(applyDetail);
+                                        adapter.notifyItemInserted(adapter.getItemCount());
+                                    });
+
+                            Observable.from(dataEntity1.getStu())
+                                    .map(stuEntity -> {
+                                        ApplyDetail applyDetail = (ApplyDetail) stuEntity;
+                                        return applyDetail;
+                                    }).subscribe(applyDetail -> {
+                                        adapter.addCid(dataEntity.getCid());
+                                        adapter.add(applyDetail);
+                                        adapter.notifyItemInserted(adapter.getItemCount());
+                                    });
+                        });
+                    });
+        });
+
+        model.stuClass().subscribe(subscriber);
     }
 
     @Override
     public void inDestory() {
-        handler.removeMessages(1);
+        if (subscriber != null){
+            subscriber.cancelProgress();
+        }
     }
 
     @Override
@@ -57,31 +108,5 @@ public class MessageActivity extends BaseActivityPresenter<MessageView>{
         return this;
     }
 
-    private final static class ProgressHandler extends Handler {
-        private WeakReference<MessageActivity> reference;
 
-        public ProgressHandler(MessageActivity activity) {
-            reference = new WeakReference<MessageActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (reference.get() != null) {
-                switch (msg.what) {
-                    case 1:
-
-                        for (int i = 0; i < 10; i++) {
-                            MessageDetail data = new MessageDetail();
-                            //data.setAvatar(RandomBackImage.getRandomAvatar());
-                            reference.get().datas.add(data);
-                        }
-                        reference.get().adapter.addAll(reference.get().datas);
-                        reference.get().v.initAdapter(reference.get().adapter);
-                        JUtils.Toast(reference.get().getResources().getString(R.string.finish_load));
-                        reference.get().v.dismissProgress();
-                        break;
-                }
-            }
-        }
-    }
 }

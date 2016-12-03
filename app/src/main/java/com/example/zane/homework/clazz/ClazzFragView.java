@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -24,7 +22,6 @@ import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.search.presenters.SearchClassActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
 import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxAbsListView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -68,7 +65,7 @@ public class ClazzFragView extends BaseViewImpl {
         EventBus.getDefault().unregister(this);
     }
 
-    public void initRecycleview(ClazzFragPresenter.ClazzRecyAdapterPresenter adapterPresenter) {
+    public void initRecycleview(ClazzFragPresenter.ClazzTeaRecyAdapterPresenter adapterPresenter) {
 
         manager = new LinearLayoutManager(App.getInstance());
         recycleviewClazzInfo.setAdapter(adapterPresenter);

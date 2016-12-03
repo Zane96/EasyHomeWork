@@ -150,7 +150,6 @@ public class NoticeFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
 
         // TODO: 2016/11/18 有待测试
         for (int i = 1; i <= page - 1; i++) {
-
             messageSubscriber = new FinalSubscriber<>(getActivity(), dataEntity -> {
                 List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
                 adapter.addAll(messages);

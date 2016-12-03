@@ -68,7 +68,6 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
         swipHomeworkFrag.setOnRefreshListener(() -> {
             EventBus.getDefault().post(new NoticeRefreshEvent());
         });
-
     }
 
     /**

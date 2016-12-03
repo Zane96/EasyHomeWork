@@ -35,10 +35,12 @@ public interface MessageService {
 
     //学生查看消息列表(分页加载)
     @GET("getMess/{num}")
+    @Headers("Cache-Control: no-cache")
     Observable<List<GetMessage.DataEntity>> getStuMessage(@Path("num") int num);
 
     //老师查看消息列表(分页加载)
     @GET("getMesste/{num}")
+    @Headers("Cache-Control: no-cache")
     Observable<List<GetMessage.DataEntity>> getTeaMessage(@Path("num") int num);
 
     //查看消息的具体内容

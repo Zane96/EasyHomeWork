@@ -3,6 +3,9 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**学生查看加入的班级：
  * Created by Zane on 16/10/24.
  * Email: zanebot96@gmail.com
@@ -13,20 +16,21 @@ public class StuHaveClass implements Parcelable {
 
     /**
      * status : 200
-     * message : exist
-     * data : {"name":"2014级信息安全卓越班","creatime":"2016-06-13","creator":"sugar","description":"信安牛牛初长成"}
+     * message : ok
+     * data : [{"cid":"11","classname":"2014信安卓越班","creatime":"2016-06-17","creator":"ture","description":"计算机学院"},{"cid":"25","classname":"","creatime":"2016-10-24","creator":"ture","description":"dfdsf"}]
      */
 
     private int status;
     private String message;
     /**
-     * name : 2014级信息安全卓越班
-     * creatime : 2016-06-13
-     * creator : sugar
-     * description : 信安牛牛初长成
+     * cid : 11
+     * classname : 2014信安卓越班
+     * creatime : 2016-06-17
+     * creator : ture
+     * description : 计算机学院
      */
 
-    private DataEntity data;
+    private List<DataEntity> data;
 
     public int getStatus() {
         return status;
@@ -44,26 +48,35 @@ public class StuHaveClass implements Parcelable {
         this.message = message;
     }
 
-    public DataEntity getData() {
+    public List<DataEntity> getData() {
         return data;
     }
 
-    public void setData(DataEntity data) {
+    public void setData(List<DataEntity> data) {
         this.data = data;
     }
 
     public static class DataEntity implements Parcelable {
-        private String name;
+        private String cid;
+        private String classname;
         private String creatime;
         private String creator;
         private String description;
 
-        public String getName() {
-            return name;
+        public String getCid() {
+            return cid;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setCid(String cid) {
+            this.cid = cid;
+        }
+
+        public String getClassname() {
+            return classname;
+        }
+
+        public void setClassname(String classname) {
+            this.classname = classname;
         }
 
         public String getCreatime() {
@@ -97,7 +110,8 @@ public class StuHaveClass implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.name);
+            dest.writeString(this.cid);
+            dest.writeString(this.classname);
             dest.writeString(this.creatime);
             dest.writeString(this.creator);
             dest.writeString(this.description);
@@ -107,7 +121,8 @@ public class StuHaveClass implements Parcelable {
         }
 
         protected DataEntity(Parcel in) {
-            this.name = in.readString();
+            this.cid = in.readString();
+            this.classname = in.readString();
             this.creatime = in.readString();
             this.creator = in.readString();
             this.description = in.readString();
@@ -135,7 +150,7 @@ public class StuHaveClass implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.status);
         dest.writeString(this.message);
-        dest.writeParcelable(this.data, flags);
+        dest.writeList(this.data);
     }
 
     public StuHaveClass() {
@@ -144,7 +159,8 @@ public class StuHaveClass implements Parcelable {
     protected StuHaveClass(Parcel in) {
         this.status = in.readInt();
         this.message = in.readString();
-        this.data = in.readParcelable(DataEntity.class.getClassLoader());
+        this.data = new ArrayList<DataEntity>();
+        in.readList(this.data, DataEntity.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<StuHaveClass> CREATOR = new Parcelable.Creator<StuHaveClass>() {

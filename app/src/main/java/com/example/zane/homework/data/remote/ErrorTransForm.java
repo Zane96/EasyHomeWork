@@ -37,9 +37,6 @@ public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
             if (throwable instanceof HttpException) {
                 HttpException response = (HttpException) throwable;
                 switch (response.code()){
-                    case 201:
-                        errorMessage = "数据不存在"+response.message();
-                        break;
                     case 404:
                         errorMessage = "token无效"+response.message();
                         break;
@@ -58,8 +55,6 @@ public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
                 }
             } else if (throwable instanceof ServiceConfigurationError){
                 errorMessage = "服务器错误";
-            } else if (throwable instanceof EOFException){
-                errorMessage = "成功～";
             } else {
                 errorMessage = "网络错误";
             }

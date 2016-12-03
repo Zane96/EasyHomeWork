@@ -22,6 +22,7 @@ import android.view.View;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.data.bean.PerInfo;
 import com.example.zane.homework.data.bean.QuitLogin;
 import com.example.zane.homework.data.model.RegisterLoginModel;
 import com.example.zane.homework.data.model.UserInfoModel;
@@ -82,15 +83,23 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         }
     }
 
+    //获取学生个人信息
+    private void getStuInfo(){
+        userInfoModel.getPerInfo(2).subscribe(this::setPerInfoData);
+    }
+    //获取老师个人信息
     private void getTeaInfo() {
-        userInfoModel.getPerInfo(1).subscribe(data -> {
-            MySharedPre sp = MySharedPre.getInstance();
-            sp.setGender(data.getGender());
-            sp.setIntro(data.getSelfintro());
-            sp.setName(data.getName());
-            sp.setRealName(data.getRealname());
-            v.reFlashData(data.getName());
-        });
+        userInfoModel.getPerInfo(1).subscribe(this::setPerInfoData);
+    }
+
+    //存储个人信息
+    private void setPerInfoData(PerInfo.DataEntity data){
+        MySharedPre sp = MySharedPre.getInstance();
+        sp.setGender(data.getGender());
+        sp.setIntro(data.getSelfintro());
+        sp.setName(data.getName());
+        sp.setRealName(data.getRealname());
+        v.reFlashData(data.getName());
     }
 
     @Override
@@ -112,10 +121,11 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if ("first".equals(getIntent().getStringExtra(LoginRegisterActivity.LOGIN))){
-            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                getTeaInfo();
-            }
+        //获取用户信息
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+            getTeaInfo();
+        } else {
+            getStuInfo();
         }
     }
 
@@ -218,7 +228,9 @@ public class MainActivity extends BaseActivityPresenter<MainView>
         if (id == R.id.drawer_class) {
             v.transToClazzFragment(clazzFragPresenter);
         } else if (id == R.id.drawer_message) {
-            v.transToMessage();
+            if (MySharedPre.getInstance().getIdentity().equals("student")){
+                v.transToMessage();
+            }
         } else if (id == R.id.drawer_info) {
             v.transToInfoActivity();
         } else if (id == R.id.drawer_about) {

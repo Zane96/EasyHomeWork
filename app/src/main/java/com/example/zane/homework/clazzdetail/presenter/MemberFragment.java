@@ -23,6 +23,7 @@ import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
 import com.jakewharton.rxbinding.support.design.widget.RxSnackbar;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -73,6 +74,7 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         adapter = new ClazzDetailMemberAdapter(getActivity());
         cid = getArguments().getString(CID);
         jid = getArguments().getString(JID);
@@ -80,11 +82,12 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
         getData();
     }
 
-    public void getData(){
+    public void getData() {
+        adapter.clear();
+        datas.clear();
         memberSubscriber = new FinalSubscriber<>(getActivity(), dataEnties -> {
-            adapter.clear();
             List<ClassMemeber.DataEntity> members = (List<ClassMemeber.DataEntity>) dataEnties;
-            for (ClassMemeber.DataEntity data : members){
+            for (ClassMemeber.DataEntity data : members) {
                 MemberDetail memberDetail = (MemberDetail) data;
                 memberDetail.setMemeber(data);
                 datas.add(memberDetail);
@@ -132,6 +135,7 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (memberSubscriber != null){
             memberSubscriber.cancelProgress();
         }

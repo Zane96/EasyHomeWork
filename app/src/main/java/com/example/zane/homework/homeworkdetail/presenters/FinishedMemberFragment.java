@@ -99,6 +99,7 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
     }
 
     public void getData(){
+        adapter.clear();
         memberSubscriber = new FinalSubscriber<>(getActivity(), memberDatas -> {
             for (ClassMemeber.DataEntity data : (List<ClassMemeber.DataEntity>) memberDatas){
                 sids.add(data.getSid());
@@ -107,13 +108,11 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
                             MemberDetail memberDetail = (MemberDetail) dataEntities.get(0);
                             memberDetail.setHoPerson(dataEntities.get(0));
                             datas.add((HoPerson.DataEntity)dataEntities.get(0));
-                            adapter.clear();
                             adapter.add(memberDetail);
                             adapter.notifyItemInserted(datas.size());
                         });
             }
         });
-
         classModel.classMemeber(cid).subscribe(memberSubscriber);
     }
 

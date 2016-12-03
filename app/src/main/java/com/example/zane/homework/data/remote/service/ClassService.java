@@ -46,7 +46,7 @@ public interface ClassService{
     //学生查看加入的班级
     @GET("inClass")
     @Headers("Cache-Control: no-cache")
-    Observable<StuHaveClass.DataEntity> stuClass();
+    Observable<List<StuHaveClass.DataEntity>> stuClass();
 
     //老师申请加入班级
     @POST("appClass")

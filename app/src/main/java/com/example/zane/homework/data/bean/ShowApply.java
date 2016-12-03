@@ -3,6 +3,9 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.zane.easymvp.base.IListModel;
+import com.example.zane.homework.entity.ApplyDetail;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class ShowApply implements Parcelable {
         this.data = data;
     }
 
-    public static class DataEntity implements Parcelable {
+    public static class DataEntity implements Parcelable{
         /**
          * apid : 2
          * realname : 夏英
@@ -84,7 +87,7 @@ public class ShowApply implements Parcelable {
             this.stu = stu;
         }
 
-        public static class TeachEntity implements Parcelable {
+        public static class TeachEntity extends ApplyDetail implements Parcelable {
             private String apid;
             private String realname;
             private String selfintro;
@@ -180,7 +183,8 @@ public class ShowApply implements Parcelable {
             };
         }
 
-        public static class StuEntity implements Parcelable {
+        public static class StuEntity extends ApplyDetail implements Parcelable {
+
             private String apid;
             private String realname;
             private String selfintro;
