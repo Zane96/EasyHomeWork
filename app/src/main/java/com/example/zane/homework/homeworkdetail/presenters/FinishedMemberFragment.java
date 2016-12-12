@@ -49,7 +49,6 @@ public class FinishedMemberFragment extends BaseFragment<ClazzDeatilFragmentView
     private ClazzDetailMemberAdapter adapter;
     private ClassModel classModel = ClassModel.getInstance();
     private HomeWorkModel workModel = HomeWorkModel.getInstance();
-    private FinalSubscriber<List<ClassMemeber.DataEntity>> memberSubscriber;
     private List<String> sids;
 
     public static final String CID = "cid";
@@ -154,8 +153,5 @@ public class FinishedMemberFragment extends BaseFragment<ClazzDeatilFragmentView
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (memberSubscriber != null){
-            memberSubscriber.cancelProgress();
-        }
     }
 }
