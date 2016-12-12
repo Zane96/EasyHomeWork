@@ -9,6 +9,9 @@ package com.example.zane.homework.data.remote;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.zane.homework.base.BaseActivity;
+import com.example.zane.homework.base.BaseFragment;
+import com.example.zane.homework.base.UnSubscriberListener;
 import com.example.zane.homework.data.remote.progress.ProgressCancelListener;
 import com.example.zane.homework.data.remote.progress.ProgressDialogHandler;
 
@@ -17,19 +20,31 @@ import rx.Subscriber;
 
 public class FinalSubscriber<T> extends Subscriber<T> implements ProgressCancelListener {
 
-
     private static final String TAG  = "FinalSubscriber";
-
     private ProgressDialogHandler progressDialogHandler;
     private SubscriberOnNextListener subscriberOnNextListener;
-    private Context context;
 
-    public FinalSubscriber(Context context, SubscriberOnNextListener listener){
-        subscriberOnNextListener = listener;
-        this.context = context;
+    /**
+     * activity调用
+     * @param context
+     * @param listener
+     */
+    public FinalSubscriber(BaseActivity context, SubscriberOnNextListener listener){
+        context.setUnSubscriberListener(() -> {if (!isUnsubscribed()){unsubscribe();}});
         progressDialogHandler = new ProgressDialogHandler(context, this, true);
+        subscriberOnNextListener = listener;
     }
 
+    /**
+     * fragment调用
+     * @param context
+     * @param listener
+     */
+    public FinalSubscriber(BaseFragment context, SubscriberOnNextListener listener) {
+        context.setUnSubscriberListener(() -> {if (!isUnsubscribed()){unsubscribe();}});
+        progressDialogHandler = new ProgressDialogHandler(context.getActivity(), this, true);
+        subscriberOnNextListener = listener;
+    }
 
     private void showProgressDialog(){
         if (progressDialogHandler != null){

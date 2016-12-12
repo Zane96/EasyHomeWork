@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazz.ClazzFragPresenter;
 import com.example.zane.homework.data.bean.PerInfo;
 import com.example.zane.homework.data.bean.QuitLogin;
@@ -39,9 +40,11 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 
-public class MainActivity extends BaseActivityPresenter<MainView>
+public class MainActivity extends BaseActivity<MainView>
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ClazzFragPresenter clazzFragPresenter;
@@ -229,8 +232,9 @@ public class MainActivity extends BaseActivityPresenter<MainView>
             v.transToClazzFragment(clazzFragPresenter);
         } else if (id == R.id.drawer_message) {
             if (MySharedPre.getInstance().getIdentity().equals("student")){
-                v.transToMessage();
+
             }
+            v.transToMessage();
         } else if (id == R.id.drawer_info) {
             v.transToInfoActivity();
         } else if (id == R.id.drawer_about) {

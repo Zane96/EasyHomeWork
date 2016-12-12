@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailMemberAdapter;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.clazzdetail.presenter.WorkJudgePresenter;
@@ -35,13 +36,14 @@ import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /** 这里默认是所有学生的完成信息
  * Created by Zane on 16/6/13.
  * Email: zanebot96@gmail.com
  */
 
-public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
+public class FinishedMemberFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
     private List<HoPerson.DataEntity> datas;
     private ClazzDetailMemberAdapter adapter;
@@ -100,20 +102,21 @@ public class FinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilFra
 
     public void getData(){
         adapter.clear();
-        memberSubscriber = new FinalSubscriber<>(getActivity(), memberDatas -> {
-            for (ClassMemeber.DataEntity data : (List<ClassMemeber.DataEntity>) memberDatas){
-                sids.add(data.getSid());
-                workModel.showHoPerson(asid, data.getSid())
-                        .subscribe(dataEntities -> {
-                            MemberDetail memberDetail = (MemberDetail) dataEntities.get(0);
-                            memberDetail.setHoPerson(dataEntities.get(0));
-                            datas.add((HoPerson.DataEntity)dataEntities.get(0));
-                            adapter.add(memberDetail);
-                            adapter.notifyItemInserted(datas.size());
-                        });
-            }
-        });
-        classModel.classMemeber(cid).subscribe(memberSubscriber);
+        classModel.classMemeber(cid)
+                .flatMap(memberDatas -> Observable.from(memberDatas))
+                .flatMap(memberData -> {
+                    sids.add(memberData.getSid());
+                    return workModel.showHoPerson(asid, memberData.getSid());})
+                .map(hoPersons -> {return hoPersons.get(0);})
+                .toList()
+                .subscribe(new FinalSubscriber<List<HoPerson.DataEntity>>(this, dataEntitie -> {
+                    List<HoPerson.DataEntity> dataEntities = (List<HoPerson.DataEntity>) dataEntitie;
+                    MemberDetail memberDetail = (MemberDetail) dataEntities.get(0);
+                    memberDetail.setHoPerson(dataEntities.get(0));
+                    datas.add((HoPerson.DataEntity)dataEntities.get(0));
+                    adapter.add(memberDetail);
+                    adapter.notifyItemInserted(datas.size());
+                }));
     }
 
     @Override

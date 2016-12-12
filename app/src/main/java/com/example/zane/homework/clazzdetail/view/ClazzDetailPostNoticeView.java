@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActivity;
 import com.example.zane.homework.event.PostNoticeEvent;
 import com.example.zane.homework.utils.JudgeSearch;
@@ -33,7 +34,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzDetailPostNoticeView extends BaseViewImpl {
+public class ClazzDetailPostNoticeView extends BaseActivityView {
 
     @Bind(R.id.toolbar_postnotice)
     Toolbar toolbarPostnotice;
@@ -64,15 +65,7 @@ public class ClazzDetailPostNoticeView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        toolbarPostnotice.setTitle("发布作业");
-        activity.setSupportActionBar(toolbarPostnotice);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarPostnotice.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        super.initToolbar(activity, toolbarPostnotice, "发布消息");
     }
 
     public void init() {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.view.WorkJudgeActivityView;
 import com.example.zane.homework.data.db.DownloadWorkDBManager;
 import com.example.zane.homework.data.model.HomeWorkModel;
@@ -31,7 +32,7 @@ import rx.functions.Action1;
  * Blog: zane96.github.io
  */
 
-public class WorkJudgePresenter extends BaseActivityPresenter<WorkJudgeActivityView>{
+public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
 
     private HomeWorkModel workModel = HomeWorkModel.getInstance();
 
@@ -43,8 +44,6 @@ public class WorkJudgePresenter extends BaseActivityPresenter<WorkJudgeActivityV
     //下载文件的base url
     //private static final String BASE_URL = "http://115.159.113.116/index.php/Homework/downLoad/";
     public static final String DOWNLOAD_URL = "download_url";
-
-    private FinalSubscriber<String> judgeSubscriber;
 
     @Override
     public Class<WorkJudgeActivityView> getRootViewClass() {
@@ -68,11 +67,9 @@ public class WorkJudgePresenter extends BaseActivityPresenter<WorkJudgeActivityV
     }
 
     public void judgeWork(String degree, String addtion){
-        judgeSubscriber = new FinalSubscriber<>(this, string -> {
+        workModel.judgeHomeWork(degree, addtion, asid, sid).subscribe(new FinalSubscriber<String>(this, string -> {
             v.judgeSuccess();
-        });
-
-        workModel.judgeHomeWork(degree, addtion, asid, sid).subscribe(judgeSubscriber);
+        }));
     }
 
     public void downloadWork(){
@@ -107,9 +104,6 @@ public class WorkJudgePresenter extends BaseActivityPresenter<WorkJudgeActivityV
 
     @Override
     public void inDestory() {
-        if (judgeSubscriber != null){
-            judgeSubscriber.cancelProgress();
-        }
         EventBus.getDefault().unregister(this);
     }
 

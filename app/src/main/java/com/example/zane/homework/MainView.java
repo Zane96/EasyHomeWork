@@ -71,6 +71,9 @@ public class MainView extends BaseViewImpl {
     }
 
     public void init(ClazzFragPresenter clazzFragPresenter) {
+
+        toolbar.setTitle("作业帮");
+
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter, "clazzfrag");
         fragmentTransaction.commit();

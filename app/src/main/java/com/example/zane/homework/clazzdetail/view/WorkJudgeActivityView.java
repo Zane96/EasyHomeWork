@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.clazzdetail.presenter.WorkJudgePresenter;
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 import com.jakewharton.rxbinding.view.RxView;
@@ -29,7 +30,7 @@ import butterknife.Bind;
  * Blog: zane96.github.io
  */
 
-public class WorkJudgeActivityView extends BaseViewImpl {
+public class WorkJudgeActivityView extends BaseActivityView {
 
     @Bind(R.id.toolbar_workjudge)
     Toolbar toolbarWorkjudge;
@@ -56,13 +57,7 @@ public class WorkJudgeActivityView extends BaseViewImpl {
     }
 
     public void init(String name, String addtion, String attach, String attachDB){
-        toolbarWorkjudge.setTitle("批改" + name + "同学作业");
-        activity.setSupportActionBar(toolbarWorkjudge);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        RxToolbar.navigationClicks(toolbarWorkjudge).subscribe(aVoid -> {
-            activity.finish();
-        });
+        super.initToolbar(activity, toolbarWorkjudge, "批改" + name + "同学作业");
 
         RxView.clicks(fabWorkjudge)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)

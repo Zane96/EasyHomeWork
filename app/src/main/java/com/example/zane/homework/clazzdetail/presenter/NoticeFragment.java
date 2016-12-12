@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
+import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.NoticeDetailFrgament;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.data.bean.GetMessage;
@@ -27,18 +28,20 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.functions.Func1;
+
 /**
  * todo 测试
  * Created by Zane on 16/6/8.
  * Email: zanebot96@gmail.com
  */
 
-public class NoticeFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
+public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
     private ClazzDetailNoticeAdapter adapter;
 
     private MessageModel model = MessageModel.getInstance();
-    private FinalSubscriber<List<GetMessage.DataEntity>> messageSubscriber;
     private List<String> mids;
     private LinearLayoutManager manager;
 
@@ -114,29 +117,28 @@ public class NoticeFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
         isLoading = true;
 
         //如果第N页数据为空，后台会返回null
-        messageSubscriber = new FinalSubscriber<>(getActivity(), dataEntity -> {
-            if (dataEntity != null){
-                List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
-                adapter.addAll(messages);
+        model.getTeaMessage(page)
+                .subscribe(new FinalSubscriber<List<GetMessage.DataEntity>>(this, dataEntity -> {
+                    if (dataEntity != null){
+                        List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
+                        adapter.addAll(messages);
 
-                for (GetMessage.DataEntity data : messages) {
-                    mids.add(data.getMid());
-                }
+                        for (GetMessage.DataEntity data : messages) {
+                            mids.add(data.getMid());
+                        }
 
-                //页数自增,一页最多填充七条数据(后台的规定)
-                page++;
+                        //页数自增,一页最多填充七条数据(后台的规定)
+                        page++;
+                        adapter.notifyDataSetChanged();
+                        isLoading = false;
+                    } else {
+                        JUtils.Toast("没有更多消息了～");
+                        //停止再加载更多
+                        isLoading = true;
+                    }
+                }));
 
-                adapter.notifyDataSetChanged();
 
-                isLoading = false;
-            } else {
-                JUtils.Toast("没有更多消息了～");
-                //停止再加载更多
-                isLoading = true;
-            }
-        });
-
-        model.getTeaMessage(page).subscribe(messageSubscriber);
     }
 
     /**
@@ -150,15 +152,14 @@ public class NoticeFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
 
         // TODO: 2016/11/18 有待测试
         for (int i = 1; i <= page - 1; i++) {
-            messageSubscriber = new FinalSubscriber<>(getActivity(), dataEntity -> {
+            model.getTeaMessage(i).subscribe(new FinalSubscriber<List<GetMessage.DataEntity>>(this, dataEntity -> {
                 List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
                 adapter.addAll(messages);
                 adapter.notifyDataSetChanged();
                 for (GetMessage.DataEntity data : messages) {
-                   mids.add(data.getMid());
+                    mids.add(data.getMid());
                 }
-            });
-            model.getTeaMessage(i).subscribe(messageSubscriber);
+            }));
         }
     }
 
@@ -187,8 +188,5 @@ public class NoticeFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (messageSubscriber != null){
-            messageSubscriber.cancelProgress();
-        }
     }
 }

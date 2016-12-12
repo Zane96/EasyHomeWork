@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.data.bean.NoDueHomeWork;
 import com.example.zane.homework.data.model.HomeWorkModel;
@@ -38,13 +39,12 @@ import java.util.List;
  * Email: zanebot96@gmail.com
  */
 
-public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
+public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
     private ArrayList<HomeWorkDetail> datas;
     private List<NoDueHomeWork.DataEntity> dataEntities;
     private ClazzDetailHomeWorkAdapter adapter;
     private HomeWorkModel model = HomeWorkModel.getInstance();
-    private FinalSubscriber<List<NoDueHomeWork.DataEntity>> subscriber;
 
     public static final String CID = "cid";
     public static final String ASID = "asid";
@@ -84,16 +84,13 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
     }
 
     private void getData(){
-        subscriber = new FinalSubscriber<>(getActivity(), data -> {
+        model.showNoDueWork().subscribe(new FinalSubscriber<List<NoDueHomeWork.DataEntity>>(this, data -> {
             datas = (ArrayList<HomeWorkDetail>) data;
             adapter.clear();
             adapter.addAll(datas);
             adapter.notifyDataSetChanged();
-
             dataEntities = (List<NoDueHomeWork.DataEntity>) data;
-        });
-
-        model.showNoDueWork().subscribe(subscriber);
+        }));
     }
 
     @Override
@@ -165,9 +162,5 @@ public class HomeWorkFragment extends BaseFragmentPresenter<ClazzDeatilFragmentV
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (subscriber != null){
-            subscriber.cancelProgress();
-        }
     }
-
 }

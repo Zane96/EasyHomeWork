@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
+import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
 import com.example.zane.homework.data.bean.ClassMemeber;
 import com.example.zane.homework.data.model.ClassModel;
@@ -30,13 +31,15 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+
 
 /**
  * Created by Zane on 16/6/8.
  * Email: zanebot96@gmail.com
  */
 
-public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentView>{
+public class MemberFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
     public static final String MEMBER_DETAIL = "memberDetail";
     private static final String CID = "cid";
@@ -48,7 +51,6 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     private ClazzDetailMemberAdapter adapter;
     private String cid;
     private String jid;
-    private FinalSubscriber<List<ClassMemeber.DataEntity>> memberSubscriber;
     private ClassModel model = ClassModel.getInstance();
     private List<MemberDetail> datas;
 
@@ -83,19 +85,20 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     }
 
     public void getData() {
+
         adapter.clear();
         datas.clear();
-        memberSubscriber = new FinalSubscriber<>(getActivity(), dataEnties -> {
-            List<ClassMemeber.DataEntity> members = (List<ClassMemeber.DataEntity>) dataEnties;
-            for (ClassMemeber.DataEntity data : members) {
-                MemberDetail memberDetail = (MemberDetail) data;
-                memberDetail.setMemeber(data);
-                datas.add(memberDetail);
-            }
-            adapter.addAll(datas);
-            adapter.notifyDataSetChanged();
-        });
-        model.classMemeber(cid).subscribe(memberSubscriber);
+
+        model.classMemeber(cid)
+                .map(dataEntities -> {return (List<ClassMemeber.DataEntity>)(dataEntities);})
+                .flatMap(members -> Observable.from(members))
+                .subscribe(new FinalSubscriber<ClassMemeber.DataEntity>(this, data -> {
+                    MemberDetail memberDetail = (MemberDetail) data;
+                    memberDetail.setMemeber((ClassMemeber.DataEntity)data);
+                    datas.add(memberDetail);
+                    adapter.addAll(datas);
+                    adapter.notifyDataSetChanged();
+                }));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -136,8 +139,5 @@ public class MemberFragment extends BaseFragmentPresenter<ClazzDeatilFragmentVie
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (memberSubscriber != null){
-            memberSubscriber.cancelProgress();
-        }
     }
 }

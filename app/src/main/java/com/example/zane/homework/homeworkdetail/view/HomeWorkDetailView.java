@@ -12,8 +12,10 @@ import android.view.View;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.homeworkdetail.HomeWorkDetailViewpagerAdapter;
+import com.example.zane.homework.homeworkdetail.presenters.HomeWorkDetailActivity;
 
 import butterknife.Bind;
 
@@ -22,7 +24,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class HomeWorkDetailView extends BaseViewImpl {
+public class HomeWorkDetailView extends BaseActivityView {
 
     @Bind(R.id.toolbar_homeworkdetail)
     Toolbar toolbarHomeworkdetail;
@@ -33,7 +35,6 @@ public class HomeWorkDetailView extends BaseViewImpl {
     @Bind(R.id.fab_homeworkdetail)
     FloatingActionButton fabHomeworkdetail;
     private AppCompatActivity activity;
-    private ProgressDialog progressDialog;
 
     @Override
     public int getRootViewId() {
@@ -42,7 +43,7 @@ public class HomeWorkDetailView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (HomeWorkDetailActivity) activity;
     }
 
     @Override
@@ -51,28 +52,11 @@ public class HomeWorkDetailView extends BaseViewImpl {
     }
 
     public void initToolbar() {
-        progressDialog = new ProgressDialog(activity);
-
-        activity.setSupportActionBar(toolbarHomeworkdetail);
-        activity.setSupportActionBar(toolbarHomeworkdetail);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarHomeworkdetail.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        super.initToolbar(activity, toolbarHomeworkdetail, "完成名单");
     }
 
     public void initTabLayout(HomeWorkDetailViewpagerAdapter adapter){
         viewpagerHomeworkdetail.setAdapter(adapter);
         tablayoutHomeworkdetail.setupWithViewPager(viewpagerHomeworkdetail);
-    }
-
-    public void showProgress(){
-        progressDialog.show();
-    }
-    public void hideProgress(){
-        progressDialog.hide();
     }
 }

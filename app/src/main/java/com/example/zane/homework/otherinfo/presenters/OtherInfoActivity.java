@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.data.bean.GetStatistc;
@@ -25,12 +26,11 @@ import java.lang.ref.WeakReference;
  * Email: zanebot96@gmail.com
  */
 
-public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
+public class OtherInfoActivity extends BaseActivity<OtherInfoView> {
 
     private MemberDetail memberDetail;
     private String courseName;
     private final HomeWorkModel model = HomeWorkModel.getInstance();
-    private FinalSubscriber<GetStatistc.DataEntity> subscriber;
 
     @Override
     public Class<OtherInfoView> getRootViewClass() {
@@ -46,18 +46,15 @@ public class OtherInfoActivity extends BaseActivityPresenter<OtherInfoView>{
     }
 
     public void getData(String jid, String sid){
-        subscriber = new FinalSubscriber<>(this, dataEntity -> {
-            GetStatistc.DataEntity data = (GetStatistc.DataEntity) dataEntity;
-            v.setData(data.getCoursename(), data.getTotal(), data.getScore(), String.valueOf(data.getAbsent()));
-        });
-        model.getStatistc(jid, sid).subscribe(subscriber);
+        model.getStatistc(jid, sid)
+                .subscribe(new FinalSubscriber<GetStatistc.DataEntity>(this, dataEntity -> {
+                    GetStatistc.DataEntity data = (GetStatistc.DataEntity) dataEntity;
+                    v.setData(data.getCoursename(), data.getTotal(), data.getScore(), String.valueOf(data.getAbsent()));
+                }));
     }
 
     @Override
     public void inDestory() {
-        if (subscriber != null){
-            subscriber.cancelProgress();
-        }
     }
 
     @Override

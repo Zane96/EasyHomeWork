@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostNoticeActivity;
@@ -46,7 +47,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzDetailActivityView extends BaseViewImpl {
+public class ClazzDetailActivityView extends BaseActivityView {
 
     public static final String COURSENAME = "courseName";
     public static final String CID = "cid";
@@ -92,16 +93,12 @@ public class ClazzDetailActivityView extends BaseViewImpl {
 
     public void init(String cid, String jid) {
 
+        super.initToolbar(activity, toolbarClazzdetail, "详细信息");
+
         collClazzdetail.setTitle("");
         collClazzdetail.setExpandedTitleColor(this.activity.getResources().getColor(R.color.transparent));
-        activity.setSupportActionBar(toolbarClazzdetail);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         textviewClazzdetailCoursename.setPadding(0, 0, 0, JUtils.px2dip(JUtils.getStatusBarHeight()));
-
-        RxToolbar.navigationClicks(toolbarClazzdetail).subscribe(aVoid -> {
-            activity.finish();
-        });
 
         RxView.clicks(fabClazzdetail).subscribe(aVoid -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);

@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.search.presenters.SearchClassActivity;
 import com.example.zane.homework.utils.JudgeSearch;
@@ -43,7 +44,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class SearchClassView extends BaseViewImpl {
+public class SearchClassView extends BaseActivityView {
 
     @Bind(R.id.toolbar_search)
     Toolbar toolbarSearch;
@@ -79,16 +80,8 @@ public class SearchClassView extends BaseViewImpl {
 
     }
 
-    private void initToolbar() {
-        toolbarSearch.setTitle("搜索班级");
-        activity.setSupportActionBar(toolbarSearch);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarSearch.setNavigationOnClickListener(v -> activity.finish());
-    }
-
     public void init() {
-        initToolbar();
-
+        super.initToolbar(activity, toolbarSearch, "搜索班级");
         RxView.clicks(clazzItem).subscribe(aVoid -> {
             AlertDialog.Builder builder;
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {

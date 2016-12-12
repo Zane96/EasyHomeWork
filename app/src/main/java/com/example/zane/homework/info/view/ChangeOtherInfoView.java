@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 import com.jakewharton.rxbinding.view.RxView;
@@ -25,7 +26,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class ChangeOtherInfoView extends BaseViewImpl {
+public class ChangeOtherInfoView extends BaseActivityView {
     @Bind(R.id.edit_change_otherinfo)
     EditText editChangeOtherinfo;
     @Bind(R.id.button_post_newotherinfo)
@@ -52,10 +53,7 @@ public class ChangeOtherInfoView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        toolbarChangotherinfo.setTitle("修改信息");
-        activity.setSupportActionBar(toolbarChangotherinfo);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        RxToolbar.navigationClicks(toolbarChangotherinfo).subscribe(aVoid -> {activity.finish();});
+        super.initToolbar(activity, toolbarChangotherinfo, "修改信息");
     }
 
     public void init(String oldData){

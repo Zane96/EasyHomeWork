@@ -9,6 +9,7 @@ import android.view.Menu;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.data.bean.SerClassInfo;
 import com.example.zane.homework.data.model.ClassModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
@@ -17,17 +18,19 @@ import com.example.zane.homework.search.view.SearchClassView;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.example.zane.homework.utils.RandomBackImage;
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
+import com.jakewharton.rxbinding.support.v7.widget.SearchViewQueryTextEvent;
 import com.jude.utils.JUtils;
+
+import rx.functions.Func1;
 
 /**
  * Created by Zane on 16/6/14.
  * Email: zanebot96@gmail.com
  */
 
-public class SearchClassActivity extends BaseActivityPresenter<SearchClassView>{
+public class SearchClassActivity extends BaseActivity<SearchClassView> {
 
     private ClassModel model;
-    private FinalSubscriber<SerClassInfo.DataEntity> searchSubscriber;
     private FinalSubscriber<String> appSubscriber;
     private String classId;
 
@@ -44,9 +47,6 @@ public class SearchClassActivity extends BaseActivityPresenter<SearchClassView>{
 
     @Override
     public void inDestory() {
-        if (searchSubscriber != null){
-            searchSubscriber.cancelProgress();
-        }
         if (appSubscriber != null){
             appSubscriber.cancelProgress();
         }
@@ -69,7 +69,7 @@ public class SearchClassActivity extends BaseActivityPresenter<SearchClassView>{
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
             model.teaAppClass(classId, "sir", course, addtion).subscribe(appSubscriber);
         } else {
-            model.stuAppClass(classId, "stu");
+            model.stuAppClass(classId, "stu").subscribe(appSubscriber);
         }
     }
 
@@ -78,17 +78,29 @@ public class SearchClassActivity extends BaseActivityPresenter<SearchClassView>{
         getMenuInflater().inflate(R.menu.search, menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search_view));
 
+//        RxSearchView.queryTextChangeEvents(searchView)
+//                .filter(searchViewQueryTextEvent -> {
+//                    if (JudgeSearch.isRight(searchViewQueryTextEvent.queryText().toString())){
+//                        return true;
+//                    }
+//                    return false;})
+//                .flatMap(charSequence -> {
+//                    classId = charSequence.toString();
+//                    return model.serClassInfo(charSequence.toString());})
+//                .subscribe(new FinalSubscriber<SerClassInfo.DataEntity>(this, data -> {
+//                    SerClassInfo.DataEntity serClassInfo = (SerClassInfo.DataEntity) data;
+//                    v.setSearchData(RandomBackImage.getRandomAvatar(), serClassInfo.getName(), serClassInfo.getCreator(), serClassInfo.getCreatime());
+//                }));
+
         RxSearchView.queryTextChanges(searchView).subscribe(charSequence -> {
             if (JudgeSearch.isRight(charSequence.toString())){
-
                 //搜索班级信息
-                searchSubscriber = new FinalSubscriber<SerClassInfo.DataEntity>(SearchClassActivity.this, data -> {
-                    SerClassInfo.DataEntity serClassInfo = (SerClassInfo.DataEntity) data;
-                    v.setSearchData(RandomBackImage.getRandomAvatar(), serClassInfo.getName(), serClassInfo.getCreator(), serClassInfo.getCreatime());
-                });
-
                 classId = charSequence.toString();
-                model.serClassInfo(charSequence.toString()).subscribe(searchSubscriber);
+                model.serClassInfo(charSequence.toString())
+                        .subscribe(new FinalSubscriber<SerClassInfo.DataEntity>(this, data -> {
+                            SerClassInfo.DataEntity serClassInfo = (SerClassInfo.DataEntity) data;
+                            v.setSearchData(RandomBackImage.getRandomAvatar(), serClassInfo.getName(), serClassInfo.getCreator(), serClassInfo.getCreatime());
+                        }));
                 v.showError();
             }
         });

@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.data.bean.StuHaveClass;
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
+public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
 
     private static final String TAG = ClazzFragPresenter.class.getSimpleName();
 
@@ -58,8 +59,6 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
 
     private ClazzTeaRecyAdapterPresenter adapterPresenter;
     private boolean mIsDetailsActivityStarted;
-    private FinalSubscriber<List<TeacherHavaClass.DataEntity>> teaClassSubscriber;
-    private FinalSubscriber<List<StuHaveClass.DataEntity>> stuClassSubscriber;
     private ClassModel classModel = ClassModel.getInstance();
 
     public static ClazzFragPresenter newInstance() {
@@ -90,11 +89,12 @@ public class ClazzFragPresenter extends BaseFragmentPresenter<ClazzFragView> {
         adapterPresenter = new ClazzTeaRecyAdapterPresenter();
 
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            teaClassSubscriber = new FinalSubscriber<>(getActivity(), datas -> {
+
+            classModel.teaHaveClass().subscribe(new FinalSubscriber<List<TeacherHavaClass.DataEntity>>(this, datas -> {
                 teaHaveClasses = (List<TeacherHavaClass.DataEntity>) datas;
                 v.initRecycleview(adapterPresenter);
-            });
-            classModel.teaHaveClass().subscribe(teaClassSubscriber);
+            }));
+
         } else {
             // TODO: 16/11/4 学生的需要将课程和班级的信息融合了之后才显示 
         }

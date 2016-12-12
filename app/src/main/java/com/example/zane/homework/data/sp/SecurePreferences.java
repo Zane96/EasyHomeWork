@@ -103,6 +103,11 @@ public class SecurePreferences implements SharedPreferences {
         return SecurePreferences.encode(generator.generateKey().getEncoded());
     }
 
+    /**
+     * 加密
+     * @param cleartext
+     * @return
+     */
     private static String encrypt(String cleartext) {
         if (cleartext == null || cleartext.length() == 0) {
             return cleartext;
@@ -117,6 +122,11 @@ public class SecurePreferences implements SharedPreferences {
         }
     }
 
+    /**
+     * 解密
+     * @param ciphertext
+     * @return
+     */
     private static String decrypt(String ciphertext) {
         if (ciphertext == null || ciphertext.length() == 0) {
             return ciphertext;

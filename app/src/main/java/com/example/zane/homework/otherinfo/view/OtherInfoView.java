@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
 import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.data.sp.MySharedPre;
@@ -25,7 +26,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class OtherInfoView extends BaseViewImpl {
+public class OtherInfoView extends BaseActivityView {
 
 
     @Bind(R.id.imageview_otherinfo_top)
@@ -65,16 +66,7 @@ public class OtherInfoView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        toolbarOtherinfo.setTitle("");
-        activity.setSupportActionBar(toolbarOtherinfo);
-        activity.setSupportActionBar(toolbarOtherinfo);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarOtherinfo.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        super.initToolbar(activity, toolbarOtherinfo, "成员信息");
     }
 
     public void init(String name, String selfInfo, int avatar) {

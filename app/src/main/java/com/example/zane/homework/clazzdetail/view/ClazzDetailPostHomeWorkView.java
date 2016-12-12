@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailPostHomeWorkActivity;
 import com.example.zane.homework.event.PostHomeWorkEvent;
 import com.example.zane.homework.utils.FileUtils;
@@ -35,7 +36,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
+public class ClazzDetailPostHomeWorkView extends BaseActivityView {
 
     @Bind(R.id.toolbar_posthomework)
     Toolbar toolbarPosthomework;
@@ -70,15 +71,7 @@ public class ClazzDetailPostHomeWorkView extends BaseViewImpl {
     }
 
     private void initToolbar() {
-        toolbarPosthomework.setTitle("发布作业");
-        activity.setSupportActionBar(toolbarPosthomework);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarPosthomework.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        super.initToolbar(activity, toolbarPosthomework, "发布作业");
     }
 
     public void init() {

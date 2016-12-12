@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.authorinfo.AuthorInfoFragment;
+import com.example.zane.homework.base.BaseActivityView;
 
 import butterknife.Bind;
 
@@ -17,7 +18,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class AuthorInfoView extends BaseViewImpl {
+public class AuthorInfoView extends BaseActivityView {
 
     @Bind(R.id.toolbar_authorinfo)
     Toolbar toolbarAuthorinfo;
@@ -41,15 +42,7 @@ public class AuthorInfoView extends BaseViewImpl {
     }
 
     public void initToolbar() {
-        toolbarAuthorinfo.setTitle("关于作者");
-        activity.setSupportActionBar(toolbarAuthorinfo);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarAuthorinfo.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        super.initToolbar(activity, toolbarAuthorinfo, "作者信息");
     }
 
     public void transToAboutFragment(AuthorInfoFragment fragment){

@@ -25,7 +25,6 @@ import com.jude.utils.JUtils;
 public class NoticeDetailFrgament extends DialogFragment{
 
     private String mid;
-    private FinalSubscriber<GetDetailMessage.DataEntity> messageSubscriber;
 
     public void setMid(String mid) {
         this.mid = mid;
@@ -47,11 +46,10 @@ public class NoticeDetailFrgament extends DialogFragment{
 
         MessageModel model = MessageModel.getInstance();
         if (mid != null){
-            messageSubscriber = new FinalSubscriber<>(getActivity(), data -> {
+            model.getDetailMessage(Integer.parseInt(mid)).subscribe(data -> {
                 GetDetailMessage.DataEntity dataEntity = (GetDetailMessage.DataEntity) data;
                 textView.setText(dataEntity.getContent());
             });
-            model.getDetailMessage(Integer.parseInt(mid)).subscribe(messageSubscriber);
         }
 
         return view;
@@ -60,8 +58,5 @@ public class NoticeDetailFrgament extends DialogFragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (messageSubscriber != null){
-            messageSubscriber.cancelProgress();
-        }
     }
 }

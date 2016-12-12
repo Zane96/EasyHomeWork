@@ -12,6 +12,8 @@ import android.view.View;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
+import com.example.zane.homework.base.BaseActivityView;
+import com.example.zane.homework.message.presenters.MessageActivity;
 import com.example.zane.homework.message.presenters.MessageRecyAdapter;
 
 import butterknife.Bind;
@@ -21,7 +23,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class MessageView extends BaseViewImpl {
+public class MessageView extends BaseActivityView {
     @Bind(R.id.toolbar_message)
     Toolbar toolbarMessage;
     @Bind(R.id.recyleview_message)
@@ -37,7 +39,7 @@ public class MessageView extends BaseViewImpl {
 
     @Override
     public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+        this.activity = (MessageActivity) activity;
     }
 
     @Override
@@ -46,15 +48,7 @@ public class MessageView extends BaseViewImpl {
     }
 
     private void initToolbar(){
-        toolbarMessage.setTitle("我的消息");
-        activity.setSupportActionBar(toolbarMessage);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarMessage.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
+        super.initToolbar(activity, toolbarMessage, "我的消息");
     }
 
     public void init(){

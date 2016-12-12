@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailPostNoticeView;
 import com.example.zane.homework.data.model.MessageModel;
@@ -14,10 +15,9 @@ import com.example.zane.homework.data.remote.FinalSubscriber;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzDetailPostNoticeActivity extends BaseActivityPresenter<ClazzDetailPostNoticeView>{
+public class ClazzDetailPostNoticeActivity extends BaseActivity<ClazzDetailPostNoticeView> {
 
     private final MessageModel model = MessageModel.getInstance();
-    private FinalSubscriber<String> postSubscriber;
     private String cid;
 
     @Override
@@ -42,17 +42,15 @@ public class ClazzDetailPostNoticeActivity extends BaseActivityPresenter<ClazzDe
         if (id.equals("")){
             typeId = cid;
         }
-        postSubscriber = new FinalSubscriber<>(this, data -> {
-             v.postSuccess();
-        });
-        model.postMessage(type, typeId, content).subscribe(postSubscriber);
+
+        model.postMessage(type, typeId, content).subscribe(new FinalSubscriber<String>(this, data->{
+            v.postSuccess();
+        }));
     }
 
     @Override
     public void inDestory() {
-        if (postSubscriber != null){
-            postSubscriber.cancelProgress();
-        }
+
     }
 
     @Override

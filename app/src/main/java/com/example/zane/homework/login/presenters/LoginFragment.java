@@ -13,6 +13,7 @@ import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.data.bean.Login;
 import com.example.zane.homework.data.model.RegisterLoginModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
@@ -29,10 +30,9 @@ import rx.subscriptions.CompositeSubscription;
  * Email: zanebot96@gmail.com
  */
 
-public class LoginFragment extends BaseFragmentPresenter<LoginView>{
+public class LoginFragment extends BaseFragment<LoginView> {
 
     private static RegisterLoginModel model = RegisterLoginModel.getInstance();
-    private FinalSubscriber<Login.DataEntity> subscriber;
 
     public static final String LOGIN = "login";
 
@@ -57,30 +57,25 @@ public class LoginFragment extends BaseFragmentPresenter<LoginView>{
     }
 
     public void login(){
-        subscriber = new FinalSubscriber<Login.DataEntity>(getActivity(), o -> {
-            if (v.getIdentity() == 1){
-                MySharedPre.getInstance().setIdentity("teacher");
-            } else if (v.getIdentity() == 2){
-                MySharedPre.getInstance().setIdentity("student");
-            }
-
-            MySharedPre.getInstance().setLogin(true);
-
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra(LoginRegisterActivity.LOGIN, "first");
-            startActivity(intent);
-            getActivity().finish();
-        });
-
         model.login(v.userName(), v.password(), v.getIdentity()+"")
-                .subscribe(subscriber);
+                .subscribe(new FinalSubscriber<Login.DataEntity>(this, o -> {
+                    if (v.getIdentity() == 1){
+                        MySharedPre.getInstance().setIdentity("teacher");
+                    } else if (v.getIdentity() == 2){
+                        MySharedPre.getInstance().setIdentity("student");
+                    }
+
+                    MySharedPre.getInstance().setLogin(true);
+
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra(LoginRegisterActivity.LOGIN, "first");
+                    startActivity(intent);
+                    getActivity().finish();
+                }));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (subscriber != null){
-            subscriber.cancelProgress();
-        }
     }
 }
