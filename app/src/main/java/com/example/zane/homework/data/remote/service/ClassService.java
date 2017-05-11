@@ -43,10 +43,11 @@ public interface ClassService{
                                  @Field("description") String description,
                                  @Field("cid") String cid);
 
-    //学生查看加入的班级
+    //学生查看加入班级的信息
     @GET("inClass")
     @Headers("Cache-Control: no-cache")
     Observable<List<StuHaveClass.DataEntity>> stuClass();
+
 
     //老师申请加入班级
     @POST("appClass")
@@ -54,7 +55,8 @@ public interface ClassService{
     Observable<String> teaAppClass(@Field("cid") String cid,
                                    @Field("sirorstu") String sirsortu,
                                    @Field("course") String course,
-                                   @Field("addtion") String addtion);
+                                   @Field("addtion") String addtion,
+                                   @Field("total") String total);
 
     //学生申请加入班级
     @POST("appClass")
@@ -68,7 +70,8 @@ public interface ClassService{
     Observable<String> applyTea(@Field("cid") String cid,
                                 @Field("tid") String tid,
                                 @Field("course") String course,
-                                @Field("addtion") String addtion);
+                                @Field("addtion") String addtion,
+                                @Field("total") String total);
 
     //同意学生加入班级
     @POST("okApply/2")

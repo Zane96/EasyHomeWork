@@ -6,17 +6,14 @@ package com.example.zane.homework.data.remote;
  * Blog: zane96.github.io
  */
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.zane.homework.app.App;
 
-import java.io.EOFException;
 import java.util.ServiceConfigurationError;
+
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
 
 public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
 
@@ -31,14 +28,13 @@ public class ErrorTransForm<T> implements Observable.Transformer<T, T>{
     public Observable<T> call(Observable<T> tObservable) {
         return tObservable.onErrorResumeNext(throwable -> {
             //判断异常是什么类型
-            Log.i(TAG, throwable+" "+throwable.getClass().getName()+" "+throwable.getLocalizedMessage()+" "+throwable.getMessage());
             String errorMessage = "";
             //通过状态码判断错误
             if (throwable instanceof HttpException) {
                 HttpException response = (HttpException) throwable;
                 switch (response.code()){
                     case 404:
-                        errorMessage = "token无效"+response.message();
+                        errorMessage = "数据为空"+response.message();
                         break;
                     case 402:
                         errorMessage = "数据库连接错误"+response.message();

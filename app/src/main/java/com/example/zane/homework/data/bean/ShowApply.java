@@ -94,6 +94,15 @@ public class ShowApply implements Parcelable {
             private String course;
             private String done;
             private String addtion;
+            private String total;
+
+            public String getTotal() {
+                return total;
+            }
+
+            public void setTotal(String total) {
+                this.total = total;
+            }
 
             public String getApid() {
                 return apid;

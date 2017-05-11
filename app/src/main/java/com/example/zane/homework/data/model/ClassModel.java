@@ -64,8 +64,8 @@ public class ClassModel {
     }
 
     //老师申请进驻班级
-    public Observable<String> teaAppClass(String cid, String sirstu, String course, String addtion){
-        return TransForm.transform(serviceApi.teaAppClass(cid, sirstu, course, addtion));
+    public Observable<String> teaAppClass(String cid, String sirstu, String course, String addtion, String total){
+        return TransForm.transform(serviceApi.teaAppClass(cid, sirstu, course, addtion, total));
     }
 
     //学生申请进驻班级
@@ -73,8 +73,8 @@ public class ClassModel {
         return TransForm.transform(serviceApi.stuAppClass(cid, sirsourt));
     }
 
-    public Observable<String> okTeaApply(String cid, String tid, String course, String addtion){
-        return TransForm.transform(serviceApi.applyTea(cid, tid, course, addtion));
+    public Observable<String> okTeaApply(String cid, String tid, String course, String addtion, String total){
+        return TransForm.transform(serviceApi.applyTea(cid, tid, course, addtion, total));
     }
 
     public Observable<String> okStuApply(String cid, String sid){

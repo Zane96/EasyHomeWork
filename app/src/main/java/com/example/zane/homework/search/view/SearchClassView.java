@@ -61,9 +61,9 @@ public class SearchClassView extends BaseActivityView {
 
     private EditText teaCourse;
     private EditText addtion;
+    private EditText total;
 
     private SearchClassActivity activity;
-    private static final String RIGHT_ASID = "123";
 
     @Override
     public int getRootViewId() {
@@ -84,11 +84,13 @@ public class SearchClassView extends BaseActivityView {
         super.initToolbar(activity, toolbarSearch, "搜索班级");
         RxView.clicks(clazzItem).subscribe(aVoid -> {
             AlertDialog.Builder builder;
+
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
                 View root = LayoutInflater.from(activity).inflate(R.layout.dialog_search, null);
                 builder = new AlertDialog.Builder(activity).setView(root);
                 teaCourse = (EditText) root.findViewById(R.id.edit_search_course);
                 addtion = (EditText) root.findViewById(R.id.edit_search_reason);
+                total = (EditText) root.findViewById(R.id.edit_search_total);
             } else {
                 View root = LayoutInflater.from(activity).inflate(R.layout.dialog_student_search, null);
                 builder = new AlertDialog.Builder(activity).setView(root);
@@ -98,10 +100,9 @@ public class SearchClassView extends BaseActivityView {
             builder.setPositiveButton("申请", ((dialog, which) -> {
                 //申请加入班级
                 if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                    Log.i("SearchClass", teaCourse.getText().toString() + " text");
-                    activity.appToClazz(teaCourse.getText().toString(), addtion.getText().toString());
+                    activity.appToClazz(teaCourse.getText().toString(), addtion.getText().toString(), total.getText().toString());
                 } else {
-                    activity.appToClazz("", addtion.getText().toString());
+                    activity.appToClazz("", addtion.getText().toString(), "");
                 }
             })).setNegativeButton("取消", (dialog, which) -> {}).create().show();
         });

@@ -63,14 +63,14 @@ public class MessageRecyAdapter extends BaseListAdapterPresenter<ApplyDetail>{
                     if (mDatas.get(i) instanceof ShowApply.DataEntity.TeachEntity){
                         ShowApply.DataEntity.TeachEntity data = (ShowApply.DataEntity.TeachEntity) mDatas.get(i);
                         TeaApplyViewHolder holder = (TeaApplyViewHolder) baseListViewHolder;
-                        model.okTeaApply(cids.get(i), data.getApid(), data.getCourse(), data.getAddtion())
+                        model.okTeaApply(cids.get(i), data.getApid(), data.getCourse(), data.getAddtion(), data.getTotal())
                                 .subscribe(new Subscriber<String>() {
                                     @Override
                                     public void onCompleted() {
                                     }
                                     @Override
                                     public void onError(Throwable e) {
-                                        holder.applySuccess();
+                                        //holder.applySuccess();
                                     }
                                     @Override
                                     public void onNext(String s) {
@@ -87,7 +87,7 @@ public class MessageRecyAdapter extends BaseListAdapterPresenter<ApplyDetail>{
                                     }
                                     @Override
                                     public void onError(Throwable e) {
-                                        holder.applySuccess();
+                                        //holder.applySuccess();
                                     }
                                     @Override
                                     public void onNext(String s) {

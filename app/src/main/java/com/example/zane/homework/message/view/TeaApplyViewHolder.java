@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;
@@ -54,21 +55,22 @@ public class TeaApplyViewHolder extends BaseListViewHolderImpl<ShowApply.DataEnt
         realName.setText(data.getRealname());
         intro.setText(data.getSelfintro());
         addtion.setText(data.getAddtion());
+
         if ("true".equals(data.getDone())){
             state.setBackgroundResource(R.drawable.round_state_done);
             state.setText("已处理");
-            state.setClickable(false);
+            state.setEnabled(false);
         } else {
             state.setBackgroundResource(R.drawable.round_shape);
             state.setText("未处理");
-            state.setClickable(true);
+            state.setEnabled(false);
         }
     }
 
     public void applySuccess(){
         state.setBackgroundResource(R.drawable.round_state_done);
         state.setText("已处理");
-        state.setClickable(false);
+        state.setEnabled(false);
         Snackbar.make(state, "同意已处理", Snackbar.LENGTH_SHORT).show();
     }
 }

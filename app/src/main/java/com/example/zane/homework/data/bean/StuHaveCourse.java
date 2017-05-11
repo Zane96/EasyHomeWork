@@ -56,10 +56,19 @@ public class StuHaveCourse implements Parcelable {
     }
 
     public static class DataEntity implements Parcelable {
+        private String cid;
         private String jid;
         private String sid;
         private String course;
         private String addtion;
+
+        public String getCid() {
+            return cid;
+        }
+
+        public void setCid(String cid) {
+            this.cid = cid;
+        }
 
         public String getJid() {
             return jid;
@@ -104,6 +113,7 @@ public class StuHaveCourse implements Parcelable {
             dest.writeString(this.sid);
             dest.writeString(this.course);
             dest.writeString(this.addtion);
+            dest.writeString(this.cid);
         }
 
         public DataEntity() {
@@ -114,6 +124,7 @@ public class StuHaveCourse implements Parcelable {
             this.sid = in.readString();
             this.course = in.readString();
             this.addtion = in.readString();
+            this.cid = in.readString();
         }
 
         public static final Creator<DataEntity> CREATOR = new Creator<DataEntity>() {

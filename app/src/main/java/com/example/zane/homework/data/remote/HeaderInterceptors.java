@@ -6,24 +6,17 @@ package com.example.zane.homework.data.remote;
  * Blog: zane96.github.io
  */
 
-import android.util.Log;
-
-import com.example.zane.homework.data.sp.MySharedPre;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ServiceConfigurationError;
-import java.util.jar.Pack200;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import rx.Observable;
 
 /**
  * Created by Zane on 16/3/14.
@@ -51,16 +44,12 @@ public class HeaderInterceptors implements Interceptor {
 
         JSONObject wrapper = null;
         try {
-            Log.i("intercept", originalContent);
-
             wrapper = new JSONObject(originalContent);
             message = wrapper.getString("message");
             code = wrapper.getInt("status");
             //剥离外层数据
             body = wrapper.getString("data");
-
         } catch (JSONException e) {
-            Log.i("intercept", "解析错误" + e.getMessage());
             throw new ServiceConfigurationError("解析错误："+e.getLocalizedMessage());
         }
 
@@ -72,6 +61,6 @@ public class HeaderInterceptors implements Interceptor {
                                            .body(ResponseBody.create(contentType, body))
                                            .header("Cache-Control", cacheControl)
                                            .removeHeader("Pragma")
-                                            .build();
+                                           .build();
     }
 }

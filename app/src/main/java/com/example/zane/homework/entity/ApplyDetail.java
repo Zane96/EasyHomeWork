@@ -1,7 +1,15 @@
 package com.example.zane.homework.entity;
 
+import android.content.Intent;
+
 import com.example.zane.easymvp.base.IListModel;
+import com.example.zane.homework.data.bean.GetHoWork;
 import com.example.zane.homework.data.bean.ShowApply;
+import com.google.gson.Gson;
+
+import java.util.List;
+
+import rx.Observable;
 
 /**
  * 申请加入信息有老师和学生两种

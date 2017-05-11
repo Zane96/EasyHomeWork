@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
@@ -27,6 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 import static com.example.zane.homework.utils.FileUtils.OPEN_FFILE;
 
@@ -80,6 +83,7 @@ public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<Clazz
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == Activity.RESULT_OK){
             switch (requestCode){
                 case OPEN_FFILE:

@@ -1,7 +1,15 @@
 package com.example.zane.homework.data.remote.upload;
 
+import com.bumptech.glide.Glide;
+import com.example.zane.homework.app.App;
 import com.example.zane.homework.data.remote.service.UpLoadService;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -36,7 +44,6 @@ public class UploadCommonProvider {
                                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                                 .connectTimeout(15, TimeUnit.SECONDS)
                                 .retryOnConnectionFailure(true);
-
     }
 
     private static Retrofit.Builder providerRetrofitBuilder(){

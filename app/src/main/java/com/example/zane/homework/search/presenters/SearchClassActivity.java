@@ -62,12 +62,12 @@ public class SearchClassActivity extends BaseActivity<SearchClassView> {
      * @param course
      * @param addtion
      */
-    public void appToClazz(String course, String addtion){
+    public void appToClazz(String course, String addtion, String total){
         appSubscriber = new FinalSubscriber<>(this, s -> {
             v.showSuccess();
         });
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            model.teaAppClass(classId, "sir", course, addtion).subscribe(appSubscriber);
+            model.teaAppClass(classId, "sir", course, addtion, total).subscribe(appSubscriber);
         } else {
             model.stuAppClass(classId, "stu").subscribe(appSubscriber);
         }

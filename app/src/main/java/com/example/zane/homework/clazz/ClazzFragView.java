@@ -66,7 +66,6 @@ public class ClazzFragView extends BaseViewImpl {
     }
 
     public void initRecycleview(ClazzFragPresenter.ClazzTeaRecyAdapterPresenter adapterPresenter) {
-
         manager = new LinearLayoutManager(App.getInstance());
         recycleviewClazzInfo.setAdapter(adapterPresenter);
         recycleviewClazzInfo.setLayoutManager(manager);
@@ -75,7 +74,7 @@ public class ClazzFragView extends BaseViewImpl {
         final int fabMarginBottm = lp.bottomMargin;
 
         recycleviewClazzInfo.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recycleviewClazzInfo.getLayoutManager();
+        //LinearLayoutManager layoutManager = (LinearLayoutManager) recycleviewClazzInfo.getLayoutManager();
         recycleviewClazzInfo.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -90,7 +89,6 @@ public class ClazzFragView extends BaseViewImpl {
                             .setInterpolator(new DecelerateInterpolator(1))
                             .start();
                 }
-
             }
         });
     }
@@ -111,6 +109,7 @@ public class ClazzFragView extends BaseViewImpl {
                         switch (which){
                             case 0:
                                 // TODO: 2016/11/8  创建班级的模块
+                                
                                 break;
                             case 1:
                                 context.startActivity(new Intent(context, SearchClassActivity.class));

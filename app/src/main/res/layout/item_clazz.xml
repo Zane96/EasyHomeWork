@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textview_item_couresename"
+            android:text="HAHAHA"
             android:layout_toRightOf="@id/imageview_item_clazz"
             android:layout_below="@id/textview_item_clazzname"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -55,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textview_item_owner"
+            android:text="ASD"
             android:layout_toRightOf="@id/imageview_item_clazz"
             android:layout_below="@id/textview_item_couresename"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -63,12 +65,13 @@
             android:layout_marginLeft="20dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:text="CID: 123"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textview_item_asid"
             android:layout_toRightOf="@id/textview_item_owner"
             android:layout_alignBaseline="@id/textview_item_owner"
-            android:layout_marginLeft="140dp"
+            android:layout_marginLeft="80dp"
             android:textSize="20sp"
             />
 

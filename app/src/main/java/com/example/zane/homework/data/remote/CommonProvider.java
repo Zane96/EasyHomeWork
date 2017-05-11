@@ -10,6 +10,12 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import dalvik.system.BaseDexClassLoader;
+import dalvik.system.PathClassLoader;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -33,9 +39,9 @@ public class CommonProvider {
     private static final Retrofit.Builder RetrofitBuilderInstance = provideRetrofit();
 
     private static OkHttpClient provideOkHttpClient(){
+        int s = 1;
+        double ss = s;
         //添加body日志打印，http，stetho调试的拦截器，管理cookie
-        Log.i("common", "provider");
-
         return new OkHttpClient.Builder()
                        .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                        .addNetworkInterceptor(new HeaderInterceptors())

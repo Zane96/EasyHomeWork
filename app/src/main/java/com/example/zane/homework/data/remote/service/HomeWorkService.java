@@ -50,6 +50,7 @@ public interface HomeWorkService {
     //老师批改作业
     @POST("hoJudge")
     @FormUrlEncoded
+    @Headers("Cache-Control: no-cache")
     Observable<String> judgeHomeWork(@Field("grade") String grade,
                                      @Field("addtion") String addtion,
                                      @Field("asid") String asid,

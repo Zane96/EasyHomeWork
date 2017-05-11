@@ -16,13 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.custom.CircleTransform;
-import com.example.zane.homework.data.bean.StuHaveClass;
+import com.example.zane.homework.data.bean.StuHaveCourse;
 import com.example.zane.homework.data.bean.TeacherHavaClass;
 import com.example.zane.homework.data.model.ClassModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
@@ -55,7 +54,7 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
     //老师的驻班班级
     private List<TeacherHavaClass.DataEntity> teaHaveClasses;
     //学生的驻班班级
-    private List<StuHaveClass.DataEntity> stuHaveClasses;
+    private List<StuHaveCourse.DataEntity> stuHaveCourses;
 
     private ClazzTeaRecyAdapterPresenter adapterPresenter;
     private boolean mIsDetailsActivityStarted;
@@ -89,14 +88,17 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
         adapterPresenter = new ClazzTeaRecyAdapterPresenter();
 
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-
             classModel.teaHaveClass().subscribe(new FinalSubscriber<List<TeacherHavaClass.DataEntity>>(this, datas -> {
                 teaHaveClasses = (List<TeacherHavaClass.DataEntity>) datas;
                 v.initRecycleview(adapterPresenter);
             }));
 
         } else {
-            // TODO: 16/11/4 学生的需要将课程和班级的信息融合了之后才显示 
+            // TODO: 16/11/4 学生的需要将课程和班级的信息融合了之后才显示
+            classModel.stuHaveCourse().subscribe(new FinalSubscriber<List<StuHaveCourse.DataEntity>>(this, datas -> {
+                stuHaveCourses = (List<StuHaveCourse.DataEntity>) datas;
+                v.initRecycleview(adapterPresenter);
+            }));
         }
     }
 
@@ -105,14 +107,19 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
      */
     public void refreshClazzData(){
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            Log.i("refresh", "refresh");
             classModel.teaHaveClass().subscribe(newDatas -> {
-                teaHaveClasses = newDatas;
+                teaHaveClasses.clear();
+                teaHaveClasses.addAll(newDatas);
                 adapterPresenter.notifyDataSetChanged();
                 v.cancleSwiprefresh();
             });
         } else {
-            // TODO: 2016/11/9 学生模块刷新数据 
+            classModel.stuHaveCourse().subscribe(newDatas -> {
+                stuHaveCourses.clear();
+                stuHaveCourses.addAll(newDatas);
+                adapterPresenter.notifyDataSetChanged();
+                v.cancleSwiprefresh();
+            });
         }
     }
 
@@ -144,8 +151,7 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
                 return teaHaveClasses.size();
             } else {
-                // TODO: 16/11/4 学生
-                return stuHaveClasses.size();
+                return stuHaveCourses.size();
             }
         }
     }
@@ -169,6 +175,7 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
 
         private int itemPosition;
         private TeacherHavaClass.DataEntity teaData;
+        private StuHaveCourse.DataEntity stuData;
 
         public ClazzTeaRecyViewHolder(View itemView) {
             super(itemView);
@@ -189,7 +196,7 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
                 textviewItemCouresename.setText(teaData.getCourse());
                 textviewItemClazzname.setText(teaData.getClassname());
                 textviewItemOwner.setText(teaData.getCreator());
-                textviewItemAsid.setText("CID " + teaData.getCid());
+                textviewItemAsid.setText("CID: " + teaData.getCid());
 
                 TeacherLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
 
@@ -198,7 +205,15 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
                         .transform(new CircleTransform(App.getInstance()))
                         .into(imageviewItemClazz);
             } else {
+
+                stuData = stuHaveCourses.get(position);
+                textviewItemCouresename.setText(stuData.getAddtion());
+                textviewItemClazzname.setText(stuData.getCourse());
+                textviewItemOwner.setText("JID : " + stuData.getJid());
+                textviewItemAsid.setText("CID :" + stuData.getCid());
+
                 StudentLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
+
                 Glide.with(App.getInstance())
                         .load(StudentLogin.getInstacne().getAvatar())
                         .transform(new CircleTransform(App.getInstance()))
