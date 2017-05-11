@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.clazzdetail.presenter.HomeWorkFragment;
@@ -54,7 +55,7 @@ public class HomeWorkDetailActivity extends BaseActivityPresenter<HomeWorkDetail
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 }

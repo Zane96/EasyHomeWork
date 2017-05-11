@@ -1,23 +1,28 @@
-package com.example.zane.homework.clazz;
+package com.example.zane.homework.clazz.view;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.clazz.presenter.ClazzFragPresenter;
+import com.example.zane.homework.clazz.presenter.StuClazzPresenter;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.search.presenters.SearchClassActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
@@ -43,7 +48,8 @@ public class ClazzFragView extends BaseViewImpl {
     @Bind(R.id.swiplayout_clazz_info)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private AppCompatActivity context;
+    private ClazzFragPresenter presenter;
+    private Activity activity;
     private LinearLayoutManager manager;
 
     public ClazzFragView(){
@@ -56,8 +62,9 @@ public class ClazzFragView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        context = (AppCompatActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        presenter = (ClazzFragPresenter) iPersenter;
+        activity = presenter.getActivity();
     }
 
     @Override
@@ -74,7 +81,6 @@ public class ClazzFragView extends BaseViewImpl {
         final int fabMarginBottm = lp.bottomMargin;
 
         recycleviewClazzInfo.setHasFixedSize(true);
-        //LinearLayoutManager layoutManager = (LinearLayoutManager) recycleviewClazzInfo.getLayoutManager();
         recycleviewClazzInfo.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -95,26 +101,32 @@ public class ClazzFragView extends BaseViewImpl {
 
     public void init(){
 
-        ClazzFragPresenter fragment = (ClazzFragPresenter)context.getSupportFragmentManager().findFragmentByTag("clazzfrag");
-        swipeRefreshLayout.setOnRefreshListener(() -> fragment.refreshClazzData());
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.refreshClazzData());
 
         RxView.clicks(fabClazzfragment).subscribe(aVoid -> {
             if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                Intent intent = new Intent(context, SearchClassActivity.class);
-                context.startActivity(intent);
+                Intent intent = new Intent(activity, SearchClassActivity.class);
+                activity.startActivity(intent);
             } else {
-                new AlertDialog.Builder(context).setItems(new String[]{"创建班级", "搜索班级"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                // TODO: 2016/11/8  创建班级的模块
-                                
-                                break;
-                            case 1:
-                                context.startActivity(new Intent(context, SearchClassActivity.class));
-                                break;
-                        }
+                new AlertDialog.Builder(activity).setItems(new String[]{"创建班级", "我的班级", "搜索班级"}, (dialog, which) -> {
+                    switch (which){
+                        case 0:
+                            View root = LayoutInflater.from(activity).inflate(R.layout.dialog_creatclazz, null);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(activity).setView(root);
+                            EditText className = (EditText) root.findViewById(R.id.edit_name);
+                            EditText classDescription = (EditText) root.findViewById(R.id.edit_description);
+
+                            builder.setPositiveButton("创建", (dialog1, which1) -> {
+                                presenter.creatClazz(className.getText().toString(), classDescription.getText().toString());
+                            }).setNegativeButton("取消", (dialog1, which1) -> {}).create().show();
+
+                            break;
+                        case 1:
+                            activity.startActivity(new Intent(activity, StuClazzPresenter.class));
+                            break;
+                        case 2:
+                            activity.startActivity(new Intent(activity, SearchClassActivity.class));
+                            break;
                     }
                 }).show();
             }
@@ -128,6 +140,9 @@ public class ClazzFragView extends BaseViewImpl {
         swipeRefreshLayout.setRefreshing(false);
     }
 
+    public void showSuccess(){
+        Snackbar.make(fabClazzfragment, "创建成功", Snackbar.LENGTH_SHORT).show();
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onActivityReenter(ActivityReenterEvent event){
@@ -137,7 +152,7 @@ public class ClazzFragView extends BaseViewImpl {
                 recycleviewClazzInfo.getViewTreeObserver().removeOnPreDrawListener(this);
                 recycleviewClazzInfo.requestLayout();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    context.startPostponedEnterTransition();
+                    activity.startPostponedEnterTransition();
                 }
                 return true;
             }

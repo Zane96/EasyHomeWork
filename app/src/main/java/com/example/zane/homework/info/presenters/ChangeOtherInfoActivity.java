@@ -3,6 +3,7 @@ package com.example.zane.homework.info.presenters;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.info.view.ChangeOtherInfoView;
 import com.example.zane.homework.info.view.InfoView;
@@ -30,7 +31,8 @@ public class ChangeOtherInfoActivity extends BaseActivityPresenter<ChangeOtherIn
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
+
 }

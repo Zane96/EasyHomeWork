@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
@@ -57,7 +58,8 @@ public class ClazzDetailPostNoticeActivity extends BaseActivity<ClazzDetailPostN
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
+
 }

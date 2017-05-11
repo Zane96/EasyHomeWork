@@ -3,6 +3,7 @@ package com.example.zane.homework.info.presenters;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.info.view.ChangePasswordView;
 
@@ -28,7 +29,7 @@ public class ChangPasswordActivity extends BaseActivityPresenter<ChangePasswordV
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 }

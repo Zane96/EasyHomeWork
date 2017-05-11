@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
@@ -43,8 +44,8 @@ public class ChangeOtherInfoView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (ChangeOtherInfoActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (ChangeOtherInfoActivity) iPersenter;
     }
 
     @Override

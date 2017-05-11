@@ -1,14 +1,12 @@
-package com.example.zane.homework.clazz;
+package com.example.zane.homework.clazz.presenter;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.base.BaseFragment;
+import com.example.zane.homework.clazz.view.ClazzFragView;
 import com.example.zane.homework.clazzdetail.presenter.ClazzDetailActivityPresenter;
 import com.example.zane.homework.custom.CircleTransform;
 import com.example.zane.homework.data.bean.StuHaveCourse;
@@ -71,8 +71,8 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
     }
 
     @Override
-    public FragmentActivity getContext() {
-        return getActivity();
+    public IPersenter getPersenter() {
+        return this;
     }
 
     @Override
@@ -92,9 +92,7 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
                 teaHaveClasses = (List<TeacherHavaClass.DataEntity>) datas;
                 v.initRecycleview(adapterPresenter);
             }));
-
         } else {
-            // TODO: 16/11/4 学生的需要将课程和班级的信息融合了之后才显示
             classModel.stuHaveCourse().subscribe(new FinalSubscriber<List<StuHaveCourse.DataEntity>>(this, datas -> {
                 stuHaveCourses = (List<StuHaveCourse.DataEntity>) datas;
                 v.initRecycleview(adapterPresenter);
@@ -121,6 +119,17 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
                 v.cancleSwiprefresh();
             });
         }
+    }
+
+    /**
+     * 创建班级
+     * @param name
+     * @param description
+     */
+    public void creatClazz(String name, String description) {
+        classModel.creatClass(name, description).subscribe(new FinalSubscriber<String>(this, datas -> {
+            v.showSuccess();
+        }));
     }
 
     @Override
@@ -190,6 +199,8 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
                 imageviewItemClazz.setTransitionName(String.valueOf(position));
             }
 
+            imageOwner.setVisibility(View.GONE);
+
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
 
                 teaData = teaHaveClasses.get(position);
@@ -229,11 +240,15 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
                 intent.putExtra(CLAZZ_NAME, teaData.getClassname());
                 intent.putExtra(COURSE_NAME, teaData.getCourse());
-                intent.putExtra(IMAGE, TeacherLogin.getInstacne().getAvatar());
+                //intent.putExtra(IMAGE, TeacherLogin.getInstacne().getAvatar());
                 intent.putExtra(CID, teaData.getCid());
                 intent.putExtra(JID, teaData.getJid());
             } else {
-                // TODO: 2016/11/14 学生模块的跳转
+                intent.putExtra(CLAZZ_NAME, stuData.getCourse());
+                intent.putExtra(COURSE_NAME, stuData.getAddtion());
+                //intent.putExtra(IMAGE, StudentLogin.getInstacne().getAvatar());
+                intent.putExtra(CID, stuData.getCid());
+                intent.putExtra(JID, stuData.getJid());
             }
 
             if (Build.VERSION.SDK_INT > 21) {

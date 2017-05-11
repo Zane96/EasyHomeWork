@@ -14,11 +14,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
 import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.event.LoginEvent;
+import com.example.zane.homework.login.presenters.RegisterFragment;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.jakewharton.rxbinding.widget.RxRadioGroup;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -56,7 +58,7 @@ public class RegisterView extends BaseViewImpl {
     @Bind(R.id.button_register)
     Button buttonRegister;
 
-    private AppCompatActivity activity;
+    private RegisterFragment fragment;
     private String gender;
     private String identity;
 
@@ -66,8 +68,8 @@ public class RegisterView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        fragment = (RegisterFragment) fragment;
     }
 
     @Override

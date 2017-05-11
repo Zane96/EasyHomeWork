@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.base.BaseFragment;
@@ -32,7 +33,6 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * todo 测试
  * Created by Zane on 16/6/8.
  * Email: zanebot96@gmail.com
  */
@@ -64,8 +64,8 @@ public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
     }
 
     @Override
-    public FragmentActivity getContext() {
-        return getActivity();
+    public IPersenter getPersenter() {
+        return this;
     }
 
     @Override
@@ -84,29 +84,25 @@ public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
         v.initNoticeRecycle(adapter);
 
-        if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
-            adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
-                @Override
-                public void onClick(View view, int i) {
-                    //显示消息公告的具体内容
-                    NoticeDetailFrgament frgament = new NoticeDetailFrgament();
-                    frgament.setMid(mids.get(i));
-                    frgament.show(getChildFragmentManager(), "NoticeDetailFragment");
-                }
-                @Override
-                public void onLongClick(View view, final int i) {
-                    Snackbar.make(view, "您想要删除这个公告吗?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            adapter.remove(i);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }).show();
-                }
-            });
-        }
-
-
+        adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
+            @Override
+            public void onClick(View view, int i) {
+                //显示消息公告的具体内容
+                NoticeDetailFrgament frgament = new NoticeDetailFrgament();
+                frgament.setMid(mids.get(i));
+                frgament.show(getChildFragmentManager(), "NoticeDetailFragment");
+            }
+            @Override
+            public void onLongClick(View view, final int i) {
+                Snackbar.make(view, "您想要删除这个公告吗?~", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        adapter.remove(i);
+                        adapter.notifyDataSetChanged();
+                    }
+                }).show();
+            }
+        });
     }
 
     /**
@@ -137,8 +133,6 @@ public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
                         isLoading = true;
                     }
                 }));
-
-
     }
 
     /**

@@ -67,6 +67,8 @@
                   android:configChanges="orientation"/>
         <activity android:name=".clazzdetail.presenter.WorkJudgePresenter"
                   android:configChanges="orientation"/>
+        <activity android:name=".clazz.presenter.StuClazzPresenter"
+                  android:configChanges="orientation"/>
 
         <service android:name=".service.UpLoadFileServicess"/>
         <service android:name=".service.PostHomeWorkService"/>

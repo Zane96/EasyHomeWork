@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
+import com.example.zane.homework.app.App;
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jude.utils.JUtils;
@@ -45,8 +47,8 @@ public class ChangePasswordView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (AppCompatActivity) iPersenter;
     }
 
     @Override

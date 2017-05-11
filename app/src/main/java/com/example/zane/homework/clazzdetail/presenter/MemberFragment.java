@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.base.BaseFragment;
@@ -69,8 +70,8 @@ public class MemberFragment extends BaseFragment<ClazzDeatilFragmentView> {
     }
 
     @Override
-    public FragmentActivity getContext() {
-        return getActivity();
+    public IPersenter getPersenter() {
+        return this;
     }
 
     @Override

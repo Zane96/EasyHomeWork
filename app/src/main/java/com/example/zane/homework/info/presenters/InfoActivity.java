@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.data.bean.GetNoDueWork;
 import com.example.zane.homework.data.bean.PerInfo;
@@ -49,11 +50,11 @@ public class InfoActivity extends BaseActivityPresenter<InfoView> {
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 
-//    public void refreshData(){
+    //    public void refreshData(){
 //        int identity = 1;
 //        if (MySharedPre.getInstance().getIdentity().equals("teacher")){
 //            identity = 1;

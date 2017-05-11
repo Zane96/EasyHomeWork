@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.app.App;
@@ -42,8 +43,8 @@ public class NoFinishedMemberFragment extends BaseFragmentPresenter<ClazzDeatilF
     }
 
     @Override
-    public FragmentActivity getContext() {
-        return null;
+    public IPersenter getPersenter() {
+        return this;
     }
 
     @Nullable

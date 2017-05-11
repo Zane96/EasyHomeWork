@@ -1,6 +1,5 @@
 package com.example.zane.homework;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,10 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.authorinfo.presenters.AuthorInfoActivity;
-import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.clazz.presenter.ClazzFragPresenter;
 import com.example.zane.homework.config.MockStudentData;
 import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.custom.CircleTransform;
@@ -60,8 +60,8 @@ public class MainView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        context = (AppCompatActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        context = (AppCompatActivity) iPersenter;
         layoutInflater = LayoutInflater.from(context);
     }
 

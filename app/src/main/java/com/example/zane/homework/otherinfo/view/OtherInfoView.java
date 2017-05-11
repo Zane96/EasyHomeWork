@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
@@ -56,8 +57,8 @@ public class OtherInfoView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (OtherInfoActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (OtherInfoActivity) iPersenter;
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.base.BaseActivityView;
@@ -61,8 +62,8 @@ public class ClazzDetailPostHomeWorkView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (ClazzDetailPostHomeWorkActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (ClazzDetailPostHomeWorkActivity) iPersenter;
     }
 
     @Override

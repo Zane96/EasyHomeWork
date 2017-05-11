@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
@@ -66,7 +67,6 @@ public class LoginView extends BaseViewImpl {
     @Bind(R.id.text_register)
     TextView textRegister;
 
-    private AppCompatActivity activity;
     private LoginFragment fragment;
     private int identity;//0, 1, 2 null, teacher, student
 
@@ -76,9 +76,8 @@ public class LoginView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (LoginRegisterActivity) activity;
-        fragment = (LoginFragment) ((LoginRegisterActivity) activity).getSupportFragmentManager().findFragmentByTag("login");
+    public void injectPresenter(IPersenter iPersenter) {
+        fragment = (LoginFragment) iPersenter;
     }
 
     @Override

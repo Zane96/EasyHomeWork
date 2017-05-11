@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.view.WorkJudgeActivityView;
@@ -26,6 +27,9 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import rx.functions.Action1;
 
+import static com.example.zane.homework.service.DownloadFileService.DOWNLOAD_NUM;
+import static com.example.zane.homework.service.DownloadFileService.DOWNLOAD_URL;
+
 /**
  * Created by Zane on 2016/11/14.
  * Email: zanebot96@gmail.com
@@ -41,9 +45,8 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
     private String attachment;
     private String name;
 
-    //下载文件的base url
-    //private static final String BASE_URL = "http://115.159.113.116/index.php/Homework/downLoad/";
-    public static final String DOWNLOAD_URL = "download_url";
+    //下载文件的base url//private static final String BASE_URL = "http://115.159.113.116/index.php/Homework/downLoad/";
+
 
     @Override
     public Class<WorkJudgeActivityView> getRootViewClass() {
@@ -75,6 +78,7 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
     public void downloadWork(){
         Intent intent = new Intent(WorkJudgePresenter.this, DownloadFileService.class);
         intent.putExtra(DOWNLOAD_URL, attachment);
+        intent.putExtra(DOWNLOAD_NUM, "2");
         startService(intent);
     }
 
@@ -108,7 +112,7 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 }

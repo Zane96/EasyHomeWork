@@ -9,9 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.R;
-import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.clazz.presenter.ClazzFragPresenter;
 import com.example.zane.homework.clazzdetail.ClazzDetailFragViewPagerAdapter;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.event.UpLoadFileEvent;
@@ -95,12 +96,11 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
 
     @Override
     public void inDestory() {
-        //handler.removeMessages(1);
         EventBus.getDefault().unregister(this);
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
@@ -58,8 +59,7 @@ public class OtherInfoActivity extends BaseActivity<OtherInfoView> {
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
-
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.R;
 import com.example.zane.homework.base.BaseActivity;
@@ -53,7 +54,7 @@ public class SearchClassActivity extends BaseActivity<SearchClassView> {
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 

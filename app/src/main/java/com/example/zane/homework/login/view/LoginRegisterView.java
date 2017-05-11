@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.event.LoginEvent;
@@ -42,8 +43,8 @@ public class LoginRegisterView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (AppCompatActivity) iPersenter;
     }
 
     @Override

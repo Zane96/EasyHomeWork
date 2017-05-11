@@ -21,7 +21,6 @@ public class StuWorkViewHolder extends BaseListViewHolderImpl<GetNoDueWork.DataE
     private TextView percentage;
     private TextView addtion;
     private TextView endTime;
-    //private ImageView button;
 
     public StuWorkViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -32,7 +31,6 @@ public class StuWorkViewHolder extends BaseListViewHolderImpl<GetNoDueWork.DataE
         percentage = get(R.id.textview_item_percentage);
         addtion = get(R.id.textview_item_workname);
         endTime = get(R.id.textview_item_endtime);
-        //button = get(R.id.button_post_homework);
     }
 
     @Override
@@ -40,7 +38,5 @@ public class StuWorkViewHolder extends BaseListViewHolderImpl<GetNoDueWork.DataE
         percentage.setText(dataEntity.getPercentage());
         addtion.setText(dataEntity.getAddtion());
         endTime.setText(dataEntity.getDeadline());
-
-        // TODO: 2016/11/11 学生上传作业
     }
 }

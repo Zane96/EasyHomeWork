@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.base.BaseActivityView;
@@ -42,8 +43,8 @@ public class HomeWorkDetailView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (HomeWorkDetailActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (HomeWorkDetailActivity) iPersenter;
     }
 
     @Override

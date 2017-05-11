@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
@@ -38,8 +39,8 @@ public class MessageView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (MessageActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (MessageActivity) iPersenter;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.login.view.LoginRegisterView;
@@ -48,7 +49,7 @@ public class LoginRegisterActivity extends BaseActivityPresenter<LoginRegisterVi
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 }

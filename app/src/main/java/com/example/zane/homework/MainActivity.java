@@ -2,7 +2,6 @@ package com.example.zane.homework;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,9 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.homework.base.BaseActivity;
-import com.example.zane.homework.clazz.ClazzFragPresenter;
+import com.example.zane.homework.clazz.presenter.ClazzFragPresenter;
 import com.example.zane.homework.data.bean.PerInfo;
 import com.example.zane.homework.data.bean.QuitLogin;
 import com.example.zane.homework.data.model.RegisterLoginModel;
@@ -31,7 +30,6 @@ import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.entity.StudentLogin;
-import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.ActivityReenterEvent;
 import com.example.zane.homework.info.presenters.InfoActivity;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
@@ -40,8 +38,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 public class MainActivity extends BaseActivity<MainView>
@@ -77,11 +73,13 @@ public class MainActivity extends BaseActivity<MainView>
         } else {
             StudentLogin studentLogin = StudentLogin.getInstacne();
             userInfoModel.getPerInfo(2).subscribe(data -> {
-                studentLogin.setUserName(data.getName());
-                studentLogin.setName(data.getRealname());
-                studentLogin.setGender(data.getGender());
-                studentLogin.setSelfIntro(data.getSelfintro());
-                v.reFlashData(studentLogin.getUserName());
+                if (data != null) {
+                    studentLogin.setUserName(data.getName());
+                    studentLogin.setName(data.getRealname());
+                    studentLogin.setGender(data.getGender());
+                    studentLogin.setSelfIntro(data.getSelfintro());
+                    v.reFlashData(studentLogin.getUserName());
+                }
             });
         }
     }
@@ -97,12 +95,14 @@ public class MainActivity extends BaseActivity<MainView>
 
     //存储个人信息
     private void setPerInfoData(PerInfo.DataEntity data){
-        MySharedPre sp = MySharedPre.getInstance();
-        sp.setGender(data.getGender());
-        sp.setIntro(data.getSelfintro());
-        sp.setName(data.getName());
-        sp.setRealName(data.getRealname());
-        v.reFlashData(data.getName());
+        if (data != null) {
+            MySharedPre sp = MySharedPre.getInstance();
+            sp.setGender(data.getGender());
+            sp.setIntro(data.getSelfintro());
+            sp.setName(data.getName());
+            sp.setRealName(data.getRealname());
+            v.reFlashData(data.getName());
+        }
     }
 
     @Override
@@ -195,7 +195,7 @@ public class MainActivity extends BaseActivity<MainView>
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 

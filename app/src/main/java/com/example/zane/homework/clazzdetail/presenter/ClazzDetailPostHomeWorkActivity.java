@@ -14,6 +14,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailPostHomeWorkView;
@@ -101,9 +102,7 @@ public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<Clazz
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
-
-
 }

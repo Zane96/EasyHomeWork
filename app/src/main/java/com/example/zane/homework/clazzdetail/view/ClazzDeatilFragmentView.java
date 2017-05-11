@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
@@ -33,7 +34,6 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
     @Bind(R.id.swip_homework_frag)
     SwipeRefreshLayout swipHomeworkFrag;
 
-    private Activity activity;
     private LinearLayoutManager linearLayoutManager;
 
     @Override
@@ -42,8 +42,7 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = activity;
+    public void injectPresenter(IPersenter iPersenter) {
     }
 
     @Override

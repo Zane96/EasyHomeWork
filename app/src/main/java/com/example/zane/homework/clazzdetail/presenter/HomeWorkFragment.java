@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.homework.R;
 import com.example.zane.homework.base.BaseFragment;
 import com.example.zane.homework.clazzdetail.view.ClazzDeatilFragmentView;
+import com.example.zane.homework.data.bean.GetNoDueWork;
 import com.example.zane.homework.data.bean.NoDueHomeWork;
 import com.example.zane.homework.data.model.HomeWorkModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
@@ -42,7 +44,8 @@ import java.util.List;
 public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
     private ArrayList<HomeWorkDetail> datas;
-    private List<NoDueHomeWork.DataEntity> dataEntities;
+    private List<NoDueHomeWork.DataEntity> teaData;
+    private List<GetNoDueWork.DataEntity> stuData;
     private ClazzDetailHomeWorkAdapter adapter;
     private HomeWorkModel model = HomeWorkModel.getInstance();
 
@@ -62,8 +65,8 @@ public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
     }
 
     @Override
-    public FragmentActivity getContext() {
-        return getActivity();
+    public IPersenter getPersenter() {
+        return this;
     }
 
     //必须在这里注册!
@@ -83,14 +86,29 @@ public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
         outState.putParcelableArrayList(DATAS, datas);
     }
 
+    /**
+     * 获取数据
+     */
     private void getData(){
-        model.showNoDueWork().subscribe(new FinalSubscriber<List<NoDueHomeWork.DataEntity>>(this, data -> {
-            datas = (ArrayList<HomeWorkDetail>) data;
-            adapter.clear();
-            adapter.addAll(datas);
-            adapter.notifyDataSetChanged();
-            dataEntities = (List<NoDueHomeWork.DataEntity>) data;
-        }));
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+            model.showNoDueWork().subscribe(new FinalSubscriber<List<NoDueHomeWork.DataEntity>>(this, data -> {
+                datas = (ArrayList<HomeWorkDetail>) data;
+                teaData = (List<NoDueHomeWork.DataEntity>) data;
+                refreshData();
+            }));
+        } else {
+            model.getNoDueWork().subscribe(new FinalSubscriber<List<GetNoDueWork.DataEntity>>(this, data -> {
+                datas = (ArrayList<HomeWorkDetail>) data;
+                stuData = (List<GetNoDueWork.DataEntity>) data;
+                refreshData();
+            }));
+        }
+    }
+
+    private void refreshData() {
+        adapter.clear();
+        adapter.addAll(datas);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -108,8 +126,8 @@ public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
                 @Override
                 public void onClick(View view, int i) {
                     Intent intent = new Intent(getActivity(), HomeWorkDetailActivity.class);
-                    intent.putExtra(CID, dataEntities.get(i).getCid());
-                    intent.putExtra(ASID, dataEntities.get(i).getAsid());
+                    intent.putExtra(CID, teaData.get(i).getCid());
+                    intent.putExtra(ASID, teaData.get(i).getAsid());
                     startActivity(intent);
                 }
                 @Override
@@ -121,6 +139,17 @@ public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
                             adapter.notifyDataSetChanged();
                         }
                     }).show();
+                }
+            });
+        } else {
+            adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
+                @Override
+                public void onClick(View view, int i) {
+
+                }
+
+                @Override
+                public void onLongClick(View view, int i) {
                 }
             });
         }

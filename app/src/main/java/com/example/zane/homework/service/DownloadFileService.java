@@ -34,6 +34,9 @@ public class DownloadFileService extends IntentService{
     private NotificationCompat.Builder notificationBuilder;
     private NotificationManager notificationManager;
 
+    public static final String DOWNLOAD_URL = "download_url";
+    public static final String DOWNLOAD_NUM = "download_num";
+
     private static final int ID = 0;
 
     public DownloadFileService() {
@@ -46,23 +49,23 @@ public class DownloadFileService extends IntentService{
 
         notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.appicon)
-                .setContentTitle("作业下载")
-                .setContentText("作业下载中")
+                .setContentTitle("下载")
+                .setContentText("下载中")
                 .setAutoCancel(true);
 
         notificationManager.notify(ID, notificationBuilder.build());
 
-        download(intent.getStringExtra(WorkJudgePresenter.DOWNLOAD_URL));
+        download(intent.getStringExtra(DOWNLOAD_URL), intent.getStringExtra(DOWNLOAD_NUM));
     }
 
-    private void download(String attachment){
+    private void download(String attachment, String num){
 
         EventBus.getDefault().post(new DownloadingEvent());
 
         //外存的公有存储空间(doc)
         File outputFile = getFile(attachment);
 
-        model.downloadWork(attachment, ((bytesRead, contentLength, done) -> {
+        model.downloadWork(attachment, num, ((bytesRead, contentLength, done) -> {
             FileDownUpload download = new FileDownUpload();
             download.setTotalFileSize(contentLength);
             download.setCurrentFileSize(bytesRead);
@@ -98,7 +101,7 @@ public class DownloadFileService extends IntentService{
     private void downloadCompleted() {
         notificationManager.cancel(ID);
         notificationBuilder.setProgress(100, 100, false);
-        notificationBuilder.setContentText("作业下载完成");
+        notificationBuilder.setContentText("下载完成");
         notificationManager.notify(ID, notificationBuilder.build());
     }
 

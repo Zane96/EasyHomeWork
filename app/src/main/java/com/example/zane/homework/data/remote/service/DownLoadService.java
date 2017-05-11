@@ -21,5 +21,4 @@ public interface DownLoadService {
     @GET("{attach}/{num}")
     @Streaming
     Observable<ResponseBody> downloadWork(@Path("attach") String attach, @Path("num") String num);
-
 }

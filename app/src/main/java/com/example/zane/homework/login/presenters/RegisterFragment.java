@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zane.easyimageprovider.download.execute.LoadTask;
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
@@ -43,8 +44,8 @@ public class RegisterFragment extends BaseFragment<RegisterView> {
     }
 
     @Override
-    public FragmentActivity getContext() {
-        return getActivity();
+    public IPersenter getPersenter() {
+        return this;
     }
 
     @Nullable

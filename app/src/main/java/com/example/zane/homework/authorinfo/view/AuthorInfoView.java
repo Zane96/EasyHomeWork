@@ -6,9 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.authorinfo.AuthorInfoFragment;
+import com.example.zane.homework.authorinfo.presenters.AuthorInfoActivity;
 import com.example.zane.homework.base.BaseActivityView;
 
 import butterknife.Bind;
@@ -32,8 +34,8 @@ public class AuthorInfoView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (AuthorInfoActivity) iPersenter;
     }
 
     @Override

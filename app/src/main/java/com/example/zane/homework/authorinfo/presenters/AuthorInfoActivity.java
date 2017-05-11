@@ -3,6 +3,7 @@ package com.example.zane.homework.authorinfo.presenters;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.authorinfo.AuthorInfoFragment;
 import com.example.zane.homework.authorinfo.view.AuthorInfoView;
@@ -30,7 +31,7 @@ public class AuthorInfoActivity extends BaseActivityPresenter<AuthorInfoView>{
     }
 
     @Override
-    public Activity getContext() {
+    public IPersenter getPersenter() {
         return this;
     }
 }

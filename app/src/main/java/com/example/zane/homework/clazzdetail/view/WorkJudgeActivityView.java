@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.base.BaseActivityView;
@@ -52,8 +53,8 @@ public class WorkJudgeActivityView extends BaseActivityView {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (WorkJudgePresenter) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (WorkJudgePresenter) iPersenter;
     }
 
     public void init(String name, String addtion, String attach, String attachDB){

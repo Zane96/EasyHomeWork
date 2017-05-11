@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.zane.easyimageprovider.builder.ImageProviderBuilder;
 import com.example.zane.easyimageprovider.builder.core.EasyImage;
 import com.example.zane.easyimageprovider.provider.listener.OnGetImageListener;
+import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
@@ -79,8 +80,8 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
     }
 
     @Override
-    public void setActivityContext(Activity activity) {
-        this.activity = (InfoActivity) activity;
+    public void injectPresenter(IPersenter iPersenter) {
+        activity = (InfoActivity) iPersenter;
     }
 
     @Override
