@@ -28,6 +28,7 @@ import com.example.zane.homework.event.HomeWorkRefreshEvent;
 import com.example.zane.homework.event.PostHomeWorkEvent;
 import com.example.zane.homework.homeworkdetail.presenters.HomeWorkDetailActivity;
 import com.example.zane.homework.data.sp.MySharedPre;
+import com.example.zane.homework.homeworkdetail.presenters.StuHomePresenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -145,7 +146,9 @@ public class HomeWorkFragment extends BaseFragment<ClazzDeatilFragmentView> {
             adapter.setOnRecycleViewItemClickListener(new BaseListAdapterPresenter.OnRecycleViewItemClickListener() {
                 @Override
                 public void onClick(View view, int i) {
-
+                    Intent intent = new Intent(getActivity(), StuHomePresenter.class);
+                    intent.putExtra(StuHomePresenter.ASID, stuData.get(i).getAsid());
+                    startActivity(intent);
                 }
 
                 @Override

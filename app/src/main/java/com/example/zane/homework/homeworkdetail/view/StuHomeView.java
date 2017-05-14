@@ -1,5 +1,6 @@
 package com.example.zane.homework.homeworkdetail.view;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,10 +50,38 @@ public class StuHomeView extends BaseActivityView {
         initToolbar(presenter, toolbarSubmit, "我的作业");
     }
 
-    private void initView() {
+    public void initData(String homework, String addtion, String deadline, String attachmenntDB) {
+        if (attachmenntDB != null) {
+            buttonSubmitDownload.setText("打开");
+        }
+
+        if (!"".equals(homework)) {
+            buttonSubmit.setText("未提交");
+        }
+
+        buttonSubmitAddtion.setText(addtion);
+        buttonSubmitDeadline.setText(deadline);
+    }
+
+    public void openFile(){
+        buttonSubmitDownload.setText("打开");
+        buttonSubmitDownload.setEnabled(true);
+        RxView.clicks(buttonSubmitDownload)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {presenter.openFile();});
+
         RxView.clicks(buttonSubmit)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {presenter.downloadWork();});
+                .subscribe(aVoid -> {presenter})
+    }
+
+    public void judgeSuccess(){
+        Snackbar.make(buttonSubmitDownload, "批改成功", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void downloading(){
+        buttonSubmitDownload.setText("下载中");
+        buttonSubmitDownload.setEnabled(false);
     }
 
     @Override

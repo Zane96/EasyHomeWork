@@ -84,7 +84,7 @@ public class WorkJudgeActivityView extends BaseActivityView {
             } else if (attach != null) {
                 downloadFile();
             } else {
-                buttonWorkjudgeDownload.setClickable(false);
+                buttonWorkjudgeDownload.setEnabled(false);
                 Snackbar.make(fabWorkjudge, "该同学未上传作业", Snackbar.LENGTH_SHORT).show();
             }
         } else {
@@ -102,7 +102,7 @@ public class WorkJudgeActivityView extends BaseActivityView {
 
     public void openFile(){
         buttonWorkjudgeDownload.setText("打开");
-
+        buttonWorkjudgeDownload.setEnabled(true);
         RxView.clicks(buttonWorkjudgeDownload)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {activity.openFile();});
@@ -114,7 +114,7 @@ public class WorkJudgeActivityView extends BaseActivityView {
 
     public void downloading(){
         buttonWorkjudgeDownload.setText("下载中");
-        buttonWorkjudgeDownload.setClickable(false);
+        buttonWorkjudgeDownload.setEnabled(false);
     }
 
     @Override

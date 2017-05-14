@@ -45,9 +45,6 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
     private String attachment;
     private String name;
 
-    //下载文件的base url//private static final String BASE_URL = "http://115.159.113.116/index.php/Homework/downLoad/";
-
-
     @Override
     public Class<WorkJudgeActivityView> getRootViewClass() {
         return WorkJudgeActivityView.class;
@@ -63,7 +60,7 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
         sid = getIntent().getStringExtra(FinishedMemberFragment.SID);
         asid = getIntent().getStringExtra(FinishedMemberFragment.ASID);
 
-        String attachDB = DownloadWorkDBManager.getInstance().queryAttachment(sid);
+        String attachDB = DownloadWorkDBManager.getInstance().queryAttachment(asid, "1");
 
         v.init(name, getIntent().getStringExtra(FinishedMemberFragment.ADDTION),
                 attachment, attachDB);
@@ -83,7 +80,7 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
     }
 
     public void openFile() {
-        Intent intent = FileUtils.openFile(DownloadWorkDBManager.getInstance().queryFilePath(sid));
+        Intent intent = FileUtils.openFile(DownloadWorkDBManager.getInstance().queryFilePath(asid, "1"));
         startActivity(intent);
     }
 
@@ -93,7 +90,7 @@ public class WorkJudgePresenter extends BaseActivity<WorkJudgeActivityView> {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void DownloadFinish(DownloadFinishEvent event){
-        DownloadWorkDBManager.getInstance().insert(name, sid, attachment, event.getFilePath());
+        DownloadWorkDBManager.getInstance().insert(name, asid, attachment, event.getFilePath(), "1");
         v.openFile();
     }
 

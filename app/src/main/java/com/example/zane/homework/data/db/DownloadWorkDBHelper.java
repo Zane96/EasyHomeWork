@@ -17,7 +17,8 @@ public class DownloadWorkDBHelper extends SQLiteOpenHelper{
     private final static String ID = "id";
     public final static String TABLE_NAME = "downloadwork";
     private final static String INTEGER_PRIMARY_KEY = " integer primary key autoincrement,";
-    public final static String SID = "sid";
+    public final static String ASID = "asid";
+    public final static String KIND = "kind"; //1是学生的提交作业，2是老师上传的作业附件
     public final static String ATTACHMENT = "attachment";
     public final static String NAME = "name";
     public final static String FILEPATH = "filepath";
@@ -35,7 +36,7 @@ public class DownloadWorkDBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        sql = CREATE_TABLE + TABLE_NAME + START_SQL + SID + VARCHAR_8 + NAME + VARCHAR_8 + FILEPATH + VARCHAR_32 + ATTACHMENT + END_SQL;
+        sql = CREATE_TABLE + TABLE_NAME + START_SQL + ASID + VARCHAR_8 + KIND + VARCHAR_8 + NAME + VARCHAR_8 + FILEPATH + VARCHAR_32 + ATTACHMENT + END_SQL;
 
         db.execSQL(sql);
     }

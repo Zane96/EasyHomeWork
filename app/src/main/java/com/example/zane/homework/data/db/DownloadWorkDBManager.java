@@ -38,35 +38,44 @@ public class DownloadWorkDBManager {
     /**
      * 插入，存在的话就修改
      * @param name
-     * @param sid
+     * @param asid
      * @param attachment
+     * @param filePath
+     * @param kind
      */
-    public void insert(String name, String sid, String attachment, String filePath){
-        Log.i("db", name + " " +sid + " " +attachment + " " +filePath);
-        Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null, DownloadWorkDBHelper.SID + "=?", new String[]{sid}, null, null, null);
+    public void insert(String name, String asid, String attachment, String filePath, String kind){
+        Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null,
+                DownloadWorkDBHelper.ASID + "=? and " + DownloadWorkDBHelper.KIND + "=?",
+                new String[]{asid, kind}, null, null, null);
+
         if (cursor.getCount() == 0){
             ContentValues contentValues = new ContentValues();
             contentValues.put(DownloadWorkDBHelper.ATTACHMENT, attachment);
             contentValues.put(DownloadWorkDBHelper.NAME, name);
-            contentValues.put(DownloadWorkDBHelper.SID, sid);
+            contentValues.put(DownloadWorkDBHelper.ASID, asid);
             contentValues.put(DownloadWorkDBHelper.FILEPATH, filePath);
             database_write.insert(DownloadWorkDBHelper.TABLE_NAME, null, contentValues);
         } else {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DownloadWorkDBHelper.ATTACHMENT, attachment);
             contentValues.put(DownloadWorkDBHelper.FILEPATH, filePath);
-            database_write.update(DownloadWorkDBHelper.TABLE_NAME, contentValues, DownloadWorkDBHelper.SID + "=?", new String[]{sid});
+            database_write.update(DownloadWorkDBHelper.TABLE_NAME, contentValues, DownloadWorkDBHelper.ASID + "=?", new String[]{asid});
         }
+
         cursor.close();
     }
 
     /**
      * 查询文件名
-     * @param sid studentid
+     * @param asid
+     * @param kind
      * @return 文件名
      */
-    public String queryAttachment(String sid){
-        Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null, DownloadWorkDBHelper.SID + "=?", new String[]{sid}, null, null, null);
+    public String queryAttachment(String asid,String kind){
+        Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null,
+                DownloadWorkDBHelper.ASID + "=? and " + DownloadWorkDBHelper.KIND + "=?",
+                new String[]{asid, kind}, null, null, null);
+
         String attachment = null;
         boolean hasNext = cursor.moveToFirst();
         if (hasNext){
@@ -78,11 +87,15 @@ public class DownloadWorkDBManager {
 
     /**
      * 查询文件的路径
-     * @param sid
+     * @param asid
+     * @param kind
      * @return 文件路径名
      */
-    public String queryFilePath(String sid){
-        Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null, DownloadWorkDBHelper.SID + "=?", new String[]{sid}, null, null, null);
+    public String queryFilePath(String asid,String kind){
+        Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null,
+                DownloadWorkDBHelper.ASID + "=? and " + DownloadWorkDBHelper.KIND + "=?",
+                new String[]{asid, kind}, null, null, null);
+
         String attachment = null;
         boolean hasNext = cursor.moveToNext();
         if (hasNext){

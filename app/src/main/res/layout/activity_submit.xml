@@ -44,7 +44,7 @@
 
                 <Button
                     android:background="@drawable/round_shape"
-                    android:text="下载"
+                    android:text="未下载"
                     android:layout_marginLeft="60dp"
                     android:layout_marginRight="60dp"
                     android:layout_marginTop="10dp"
@@ -84,7 +84,7 @@
 
                 <Button
                     android:background="@drawable/round_shape"
-                    android:text="未上传"
+                    android:text="已提交"
                     android:layout_marginLeft="60dp"
                     android:layout_marginRight="60dp"
                     android:layout_marginTop="10dp"
