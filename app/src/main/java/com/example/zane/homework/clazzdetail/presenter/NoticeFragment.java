@@ -112,27 +112,33 @@ public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
         isLoading = true;
 
+        Observable<List<GetMessage.DataEntity>> observable;
         //如果第N页数据为空，后台会返回null
-        model.getTeaMessage(page)
-                .subscribe(new FinalSubscriber<List<GetMessage.DataEntity>>(this, dataEntity -> {
-                    if (dataEntity != null){
-                        List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
-                        adapter.addAll(messages);
+        if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+            observable = model.getTeaMessage(page);
+        } else {
+            observable = model.getStuMessage(page);
+        }
 
-                        for (GetMessage.DataEntity data : messages) {
-                            mids.add(data.getMid());
-                        }
+        observable.subscribe(new FinalSubscriber<List<GetMessage.DataEntity>>(this, dataEntity -> {
+            if (dataEntity != null){
+                List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
+                adapter.addAll(messages);
 
-                        //页数自增,一页最多填充七条数据(后台的规定)
-                        page++;
-                        adapter.notifyDataSetChanged();
-                        isLoading = false;
-                    } else {
-                        JUtils.Toast("没有更多消息了～");
-                        //停止再加载更多
-                        isLoading = true;
-                    }
-                }));
+                for (GetMessage.DataEntity data : messages) {
+                    mids.add(data.getMid());
+                }
+
+                //页数自增,一页最多填充七条数据(后台的规定)
+                page++;
+                adapter.notifyDataSetChanged();
+                isLoading = false;
+            } else {
+                JUtils.Toast("没有更多消息了～");
+                //停止再加载更多
+                isLoading = true;
+            }
+        }));
     }
 
     /**
@@ -144,9 +150,15 @@ public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
         mids.clear();
         //final Semaphore mSemaphore = new Semaphore(1);
 
-        // TODO: 2016/11/18 有待测试
+        Observable<List<GetMessage.DataEntity>> observable;
         for (int i = 1; i <= page - 1; i++) {
-            model.getTeaMessage(i).subscribe(new FinalSubscriber<List<GetMessage.DataEntity>>(this, dataEntity -> {
+            if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+                observable = model.getTeaMessage(i);
+            } else {
+                observable = model.getStuMessage(i);
+            }
+
+            observable.subscribe(new FinalSubscriber<List<GetMessage.DataEntity>>(this, dataEntity -> {
                 List<GetMessage.DataEntity> messages = (List<GetMessage.DataEntity>) dataEntity;
                 adapter.addAll(messages);
                 adapter.notifyDataSetChanged();
@@ -165,7 +177,6 @@ public class NoticeFragment extends BaseFragment<ClazzDeatilFragmentView> {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loadMore(LoadMoreNoticeEvent event){
-        Log.i("noticefragment", "loadmore");
         getData();
     }
 

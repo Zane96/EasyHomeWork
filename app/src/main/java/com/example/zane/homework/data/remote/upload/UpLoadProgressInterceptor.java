@@ -1,7 +1,13 @@
 package com.example.zane.homework.data.remote.upload;
 
+import android.util.Log;
+
+import com.example.zane.homework.data.remote.CommonProvider;
+import com.example.zane.homework.data.sp.MySharedPre;
+
 import java.io.IOException;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

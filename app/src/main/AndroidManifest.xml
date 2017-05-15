@@ -69,10 +69,12 @@
                   android:configChanges="orientation"/>
         <activity android:name=".clazz.presenter.StuClazzPresenter"
                   android:configChanges="orientation"/>
+        <activity android:name=".homeworkdetail.presenters.StuHomePresenter"
+                  android:configChanges="orientation"/>
 
         <service android:name=".service.UpLoadFileServicess"/>
-        <service android:name=".service.PostHomeWorkService"/>
         <service android:name=".service.DownloadFileService"/>
+        <service android:name=".service.PostHomeWorkService"/>
         <service android:name=".service.UploadFileService"/>
 
     </application>

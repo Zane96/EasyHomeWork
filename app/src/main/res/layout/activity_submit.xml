@@ -43,8 +43,8 @@
                     android:layout_height="match_parent"/>
 
                 <Button
-                    android:background="@drawable/round_shape"
                     android:text="未下载"
+                    android:background="@drawable/round_shape"
                     android:layout_marginLeft="60dp"
                     android:layout_marginRight="60dp"
                     android:layout_marginTop="10dp"
@@ -84,7 +84,6 @@
 
                 <Button
                     android:background="@drawable/round_shape"
-                    android:text="已提交"
                     android:layout_marginLeft="60dp"
                     android:layout_marginRight="60dp"
                     android:layout_marginTop="10dp"
@@ -126,7 +125,6 @@
                 <TextView
                     android:textSize="16sp"
                     android:ellipsize="marquee"
-                    android:text="未上传"
                     android:layout_marginLeft="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -167,7 +165,6 @@
                 <TextView
                     android:textSize="16sp"
                     android:ellipsize="marquee"
-                    android:text="未上传"
                     android:layout_marginLeft="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"

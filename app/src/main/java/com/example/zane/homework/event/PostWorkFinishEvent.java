@@ -7,4 +7,13 @@ package com.example.zane.homework.event;
  */
 
 public class PostWorkFinishEvent {
+    private boolean isSuccess;
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
 }

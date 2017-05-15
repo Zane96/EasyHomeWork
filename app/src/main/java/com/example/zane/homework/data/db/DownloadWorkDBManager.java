@@ -15,7 +15,7 @@ import com.example.zane.homework.app.App;
 
 public class DownloadWorkDBManager {
 
-    private final static int VERSION = 1;
+    private final static int VERSION = 2;
     private final static String DB_NAME = "DownloadWork.db";
     private SQLiteDatabase database_write;
     private SQLiteDatabase database_read;
@@ -54,6 +54,7 @@ public class DownloadWorkDBManager {
             contentValues.put(DownloadWorkDBHelper.NAME, name);
             contentValues.put(DownloadWorkDBHelper.ASID, asid);
             contentValues.put(DownloadWorkDBHelper.FILEPATH, filePath);
+            contentValues.put(DownloadWorkDBHelper.KIND, kind);
             database_write.insert(DownloadWorkDBHelper.TABLE_NAME, null, contentValues);
         } else {
             ContentValues contentValues = new ContentValues();
@@ -71,7 +72,7 @@ public class DownloadWorkDBManager {
      * @param kind
      * @return 文件名
      */
-    public String queryAttachment(String asid,String kind){
+    public String queryAttachment(String asid, String kind){
         Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null,
                 DownloadWorkDBHelper.ASID + "=? and " + DownloadWorkDBHelper.KIND + "=?",
                 new String[]{asid, kind}, null, null, null);
@@ -91,7 +92,7 @@ public class DownloadWorkDBManager {
      * @param kind
      * @return 文件路径名
      */
-    public String queryFilePath(String asid,String kind){
+    public String queryFilePath(String asid, String kind){
         Cursor cursor = database_read.query(DownloadWorkDBHelper.TABLE_NAME, null,
                 DownloadWorkDBHelper.ASID + "=? and " + DownloadWorkDBHelper.KIND + "=?",
                 new String[]{asid, kind}, null, null, null);

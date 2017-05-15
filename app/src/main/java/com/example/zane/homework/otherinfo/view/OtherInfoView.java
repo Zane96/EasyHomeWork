@@ -67,7 +67,7 @@ public class OtherInfoView extends BaseActivityView {
     }
 
     private void initToolbar() {
-        super.initToolbar(activity, toolbarOtherinfo, "成员信息");
+        //super.initToolbar(activity, toolbarOtherinfo, "成员信息");
     }
 
     public void init(String name, String selfInfo, int avatar) {

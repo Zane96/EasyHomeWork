@@ -69,6 +69,6 @@ public interface HomeWorkService {
     //学生查看自己提交的某份作业详情
     @GET("getHo/{asid}")
     @Headers("Cache-Control: no-cache")
-    Observable<List<GetHoWork.DataEntity>> getHoWork(@Path("asid") String asid);
+    Observable<GetHoWork.DataEntity> getHoWork(@Path("asid") String asid);
 
 }

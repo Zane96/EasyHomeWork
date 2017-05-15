@@ -1,26 +1,15 @@
 package com.example.zane.homework.clazzdetail.presenter;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.util.ArrayMap;
-import android.util.Log;
-import android.util.SparseArray;
 
 import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.clazzdetail.view.ClazzDetailPostHomeWorkView;
 import com.example.zane.homework.event.PostWorkFinishEvent;
-import com.example.zane.homework.event.UpLoadFileEvent;
-import com.example.zane.homework.service.PostHomeWorkService;
 import com.example.zane.homework.service.UploadFileService;
 import com.example.zane.homework.utils.Uri2File;
 
@@ -29,8 +18,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
 
 import static com.example.zane.homework.utils.FileUtils.OPEN_FFILE;
 
@@ -41,7 +28,6 @@ import static com.example.zane.homework.utils.FileUtils.OPEN_FFILE;
 
 public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<ClazzDetailPostHomeWorkView>{
 
-    private PostHomeWorkService postService;
     public static final String TYPE = "postHomeWork";
     public static final String PERCENTAGE = "percentage";
     public static final String DEADLINE = "deadline";
@@ -84,13 +70,11 @@ public class ClazzDetailPostHomeWorkActivity extends BaseActivityPresenter<Clazz
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == Activity.RESULT_OK){
             switch (requestCode){
                 case OPEN_FFILE:
                     String filePath = Uri2File.getFileAbsolutePath(ClazzDetailPostHomeWorkActivity.this, Uri.parse(Uri.decode(data.getDataString())));
                     uploadFile = new File(filePath);
-                    Log.i("ClazzDetailPost", filePath+"");
                     break;
             }
         }

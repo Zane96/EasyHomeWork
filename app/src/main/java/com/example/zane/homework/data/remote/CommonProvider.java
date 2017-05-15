@@ -39,8 +39,6 @@ public class CommonProvider {
     private static final Retrofit.Builder RetrofitBuilderInstance = provideRetrofit();
 
     private static OkHttpClient provideOkHttpClient(){
-        int s = 1;
-        double ss = s;
         //添加body日志打印，http，stetho调试的拦截器，管理cookie
         return new OkHttpClient.Builder()
                        .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

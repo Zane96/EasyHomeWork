@@ -1,8 +1,7 @@
 package com.example.zane.homework.data.model;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.data.bean.GetHoWork;
@@ -20,6 +19,7 @@ import com.example.zane.homework.data.remote.service.DownLoadService;
 import com.example.zane.homework.data.remote.service.HomeWorkService;
 import com.example.zane.homework.data.remote.upload.UploadCommonProvider;
 import com.example.zane.homework.data.remote.upload.UploadProgressListener;
+import com.example.zane.homework.data.sp.MySharedPre;
 
 import java.io.File;
 import java.util.List;
@@ -94,7 +94,7 @@ public class HomeWorkModel {
         return TransForm.transform(serviceApi.getNoDueWork());
     }
 
-    public Observable<List<GetHoWork.DataEntity>> getHoWork(String asid){
+    public Observable<GetHoWork.DataEntity> getHoWork(String asid){
         return TransForm.transform(serviceApi.getHoWork(asid));
     }
 
@@ -102,14 +102,21 @@ public class HomeWorkModel {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        return TransForm.transform(UploadCommonProvider.getServiceApi(listener).stuUpload(asid, body));
+        Log.i("testSid", MySharedPre.getInstance().getSid());
+        RequestBody asidBody = RequestBody.create(MediaType.parse("multipart/form-data"), asid);
+        RequestBody sidBody = RequestBody.create(MediaType.parse("multipart/form-data"), MySharedPre.getInstance().getSid());
+
+        return TransForm.transform(UploadCommonProvider.getServiceApi(listener).stuUpload(sidBody, asidBody, body));
     }
 
     public Observable<String> stuUpLoadAgain(String asid, File file, UploadProgressListener listener){
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        return TransForm.transform(UploadCommonProvider.getServiceApi(listener).stuUploadAgain(asid, body));
+        RequestBody asidBody = RequestBody.create(MediaType.parse("multipart/form-data"), asid);
+        RequestBody sidBody = RequestBody.create(MediaType.parse("multipart/form-data"), MySharedPre.getInstance().getSid());
+
+        return TransForm.transform(UploadCommonProvider.getServiceApi(listener).stuUploadAgain(sidBody, asidBody, body));
     }
 
     //老师下载学生的作业

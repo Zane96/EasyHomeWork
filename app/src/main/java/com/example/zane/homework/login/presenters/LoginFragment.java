@@ -66,6 +66,9 @@ public class LoginFragment extends BaseFragment<LoginView> {
                         MySharedPre.getInstance().setIdentity("student");
                     }
 
+                    Login.DataEntity data = (Login.DataEntity) o;
+
+                    MySharedPre.getInstance().setSid(data.getSessionid());
                     MySharedPre.getInstance().setLogin(true);
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);

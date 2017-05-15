@@ -54,7 +54,6 @@ public class ClazzDetailPostHomeWorkView extends BaseActivityView {
 
     private ClazzDetailPostHomeWorkActivity activity;
     private String endTime;
-    private String file = "null";
 
     @Override
     public int getRootViewId() {
@@ -98,12 +97,10 @@ public class ClazzDetailPostHomeWorkView extends BaseActivityView {
 
     private void loading() {
         buttonChooseFile.setImageResource(R.drawable.ic_upload_1);
-        file = "loading";
     }
 
     public void loaded() {
         buttonChooseFile.setImageResource(R.drawable.ic_upload_2);
-        file = "loaded";
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.zane.homework.data.remote.upload;
 
 import com.bumptech.glide.Glide;
 import com.example.zane.homework.app.App;
+import com.example.zane.homework.data.remote.CommonProvider;
 import com.example.zane.homework.data.remote.service.UpLoadService;
 
 import java.net.HttpURLConnection;

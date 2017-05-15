@@ -6,6 +6,10 @@ package com.example.zane.homework.data.remote;
  * Blog: zane96.github.io
  */
 
+import android.util.Log;
+
+import com.example.zane.homework.data.sp.MySharedPre;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +34,7 @@ public class HeaderInterceptors implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
 
         Request request = chain.request();
+
         Response originalResponse;
 
         originalResponse = chain.proceed(request);
@@ -37,6 +42,7 @@ public class HeaderInterceptors implements Interceptor {
         MediaType contentType = originalResponse.body().contentType();
         //先解析一遍json数据，根据status和message去手动改状态码和描述
         String originalContent = originalResponse.body().string();
+        Log.i("testBody", originalContent);
 
         int code ;
         String message ;
@@ -49,6 +55,7 @@ public class HeaderInterceptors implements Interceptor {
             code = wrapper.getInt("status");
             //剥离外层数据
             body = wrapper.getString("data");
+
         } catch (JSONException e) {
             throw new ServiceConfigurationError("解析错误："+e.getLocalizedMessage());
         }

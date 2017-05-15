@@ -83,4 +83,13 @@ public class MySharedPre {
         return preferences.getString("gender", "");
     }
 
+    public void setSid(String sid) {
+        editor.putString("sid", sid);
+        editor.commit();
+    }
+
+    public String getSid() {
+        return preferences.getString("sid", "");
+    }
+
 }

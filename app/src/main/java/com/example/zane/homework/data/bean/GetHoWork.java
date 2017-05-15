@@ -3,9 +3,6 @@ package com.example.zane.homework.data.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**学生查看自己提交的某份作业详情
  * Created by Zane on 16/11/1.
  * Email: zanebot96@gmail.com
@@ -14,22 +11,16 @@ import java.util.List;
 
 public class GetHoWork implements Parcelable {
 
+
     /**
      * status : 200
      * message : ok
-     * data : [{"asinattachment":"20161030191924666.jpg","hoattachment":"20161030193307218.docx","addtion":"数学作业，大家好好做","deadline":"2016-12-25"}]
+     * data : {"asinattachment":"20161030191924666.jpg","hoattachment":"20161030193307218.docx","addtion":"数学作业，大家好好做","deadline":"2016-12-25"}
      */
 
     private int status;
     private String message;
-    /**
-     * asinattachment : 20161030191924666.jpg
-     * hoattachment : 20161030193307218.docx
-     * addtion : 数学作业，大家好好做
-     * deadline : 2016-12-25
-     */
-
-    private List<DataEntity> data;
+    private DataEntity data;
 
     public int getStatus() {
         return status;
@@ -47,15 +38,22 @@ public class GetHoWork implements Parcelable {
         this.message = message;
     }
 
-    public List<DataEntity> getData() {
+    public DataEntity getData() {
         return data;
     }
 
-    public void setData(List<DataEntity> data) {
+    public void setData(DataEntity data) {
         this.data = data;
     }
 
     public static class DataEntity implements Parcelable {
+        /**
+         * asinattachment : 20161030191924666.jpg
+         * hoattachment : 20161030193307218.docx
+         * addtion : 数学作业，大家好好做
+         * deadline : 2016-12-25
+         */
+
         private String asinattachment;
         private String hoattachment;
         private String addtion;
@@ -138,7 +136,7 @@ public class GetHoWork implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.status);
         dest.writeString(this.message);
-        dest.writeList(this.data);
+        dest.writeParcelable(this.data, flags);
     }
 
     public GetHoWork() {
@@ -147,11 +145,10 @@ public class GetHoWork implements Parcelable {
     protected GetHoWork(Parcel in) {
         this.status = in.readInt();
         this.message = in.readString();
-        this.data = new ArrayList<DataEntity>();
-        in.readList(this.data, DataEntity.class.getClassLoader());
+        this.data = in.readParcelable(DataEntity.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<GetHoWork> CREATOR = new Parcelable.Creator<GetHoWork>() {
+    public static final Creator<GetHoWork> CREATOR = new Creator<GetHoWork>() {
         @Override
         public GetHoWork createFromParcel(Parcel source) {
             return new GetHoWork(source);

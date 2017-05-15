@@ -119,17 +119,17 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
         startActivityForResult(intent, OPEN_FFILE);
     }
 
-    private ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            UpLoadFileServicess.MyBinder binder = (UpLoadFileServicess.MyBinder) service;
-            ClazzDetailActivityPresenter.this.upLoadFileService = binder.getServiceContext();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-        }
-    };
+//    private ServiceConnection connection = new ServiceConnection() {
+//        @Override
+//        public void onServiceConnected(ComponentName name, IBinder service) {
+//            UpLoadFileServicess.MyBinder binder = (UpLoadFileServicess.MyBinder) service;
+//            ClazzDetailActivityPresenter.this.upLoadFileService = binder.getServiceContext();
+//        }
+//
+//        @Override
+//        public void onServiceDisconnected(ComponentName name) {
+//        }
+//    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -143,7 +143,7 @@ public class ClazzDetailActivityPresenter extends BaseActivityPresenter<ClazzDet
                     Intent intent = new Intent(ClazzDetailActivityPresenter.this, UpLoadFileServicess.class);
                     intent.putExtra(POSITION, position);
                     startService(intent);
-                    bindService(intent, connection, Context.BIND_AUTO_CREATE);
+                    //bindService(intent, connection, Context.BIND_AUTO_CREATE);
                     break;
             }
         }

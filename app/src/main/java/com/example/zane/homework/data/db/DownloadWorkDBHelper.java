@@ -43,6 +43,9 @@ public class DownloadWorkDBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (newVersion > oldVersion) {
+            db.delete(TABLE_NAME, null, null);
+            db.execSQL(sql);
+        }
     }
 }

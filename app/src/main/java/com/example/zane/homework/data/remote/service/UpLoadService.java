@@ -33,15 +33,15 @@ public interface UpLoadService {
 
     //提交作业
     @POST("stuUpload/1")
-    @FormUrlEncoded
     @Multipart
-    Observable<String> stuUpload(@Field("asid") String asid,
+    Observable<String> stuUpload(@Part("sid") RequestBody sid,
+                                 @Part("asid") RequestBody asid,
                                  @Part MultipartBody.Part file);
 
     //再次提交作业
     @POST("stuUpload/2")
-    @FormUrlEncoded
     @Multipart
-    Observable<String> stuUploadAgain(@Field("asid") String asid,
+    Observable<String> stuUploadAgain(@Part("sid") RequestBody sid,
+                                      @Part("asid") RequestBody asid,
                                       @Part MultipartBody.Part file);
 }
