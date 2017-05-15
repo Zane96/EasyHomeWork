@@ -63,7 +63,7 @@ public class TeaApplyViewHolder extends BaseListViewHolderImpl<ShowApply.DataEnt
         } else {
             state.setBackgroundResource(R.drawable.round_shape);
             state.setText("未处理");
-            state.setEnabled(false);
+            state.setEnabled(true);
         }
     }
 

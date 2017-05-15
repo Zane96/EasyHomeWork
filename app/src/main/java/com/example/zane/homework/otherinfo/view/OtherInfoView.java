@@ -79,12 +79,6 @@ public class OtherInfoView extends BaseActivityView {
                 .load(avatar)
                 .transform(new CircleTransform(App.getInstance()))
                 .into(imageviewOtherinfoAvatar);
-//        if (MySharedPre.getInstance().getIdentity().equals("student") && activity.getIntent().getSerializableExtra(MemberFragment.MEMBER_DETAIL) != null) {
-//            textview0.setText("课程名:");
-//            textview1.setText("课程总分:");
-//            textview2.setText("已获得分数:");
-//            textview3.setText("未交作业次数:");
-//        }
     }
 
     public void setData(String couseName, String total, String score, String absent) {
