@@ -2,6 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.zane.easylinecounter'
 apply plugin: 'me.tatarka.retrolambda'
 
+countpath {
+    filepaths=["/app/src/main/res/values",
+               "/app/src/main/res/drawable",
+               "/app/src/main/res/menu",
+               "/app/src/main/res/xml"]
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
