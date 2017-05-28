@@ -9,11 +9,15 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.event.RegisterEvent;
+import com.example.zane.homework.login.Adapter.SpinnerAdapter;
 import com.example.zane.homework.login.presenters.LoginFragment;
 import com.example.zane.homework.login.presenters.LoginRegisterActivity;
 import com.example.zane.homework.utils.JudgeSearch;
@@ -56,12 +61,16 @@ public class LoginView extends BaseViewImpl {
     EditText editLoginPassword;
     @Bind(R.id.textinput_login_password)
     TextInputLayout textinputLoginPassword;
-    @Bind(R.id.radio_teacher)
-    RadioButton radioTeacher;
-    @Bind(R.id.radio_student)
-    RadioButton radioStudent;
-    @Bind(R.id.radiogroup_login)
-    RadioGroup radiogroupLogin;
+    @Bind(R.id.spinner_login)
+    Spinner spinner;
+    @Bind(R.id.imageView_log)
+    ImageView imageView;
+//    @Bind(R.id.radio_teacher)
+//    RadioButton radioTeacher;
+//    @Bind(R.id.radio_student)
+//    RadioButton radioStudent;
+//    @Bind(R.id.radiogroup_login)
+//    RadioGroup radiogroupLogin;
     @Bind(R.id.button_login)
     Button buttonLogin;
     @Bind(R.id.text_register)
@@ -69,6 +78,10 @@ public class LoginView extends BaseViewImpl {
 
     private LoginFragment fragment;
     private int identity;//0, 1, 2 null, teacher, student
+
+    private SpinnerAdapter adapter;
+
+    private int[] drawableIds = { R.drawable.student, R.drawable.teacher};
 
     @Override
     public int getRootViewId() {
@@ -88,6 +101,7 @@ public class LoginView extends BaseViewImpl {
     public void init(){
 
 
+
         RxTextView.textChanges(editLoginUsername).subscribe(c -> {
             if (!JudgeSearch.isRight(c.toString())){
                 textinputLoginUsername.setError("用户名格式不正确");
@@ -105,21 +119,58 @@ public class LoginView extends BaseViewImpl {
             }
         });
 
-        RxRadioGroup.checkedChanges(radiogroupLogin).subscribe(integer -> {
-            if (integer == R.id.radio_student){
-                setIdentity(2);
-            } else if (integer == R.id.radio_teacher){
-                setIdentity(1);
-            } else {
-                setIdentity(0);
-            }
-        });
+//        RxRadioGroup.checkedChanges(radiogroupLogin).subscribe(integer -> {
+//            if (integer == R.id.radio_student){
+//                setIdentity(2);
+//            } else if (integer == R.id.radio_teacher){
+//                setIdentity(1);
+//            } else {
+//                setIdentity(0);
+//            }
+//        });
 
         RxView.clicks(textRegister).subscribe(aVoid -> {
             EventBus.getDefault().post(new RegisterEvent());
         });
 
         RxView.clicks(buttonLogin).subscribe(aVoid -> fragment.login());
+
+
+        adapter = new SpinnerAdapter(drawableIds);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int positon, long id) {
+
+                if (positon == 0){
+                    imageView.setImageResource(R.drawable.logo_red);
+                    setIdentity(2);
+                } else if (positon == 1){
+                    imageView.setImageResource(R.drawable.logo_yellow);
+                    setIdentity(1);
+                } else {
+                    setIdentity(0);
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+//        RxView.clicks(spinner).subscribe(aVoid -> {
+//            adapter = new SpinnerAdapter(drawableIds);
+//            spinner.setAdapter(adapter);
+//            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                public void onItemSelected(AdapterView<?> parent, View view,
+//                                           int positon, long id) {
+//                    int i = (int) parent.getItemAtPosition(positon);
+//                    Log.i("AA", "onItemSelected: "+parent.getItemAtPosition(positon));
+//                    Log.i("AB", "onItemSelected: " + i);
+//                }
+//
+//                public void onNothingSelected(AdapterView<?> parent) {
+//                }
+//            });
+//        });
     }
 
     private void setIdentity(int id){

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,8 +46,10 @@ public class MainView extends BaseViewImpl {
     Toolbar toolbar;
     @Bind(R.id.main_fragment_replace)
     FrameLayout mainFragmentReplace;
-    @Bind(R.id.nav_view)
-    NavigationView navView;
+//    @Bind(R.id.nav_view)
+//    NavigationView navView;
+    @Bind(R.id.nav_hmenu)
+    View include;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     private AppCompatActivity context;
@@ -72,20 +75,23 @@ public class MainView extends BaseViewImpl {
 
     public void init(ClazzFragPresenter clazzFragPresenter) {
 
+
         toolbar.setTitle("作业帮");
 
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_replace, clazzFragPresenter, "clazzfrag");
         fragmentTransaction.commit();
 
-        View view = layoutInflater.inflate(R.layout.nav_header_main, navView);
+//        View view = layoutInflater.inflate(R.layout.nav_header_main, navView);
+//        View view = layoutInflater.inflate(R.layout.nav_header_main,);
+
 
         textView = (TextView) view.findViewById(R.id.text_main_welcom);
 
         imageView = (ImageView) view.findViewById(R.id.imageView_main_avatar);
 
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            textView.setText(TeacherLogin.getInstacne().getUserName() + "老师, " + "你好!");
+            textView.setText(TeacherLogin.getInstacne().getUserName() + "老师，, " + "你好呀!");
             if (MockTeacherData.avatar != null){
                 Glide.with(context)
                         .load(MockTeacherData.avatar)
@@ -98,7 +104,7 @@ public class MainView extends BaseViewImpl {
                         .into(imageView);
             }
         } else {
-            textView.setText(StudentLogin.getInstacne().getUserName() + "同学" + "你好!");
+            textView.setText(StudentLogin.getInstacne().getUserName() + "同学，" + "你好呀!");
             if (MockStudentData.avatar != null){
                 Glide.with(context)
                         .load(MockStudentData.avatar)
@@ -133,13 +139,13 @@ public class MainView extends BaseViewImpl {
 
     public void reFlashData(String name){
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-            textView.setText(name + " 老师, " + "你好!");
+            textView.setText(name + " 老师, " + "你好呀!");
             Glide.with(context)
                     .load(MockTeacherData.avatar)
                     .transform(new CircleTransform(App.getInstance()))
                     .into(imageView);
         } else {
-            textView.setText(name + " 同学, " + "你好!");
+            textView.setText(name + " 同学, " + "你好呀!");
             Glide.with(context)
                     .load(MockStudentData.avatar)
                     .transform(new CircleTransform(App.getInstance()))

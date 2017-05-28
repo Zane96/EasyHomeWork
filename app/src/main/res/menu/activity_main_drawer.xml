@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_class"
-            android:icon="@drawable/clazz"
+            android:icon="@drawable/ic_class"
             android:title="@string/drawer_class"/>
         <item
             android:id="@+id/drawer_message"
-            android:icon="@drawable/message"
+            android:icon="@drawable/ic_mesnews"
             android:title="@string/drawer_message"/>
         <item
             android:id="@+id/drawer_info"
-            android:icon="@drawable/info"
+            android:icon="@drawable/ic_info"
             android:title="@string/drawer_info"/>
         <!--<item-->
             <!--android:id="@+id/nav_manage"-->
@@ -22,17 +23,17 @@
 
     <item android:title="">
         <menu>
+
             <item
                 android:id="@+id/drawer_about"
-                android:icon="@drawable/about"
+                app:showAsAction="ifRoom"
                 android:title="@string/drawer_about"/>
             <item
                 android:id="@+id/drawer_setting"
-                android:icon="@drawable/setting"
                 android:title="@string/drawer_setting"/>
             <item
                 android:id="@+id/drawer_login"
-                android:icon="@drawable/out"
+                app:showAsAction="always"
                 android:title="@string/out"/>
         </menu>
     </item>

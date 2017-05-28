@@ -30,10 +30,7 @@ public interface LoginRegisteService {
     @Headers("Cache-Control: no-store")
     Observable<Integer> registe(@Field("sirstu") String sirstu,
                                 @Field("username") String userName,
-                                @Field("realname") String realName,
-                                @Field("password") String password,
-                                @Field("gender") String gender,
-                                @Field("introduce") String introduce);
+                                @Field("password") String password);
 
     //学生／老师帐号登陆
     @POST("isvalid")

@@ -25,7 +25,7 @@ public class StuApplyViewHolder extends BaseListViewHolderImpl<ShowApply.DataEnt
     private ImageView avatar;
     private TextView realName;
     private TextView intro;
-    private Button state;
+    private TextView state;
     private TextView addtion;
 
     public StuApplyViewHolder(ViewGroup parent, @LayoutRes int res) {
@@ -51,19 +51,14 @@ public class StuApplyViewHolder extends BaseListViewHolderImpl<ShowApply.DataEnt
         intro.setText(data.getSelfintro());
         addtion.setText("无");
         if ("true".equals(data.getDone())){
-            state.setBackgroundResource(R.drawable.round_state_done);
             state.setText("已处理");
-            state.setClickable(false);
         } else {
-            state.setBackgroundResource(R.drawable.round_shape);
             state.setText("未处理");
         }
     }
 
     public void applySuccess(){
-        state.setBackgroundResource(R.drawable.round_state_done);
         state.setText("已处理");
-        state.setClickable(false);
         Snackbar.make(state, "同意已处理", Snackbar.LENGTH_SHORT).show();
     }
 }

@@ -169,8 +169,6 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
 
         @Bind(R.id.imageview_item_clazz)
         ImageView imageviewItemClazz;
-        @Bind(R.id.textview_item_clazzname)
-        TextView textviewItemClazzname;
         @Bind(R.id.textview_item_couresename)
         TextView textviewItemCouresename;
         @Bind(R.id.textview_item_owner)
@@ -179,8 +177,6 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
         CardView clazzItem;
         @Bind(R.id.textview_item_asid)
         TextView textviewItemAsid;
-        @Bind(R.id.image_item_owner)
-        ImageView imageOwner;
 
         private int itemPosition;
         private TeacherHavaClass.DataEntity teaData;
@@ -199,13 +195,10 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
                 imageviewItemClazz.setTransitionName(String.valueOf(position));
             }
 
-            imageOwner.setVisibility(View.GONE);
-
             if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
 
                 teaData = teaHaveClasses.get(position);
                 textviewItemCouresename.setText(teaData.getCourse());
-                textviewItemClazzname.setText(teaData.getClassname());
                 textviewItemOwner.setText(teaData.getCreator());
                 textviewItemAsid.setText("CID: " + teaData.getCid());
 
@@ -219,7 +212,6 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
 
                 stuData = stuHaveCourses.get(position);
                 textviewItemCouresename.setText(stuData.getAddtion());
-                textviewItemClazzname.setText(stuData.getCourse());
                 textviewItemOwner.setText("JID : " + stuData.getJid());
                 textviewItemAsid.setText("CID :" + stuData.getCid());
 

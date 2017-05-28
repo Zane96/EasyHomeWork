@@ -1,158 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/message_item"
-    android:layout_height="300dp"
     android:layout_width="match_parent"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
-    android:layout_gravity="center"
-    app:cardCornerRadius="4dp"
-    app:cardBackgroundColor="#fff"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true"
-    app:cardPreventCornerOverlap="true"
-    android:foreground="@drawable/card_foreground"
-    >
+    android:layout_height="128dp">
 
-    <LinearLayout
-        android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:id="@+id/message_item"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="128dp"
+        android:layout_width="344dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#fff"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true"
+        android:foreground="@drawable/card_foreground">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:id="@+id/image_message_top"
-            android:layout_marginTop="8dp"
-            />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/image_message_top"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/text1"
-                android:text="姓名:"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
                 android:id="@+id/text_message_realname"
-                android:maxLines="1"
+                android:layout_width="150dp"
+                android:layout_height="23dp"
+                android:layout_alignTop="@+id/image_message_top"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_toEndOf="@+id/image_message_top"
+                android:layout_toRightOf="@+id/image_message_top"
                 android:ellipsize="end"
-                android:layout_toRightOf="@id/text1"
-                android:layout_alignBaseline="@id/text1"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/background"
-                android:layout_below="@id/text1"/>
+                android:maxLines="1"
+                android:text="唐不苦"
+                android:textColor="#7f848a"
+                android:textSize="18sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/text2"
-                android:text="介绍:"
-                android:layout_below="@id/text1"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
                 android:id="@+id/text_message_intro"
-                android:maxLines="1"
+                android:layout_width="180dp"
+                android:layout_height="15dp"
+                android:layout_alignBottom="@+id/image_message_top"
+                android:layout_alignLeft="@+id/text_message_realname"
+                android:layout_alignStart="@+id/text_message_realname"
                 android:ellipsize="end"
-                android:layout_below="@id/text_message_realname"
-                android:layout_toRightOf="@id/text2"
-                android:layout_alignBaseline="@id/text2"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/background"
-                android:layout_below="@id/text2"/>
+                android:maxLines="1"
+                android:text="这不是一段自我介绍，只是一段占位符"
+                android:textColor="#7f848a"
+                android:textSize="12sp" />
 
-            <LinearLayout
-                android:id="@+id/text3"
-                android:layout_below="@id/text2"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="状态:"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center_vertical"
-                    />
-
-                <Button
-                    android:clickable="false"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/button_message_state"
-                    android:text="已处理"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/background"
-                android:layout_below="@id/text3"/>
 
             <TextView
+                android:id="@+id/textView2"
+                android:layout_width="30dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+                android:text="状态:"
+                android:textColor="#7f848a"
+                android:textSize="9sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/text4_message"
+                android:layout_alignStart="@+id/text4_message"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/button_message_state"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:text="已处理"
+                android:textColor="#e91e63"
+                android:textSize="12sp"
+                android:layout_alignBaseline="@+id/textView2"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_alignLeft="@+id/text_message_reason"
+                android:layout_alignStart="@+id/text_message_reason" />
+
+            <TextView
                 android:id="@+id/text4_message"
+                android:layout_width="30dp"
+                android:layout_height="10dp"
+                android:layout_alignLeft="@+id/image_message_top"
+                android:layout_alignStart="@+id/image_message_top"
+                android:layout_below="@+id/image_message_top"
+                android:layout_marginTop="18dp"
                 android:text="理由:"
-                android:layout_below="@id/text3"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                />
+                android:textColor="#7f848a"
+                android:textSize="9sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
                 android:id="@+id/text_message_reason"
-                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/text4_message"
+                android:layout_alignBottom="@+id/text4_message"
+                android:layout_toEndOf="@+id/image_message_top"
+                android:layout_toRightOf="@+id/image_message_top"
                 android:ellipsize="end"
-                android:layout_below="@id/text3"
-                android:layout_toRightOf="@id/text4_message"
-                android:layout_alignBaseline="@id/text4_message"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/background"
-                android:layout_below="@id/text4"/>
+                android:maxLines="1"
+                android:text="每门课 20分"
+                android:textSize="12sp" />
+
         </RelativeLayout>
 
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+<!--<android.support.v7.widget.CardView-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/message_item"-->
+    <!--android:layout_height="128dp"-->
+    <!--android:layout_width="344dp"-->
+    <!--app:cardCornerRadius="4dp"-->
+    <!--app:cardBackgroundColor="#fff"-->
+    <!--app:cardElevation="2dp"-->
+    <!--app:cardUseCompatPadding="true"-->
+    <!--app:cardPreventCornerOverlap="true"-->
+    <!--android:foreground="@drawable/card_foreground">-->
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/image_message_top"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginTop="8dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/text_message_realname"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="23dp"-->
+            <!--android:layout_alignTop="@+id/image_message_top"-->
+            <!--android:layout_marginLeft="24dp"-->
+            <!--android:layout_marginStart="24dp"-->
+            <!--android:layout_toEndOf="@+id/image_message_top"-->
+            <!--android:layout_toRightOf="@+id/image_message_top"-->
+            <!--android:ellipsize="end"-->
+            <!--android:maxLines="1"-->
+            <!--android:text="唐不苦"-->
+            <!--android:textColor="#7f848a"-->
+            <!--android:textSize="18sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/text_message_intro"-->
+            <!--android:layout_width="180dp"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:layout_alignBottom="@+id/image_message_top"-->
+            <!--android:layout_alignLeft="@+id/text_message_realname"-->
+            <!--android:layout_alignStart="@+id/text_message_realname"-->
+            <!--android:ellipsize="end"-->
+            <!--android:maxLines="1"-->
+            <!--android:text="这不是一段自我介绍，只是一段占位符"-->
+            <!--android:textColor="#7f848a"-->
+            <!--android:textSize="12sp" />-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/textView2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignLeft="@+id/text4_message"-->
+            <!--android:layout_alignStart="@+id/text4_message"-->
+            <!--android:layout_below="@+id/text4_message"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginTop="17dp"-->
+            <!--android:text="状态:"-->
+            <!--android:textColor="#7f848a"-->
+            <!--android:textSize="9sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/button_message_state"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/textView2"-->
+            <!--android:layout_alignLeft="@+id/text_message_reason"-->
+            <!--android:layout_alignStart="@+id/text_message_reason"-->
+            <!--android:text="已处理"-->
+            <!--android:textColor="#e91e63"-->
+            <!--android:textSize="12sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/text4_message"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignLeft="@+id/image_message_top"-->
+            <!--android:layout_alignStart="@+id/image_message_top"-->
+            <!--android:layout_below="@+id/image_message_top"-->
+            <!--android:layout_marginTop="18dp"-->
+            <!--android:text="理由:"-->
+            <!--android:textColor="#7f848a"-->
+            <!--android:textSize="9sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/text_message_reason"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBaseline="@+id/text4_message"-->
+            <!--android:layout_alignBottom="@+id/text4_message"-->
+            <!--android:layout_toEndOf="@+id/image_message_top"-->
+            <!--android:layout_toRightOf="@+id/image_message_top"-->
+            <!--android:ellipsize="end"-->
+            <!--android:maxLines="1"-->
+            <!--android:text="每门课 20分"-->
+            <!--android:textSize="12sp" />-->
+
+    <!--</RelativeLayout>-->
+
+<!--</android.support.v7.widget.CardView>-->

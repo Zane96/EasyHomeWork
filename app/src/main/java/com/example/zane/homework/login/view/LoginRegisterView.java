@@ -27,8 +27,7 @@ import butterknife.Bind;
  */
 
 public class LoginRegisterView extends BaseViewImpl {
-    @Bind(R.id.toolbar_login_register)
-    Toolbar toolbarLoginRegister;
+
     @Bind(R.id.fragment_login_replace)
     FrameLayout fragmentLoginReplace;
     private AppCompatActivity activity;
@@ -52,27 +51,13 @@ public class LoginRegisterView extends BaseViewImpl {
 
     }
 
-    private void initToolbar(){
-        toolbarLoginRegister.setTitle("登录");
-        activity.setSupportActionBar(toolbarLoginRegister);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarLoginRegister.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.finish();
-            }
-        });
-    }
-
     public void init(LoginFragment fragment){
-        initToolbar();
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_login_replace, fragment, "login");
         transaction.commit();
     }
 
     public void transToRegister(RegisterFragment fragment){
-        toolbarLoginRegister.setTitle("注册");
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_login_replace, fragment);
         transaction.addToBackStack(null);
@@ -90,14 +75,14 @@ public class LoginRegisterView extends BaseViewImpl {
         transToRegister(RegisterFragment.newInstance());
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onLogin(LoginEvent event){
-//        transToLogin(LoginFragment.newInstance());
-//    }
-
-    public void setToolbarTitle(){
-        toolbarLoginRegister.setTitle("登陆");
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogin(LoginEvent event){
+        transToLogin(LoginFragment.newInstance());
     }
+//
+//    public void setToolbarTitle(){
+//        toolbarLoginRegister.setTitle("登陆");
+//    }
 
     public void unRegister(){
         EventBus.getDefault().unregister(this);

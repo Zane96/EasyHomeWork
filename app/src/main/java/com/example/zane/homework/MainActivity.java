@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.homework.base.BaseActivity;
@@ -40,8 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends BaseActivity<MainView>
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity<MainView> implements View.OnClickListener{//NavigationView.OnNavigationItemSelectedListener
 
     private ClazzFragPresenter clazzFragPresenter;
     private InfoActivity infoActivity;
@@ -98,9 +99,7 @@ public class MainActivity extends BaseActivity<MainView>
         if (data != null) {
             MySharedPre sp = MySharedPre.getInstance();
             sp.setGender(data.getGender());
-            sp.setIntro(data.getSelfintro());
             sp.setName(data.getName());
-            sp.setRealName(data.getRealname());
             v.reFlashData(data.getName());
         }
     }
@@ -121,8 +120,25 @@ public class MainActivity extends BaseActivity<MainView>
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
+
+        View include = findViewById(R.id.nav_hmenu);
+        RelativeLayout relativeLayout = (RelativeLayout) include.findViewById(R.id.drawer_class);
+        RelativeLayout relativeLayout1 = (RelativeLayout) include.findViewById(R.id.drawer_message);
+        RelativeLayout relativeLayout2 = (RelativeLayout) include.findViewById(R.id.drawer_info);
+        RelativeLayout relativeLayout3 = (RelativeLayout) include.findViewById(R.id.drawer_about);
+        RelativeLayout relativeLayout4 = (RelativeLayout) include.findViewById(R.id.drawer_setting);
+        RelativeLayout relativeLayout5 = (RelativeLayout) include.findViewById(R.id.drawer_login);
+        relativeLayout.setOnClickListener(MainActivity.this);
+        relativeLayout1.setOnClickListener(MainActivity.this);
+        relativeLayout2.setOnClickListener(MainActivity.this);
+        relativeLayout3.setOnClickListener(MainActivity.this);
+        relativeLayout4.setOnClickListener(MainActivity.this);
+        relativeLayout5.setOnClickListener(MainActivity.this);
+//
+//        //点击监听事件
+//        ClickView(include);
 
         //获取用户信息
         if (MySharedPre.getInstance().getIdentity().equals("teacher")){
@@ -222,39 +238,89 @@ public class MainActivity extends BaseActivity<MainView>
         RegisterLoginModel.getInstance().quitLogin().subscribe(subscriber);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+//    private void ClickView(View view){
+//        ViewGroup viewGroup = (ViewGroup) view.getParent();
+//        switch (viewGroup.getId()){
+//            case R.id.nav_menu:
+//                if (view.getId() == R.id.drawer_class) {
+//                    v.transToClazzFragment(clazzFragPresenter);
+//                } else if (view.getId() == R.id.drawer_message) {
+//                    if (MySharedPre.getInstance().getIdentity().equals("student")){
+//
+//                    }
+//                    v.transToMessage();
+//                } else if (view.getId() == R.id.drawer_info) {
+//                    v.transToInfoActivity();
+//                } else if (view.getId() == R.id.drawer_about) {
+//                    v.transToAuthorInfo();
+//                } else if (view.getId() == R.id.drawer_setting) {
+//
+//                } else if (view.getId() == R.id.drawer_login){
+//                    quitLogin();
+//                }
+//                break;
+//
+//        }
+//    }
+
+//    @SuppressWarnings("StatementWithEmptyBody")
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//        // Handle navigation view item clicks here.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.drawer_class) {
+//            v.transToClazzFragment(clazzFragPresenter);
+//        } else if (id == R.id.drawer_message) {
+//            if (MySharedPre.getInstance().getIdentity().equals("student")){
+//
+//            }
+//            v.transToMessage();
+//        } else if (id == R.id.drawer_info) {
+//            v.transToInfoActivity();
+//        } else if (id == R.id.drawer_about) {
+//            v.transToAuthorInfo();
+//        } else if (id == R.id.drawer_setting) {
+//
+//        } else if (id == R.id.drawer_login){
+//            quitLogin();
+//        }
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        //MenuItem item = menu.findItem(R.id.search_view);
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    public void onClick(View vi) {
+        switch (vi.getId()){
+            case R.id.nav_hmenu:
+                View view = findViewById(R.id.nav_hmenu);
+                if (view.getId() == R.id.drawer_class) {
+                    v.transToClazzFragment(clazzFragPresenter);
+                } else if (view.getId() == R.id.drawer_message) {
+                    if (MySharedPre.getInstance().getIdentity().equals("student")){
 
-        if (id == R.id.drawer_class) {
-            v.transToClazzFragment(clazzFragPresenter);
-        } else if (id == R.id.drawer_message) {
-            if (MySharedPre.getInstance().getIdentity().equals("student")){
+                    }
+                    v.transToMessage();
+                } else if (view.getId() == R.id.drawer_info) {
+                    v.transToInfoActivity();
+                } else if (view.getId() == R.id.drawer_about) {
+                    v.transToAuthorInfo();
+                } else if (view.getId() == R.id.drawer_setting) {
 
-            }
-            v.transToMessage();
-        } else if (id == R.id.drawer_info) {
-            v.transToInfoActivity();
-        } else if (id == R.id.drawer_about) {
-            v.transToAuthorInfo();
-        } else if (id == R.id.drawer_setting) {
-
-        } else if (id == R.id.drawer_login){
-            quitLogin();
+                } else if (view.getId() == R.id.drawer_login){
+                    quitLogin();
+                }
+                break;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        //MenuItem item = menu.findItem(R.id.search_view);
-
-        return super.onCreateOptionsMenu(menu);
     }
 }

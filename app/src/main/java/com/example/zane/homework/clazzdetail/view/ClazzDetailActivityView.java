@@ -54,14 +54,18 @@ public class ClazzDetailActivityView extends BaseActivityView {
     public static final String CID = "cid";
     public static final String JID = "jid";
 
-    @Bind(R.id.imageview_clazzdetail_top)
-    ImageView imageviewClazzdetailTop;
-    @Bind(R.id.toolbar_clazzdetail)
-    Toolbar toolbarClazzdetail;
+//    @Bind(R.id.imageview_clazzdetail_top)
+//    ImageView imageviewClazzdetailTop;
+//    @Bind(R.id.toolbar_clazzdetail)
+//    Toolbar toolbarClazzdetail;
+    @Bind(R.id.imageView_clazzdetail_about)
+    ImageView about;
+    @Bind(R.id.imageView_clazzdetail_back)
+    ImageView back;
     @Bind(R.id.textview_clazzdetail_classname)
     TextView textviewClazzdetailClassname;
-    @Bind(R.id.textview_clazzdetail_coursename)
-    TextView textviewClazzdetailCoursename;
+//    @Bind(R.id.textview_clazzdetail_coursename)
+//    TextView textviewClazzdetailCoursename;
     @Bind(R.id.tablayout_clazzdetail)
     TabLayout tablayoutClazzdetail;
     @Bind(R.id.fab_clazzdetail)
@@ -95,12 +99,12 @@ public class ClazzDetailActivityView extends BaseActivityView {
 
     public void init(String cid, String jid) {
 
-        super.initToolbar(activity, toolbarClazzdetail, "详细信息");
+       // super.initToolbar(activity, toolbarClazzdetail, "详细信息");
 
         collClazzdetail.setTitle("");
         collClazzdetail.setExpandedTitleColor(this.activity.getResources().getColor(R.color.transparent));
 
-        textviewClazzdetailCoursename.setPadding(0, 0, 0, JUtils.px2dip(JUtils.getStatusBarHeight()));
+//        textviewClazzdetailCoursename.setPadding(0, 0, 0, JUtils.px2dip(JUtils.getStatusBarHeight()));
 
         RxView.clicks(fabClazzdetail).subscribe(aVoid -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -139,47 +143,47 @@ public class ClazzDetailActivityView extends BaseActivityView {
         });
     }
 
-    Callback callback = new Callback() {
-        @Override
-        public void onSuccess() {
-            startPost();
-        }
-
-        @Override
-        public void onError() {
-            startPost();
-        }
-    };
+//    Callback callback = new Callback() {
+//        @Override
+//        public void onSuccess() {
+//            startPost();
+//        }
+//
+//        @Override
+//        public void onError() {
+//            startPost();
+//        }
+//    };
 
     public void setText(String clazzName, String courseName, int image, int position) {
-        textviewClazzdetailClassname.setText(clazzName);
-        textviewClazzdetailCoursename.setText(courseName);
+      textviewClazzdetailClassname.setText(clazzName);
+//        textviewClazzdetailCoursename.setText(courseName);
         this.courseName = courseName;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            imageviewClazzdetailTop.setTransitionName(position+"");
-        }
-        RequestCreator requestCreator;
-        requestCreator = Picasso.with(activity).load(image);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            imageviewClazzdetailTop.setTransitionName(String.valueOf(position));
-        }
-
-        requestCreator.into(imageviewClazzdetailTop, callback);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            imageviewClazzdetailTop.setTransitionName(position+"");
+//        }
+//        RequestCreator requestCreator;
+//        requestCreator = Picasso.with(activity).load(image);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            imageviewClazzdetailTop.setTransitionName(String.valueOf(position));
+//        }
+//
+//        requestCreator.into(imageviewClazzdetailTop, callback);
     }
 
-    public void startPost(){
-        imageviewClazzdetailTop.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                imageviewClazzdetailTop.getViewTreeObserver().removeOnPreDrawListener(this);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    activity.startPostponedEnterTransition();
-                }
-                return true;
-            }
-        });
-    }
+//    public void startPost(){
+//        imageviewClazzdetailTop.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                imageviewClazzdetailTop.getViewTreeObserver().removeOnPreDrawListener(this);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    activity.startPostponedEnterTransition();
+//                }
+//                return true;
+//            }
+//        });
+//    }
 
     public void initTablayout(ClazzDetailFragViewPagerAdapter adapter) {
         viewpagerClazzdetail.setAdapter(adapter);
@@ -196,11 +200,11 @@ public class ClazzDetailActivityView extends BaseActivityView {
             mCallBack = new SharedElementCallback() {
                 @Override
                 public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                    imageviewClazzdetailTop = getImageView();
-                    if (imageviewClazzdetailTop == null){
-                        names.clear();
-                        sharedElements.clear();
-                    }
+//                    imageviewClazzdetailTop = getImageView();
+//                    if (imageviewClazzdetailTop == null){
+//                        names.clear();
+//                        sharedElements.clear();
+//                    }
                 }
             };
             activity.setEnterSharedElementCallback(mCallBack);
@@ -210,9 +214,9 @@ public class ClazzDetailActivityView extends BaseActivityView {
 
     @Nullable
     private ImageView getImageView(){
-        if (isInScreen(activity.getWindow().getDecorView(), imageviewClazzdetailTop)){
-            return imageviewClazzdetailTop;
-        }
+//        if (isInScreen(activity.getWindow().getDecorView(), imageviewClazzdetailTop)){
+//            return imageviewClazzdetailTop;
+//        }
         return null;
     }
 

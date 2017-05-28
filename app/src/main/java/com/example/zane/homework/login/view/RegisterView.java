@@ -8,11 +8,15 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.zane.easymvp.base.IPersenter;
 import com.example.zane.easymvp.view.BaseViewImpl;
@@ -20,6 +24,7 @@ import com.example.zane.homework.MainActivity;
 import com.example.zane.homework.R;
 import com.example.zane.homework.config.MockTeacherData;
 import com.example.zane.homework.event.LoginEvent;
+import com.example.zane.homework.login.Adapter.SpinnerAdapter;
 import com.example.zane.homework.login.presenters.RegisterFragment;
 import com.example.zane.homework.utils.JudgeSearch;
 import com.jakewharton.rxbinding.widget.RxRadioGroup;
@@ -35,32 +40,26 @@ import butterknife.Bind;
  */
 
 public class RegisterView extends BaseViewImpl {
-    @Bind(R.id.radiogroup_register_identity)
-    RadioGroup radiogroupRegisterIdentity;
-    @Bind(R.id.radiogroup_register_gender)
-    RadioGroup radiogroupRegisterGender;
+
     @Bind(R.id.edit_register_username)
     EditText editRegisterUsername;
     @Bind(R.id.textinput_register_username)
     TextInputLayout textinputRegisterUsername;
-    @Bind(R.id.edit_register_name)
-    EditText editRegisterName;
-    @Bind(R.id.textinput_register_name)
-    TextInputLayout textinputRegisterName;
+    @Bind(R.id.spinner_register)
+    Spinner spinner;
     @Bind(R.id.edit_register_password)
     EditText editRegisterPassword;
     @Bind(R.id.textinput_register_password)
     TextInputLayout textinputRegisterPassword;
-    @Bind(R.id.edit_register_selfintro)
-    EditText editRegisterSelfintro;
-    @Bind(R.id.textinput_register_selfintro)
-    TextInputLayout textinputRegisterSelfintro;
     @Bind(R.id.button_register)
     Button buttonRegister;
 
     private RegisterFragment fragment;
     private String gender;
-    private String identity;
+    private String identity = "1";
+    private SpinnerAdapter adapter;
+
+    private int[] drawableIds = { R.drawable.student, R.drawable.teacher};
 
     @Override
     public int getRootViewId() {
@@ -79,33 +78,33 @@ public class RegisterView extends BaseViewImpl {
 
     public void init(){
 
-        RxRadioGroup.checkedChanges(radiogroupRegisterGender).subscribe(integer -> {
-            if (integer == R.id.radio_male){
-                gender = "男";
-            } else if (integer == R.id.radio_female){
-                gender = "女";
-            } else {
-                gender = null;
+        adapter = new SpinnerAdapter(drawableIds);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int positon, long id) {
+                if (positon == 0){
+                    identity = "2";
+                } else if (positon == 1){
+                    identity = "1";
+                } else {
+                    identity = null;
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
-        RxRadioGroup.checkedChanges(radiogroupRegisterIdentity).subscribe(integer -> {
-            if (integer == R.id.radio_register_student){
-                identity = "2";
-            } else if (integer == R.id.radio_register_teacher){
-                identity = "1";
-            } else {
-                identity = null;
-            }
-        });
+//        RxRadioGroup.checkedChanges(radiogroupRegisterIdentity).subscribe(integer -> {
+//            if (integer == R.id.radio_register_student){
+//                identity = "2";
+//            } else if (integer == R.id.radio_register_teacher){
+//                identity = "1";
+//            } else {
+//                identity = null;
+//            }
+//        });
 
-        RxTextView.textChanges(editRegisterName).subscribe(s -> {
-            if (!JudgeSearch.isRight(s.toString())){
-                textinputRegisterName.setError("真实姓名格式不正确");
-            } else {
-                textinputRegisterName.setErrorEnabled(false);
-            }
-        });
 
         RxTextView.textChanges(editRegisterPassword).subscribe(s -> {
             if (!JudgeSearch.isRight(s.toString())){
@@ -164,16 +163,11 @@ public class RegisterView extends BaseViewImpl {
         return editRegisterUsername.getText().toString();
     }
 
-    public String realname(){
-        return editRegisterName.getText().toString();
-    }
 
     public String password(){
         return editRegisterPassword.getText().toString();
     }
 
-    public String introduce(){
-        return editRegisterSelfintro.getText().toString();
-    }
+
 
 }

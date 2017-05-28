@@ -35,7 +35,7 @@ public class WorkMemberViewHolder extends BaseListViewHolderImpl<HoPerson.DataEn
     protected void initView() {
         avatar = get(R.id.imageview_item_member);
         name = get(R.id.textview_item_membername);
-        finishtime = get(R.id.textview_item_membernumber);
+//        finishtime = get(R.id.textview_item_sid);
         grade = get(R.id.textview_item_selfinfo);
     }
 
@@ -46,7 +46,7 @@ public class WorkMemberViewHolder extends BaseListViewHolderImpl<HoPerson.DataEn
                 .transform(new CircleTransform(App.getInstance()))
                 .into(avatar);
         name.setText(dataEntity.getName());
-        finishtime.setText("完成时间: " + dataEntity.getFinishtime());
+//        finishtime.setText("完成时间: " + dataEntity.getFinishtime());
         grade.setText("成绩: " + dataEntity.getGrade());
     }
 }

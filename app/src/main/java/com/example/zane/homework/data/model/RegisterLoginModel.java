@@ -48,9 +48,8 @@ public class RegisterLoginModel {
     }
 
     //注册
-    public Observable<Integer> register(String sirstu, String username, String realname, String password,
-                                       String gender, String introduce){
-        return TransForm.transform(serviceApi.registe(sirstu, username, realname, password, gender, introduce));
+    public Observable<Integer> register(String sirstu, String username,String password){
+        return TransForm.transform(serviceApi.registe(sirstu, username, password));
 
     }
 

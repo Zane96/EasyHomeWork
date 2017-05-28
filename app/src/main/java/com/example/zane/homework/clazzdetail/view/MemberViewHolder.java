@@ -34,7 +34,7 @@ public class MemberViewHolder extends BaseListViewHolderImpl<ClassMemeber.DataEn
     public void initView() {
         avatar = get(R.id.imageview_item_member);
         name = get(R.id.textview_item_membername);
-        number = get(R.id.textview_item_membernumber);
+        number = get(R.id.textview_item_sid);
         selfInfo = get(R.id.textview_item_selfinfo);
     }
 

@@ -61,7 +61,7 @@ public class RegisterFragment extends BaseFragment<RegisterView> {
 
         RxView.clicks(v.get(R.id.button_register)).subscribe(Void -> {
 
-            model.register(v.getIdentity(), v.username(), v.realname(), v.password(), v.getGnder(), v.introduce())
+            model.register(v.getIdentity(), v.username(), v.password())
                     .flatMap(integer -> {
                         return model.login(v.username(), v.password(), v.getIdentity());})
                     .subscribe(new FinalSubscriber<Login.DataEntity>(this, aVoid -> {
