@@ -15,6 +15,7 @@ public class MySharedPre {
     private SecurePreferences preferences;
     private SecurePreferences.Editor editor;
 
+
     private MySharedPre() {
         this.context = App.getInstance();
         preferences = new SecurePreferences(this.context);
@@ -92,4 +93,12 @@ public class MySharedPre {
         return preferences.getString("sid", "");
     }
 
+    public String getPassword() {
+        return preferences.getString("password","");
+    }
+
+    public void setPassword(String password) {
+        editor.putString("password",password);
+        editor.commit();
+    }
 }

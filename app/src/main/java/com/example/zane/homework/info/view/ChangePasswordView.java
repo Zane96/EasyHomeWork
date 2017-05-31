@@ -30,12 +30,16 @@ import butterknife.Bind;
 public class ChangePasswordView extends BaseViewImpl {
     @Bind(R.id.toolbar_changepassword)
     Toolbar toolbarChangepassword;
+
     @Bind(R.id.edit_change_newpassword)
     EditText editChangeNewpassword;
+
     @Bind(R.id.edit_change_newpassword_again)
     EditText editChangeNewpasswordAgain;
+
     @Bind(R.id.button_post_newpassword)
     Button buttonPostNewpassword;
+
     private AppCompatActivity activity;
     private ProgressDialog progressDialog;
 

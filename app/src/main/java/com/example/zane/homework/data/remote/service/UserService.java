@@ -29,9 +29,9 @@ public interface UserService {
     @FormUrlEncoded
     @Headers("Cache-Control: no-store")
     Observable<String> modiInfo(@Field("flag") String flag,
-                                @Field("gender") String gender,
+                                @Field("password") String password,
                                 @Field("realname") String realname,
                                 @Field("name") String name,
-                                @Field("selfintro") String selfintro);
+                                @Field("selfintro") String selfintro);//                                @Field("gender") String gender,
 
 }

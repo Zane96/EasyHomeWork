@@ -17,9 +17,10 @@
             android:background="@drawable/avatar">
 
             <ImageView
-                android:id="@+id/imageView_clazzdetail_back"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:clickable="true"
+                android:id="@+id/imageView_info_back"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignLeft="@+id/text_info_username"
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/text_info_username"
@@ -27,10 +28,11 @@
                 android:foreground="@drawable/back" />
 
             <ImageView
-                android:id="@+id/imageView_clazzdetail_about"
+                android:clickable="true"
+                android:id="@+id/imageView_info_write"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignBottom="@+id/imageView_clazzdetail_back"
+                android:layout_alignBottom="@+id/imageView_info_back"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="18dp"
@@ -81,7 +83,7 @@
             android:background="@drawable/ic_perinfo"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/imageView4"
+            android:id="@+id/imageView_serect"
             android:layout_marginLeft="14dp"
             android:layout_marginStart="14dp"
             android:layout_alignTop="@+id/text_info_selfintro"
@@ -95,16 +97,16 @@
             android:layout_marginLeft="22dp"
             android:layout_marginStart="22dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageView4"
-            android:layout_toEndOf="@+id/imageView4" />
+            android:layout_toRightOf="@+id/imageView_serect"
+            android:layout_toEndOf="@+id/imageView_serect" />
         <ImageView
             android:background="@drawable/ic_secret"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:id="@+id/imageView5"
-            android:layout_below="@+id/imageView4"
-            android:layout_alignLeft="@+id/imageView4"
-            android:layout_alignStart="@+id/imageView4"
+            android:layout_below="@+id/imageView_serect"
+            android:layout_alignLeft="@+id/imageView_serect"
+            android:layout_alignStart="@+id/imageView_serect"
             android:layout_marginTop="32dp" />
         <TextView
             android:layout_width="250dp"
@@ -114,6 +116,7 @@
             android:layout_alignLeft="@+id/text_info_selfintro"
             android:layout_alignStart="@+id/text_info_selfintro" />
         <ImageView
+            android:clickable="true"
             android:background="@drawable/ic_secretn"
             android:layout_width="20dp"
             android:layout_height="20dp"

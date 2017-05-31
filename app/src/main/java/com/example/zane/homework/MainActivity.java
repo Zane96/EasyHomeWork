@@ -123,13 +123,13 @@ public class MainActivity extends BaseActivity<MainView> implements View.OnClick
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
 
-        View include = findViewById(R.id.nav_hmenu);
-        RelativeLayout relativeLayout = (RelativeLayout) include.findViewById(R.id.drawer_class);
-        RelativeLayout relativeLayout1 = (RelativeLayout) include.findViewById(R.id.drawer_message);
-        RelativeLayout relativeLayout2 = (RelativeLayout) include.findViewById(R.id.drawer_info);
-        RelativeLayout relativeLayout3 = (RelativeLayout) include.findViewById(R.id.drawer_about);
-        RelativeLayout relativeLayout4 = (RelativeLayout) include.findViewById(R.id.drawer_setting);
-        RelativeLayout relativeLayout5 = (RelativeLayout) include.findViewById(R.id.drawer_login);
+//        View include = findViewById(R.id.nav_hmenu);
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.drawer_class);
+        RelativeLayout relativeLayout1 = (RelativeLayout) findViewById(R.id.drawer_message);
+        RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.drawer_info);
+        RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.drawer_about);
+        RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.drawer_setting);
+        RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.drawer_login);
         relativeLayout.setOnClickListener(MainActivity.this);
         relativeLayout1.setOnClickListener(MainActivity.this);
         relativeLayout2.setOnClickListener(MainActivity.this);
@@ -300,11 +300,8 @@ public class MainActivity extends BaseActivity<MainView> implements View.OnClick
 //    }
 
     @Override
-    public void onClick(View vi) {
-        switch (vi.getId()){
-            case R.id.nav_hmenu:
-                View view = findViewById(R.id.nav_hmenu);
-                if (view.getId() == R.id.drawer_class) {
+    public void onClick(View view) {
+        if (view.getId() == R.id.drawer_class) {
                     v.transToClazzFragment(clazzFragPresenter);
                 } else if (view.getId() == R.id.drawer_message) {
                     if (MySharedPre.getInstance().getIdentity().equals("student")){
@@ -320,7 +317,26 @@ public class MainActivity extends BaseActivity<MainView> implements View.OnClick
                 } else if (view.getId() == R.id.drawer_login){
                     quitLogin();
                 }
-                break;
-        }
+//        switch (vi.getId()){
+//            case R.id.nav_hmenu:
+//                View view = findViewById(R.id.nav_hmenu);
+//                if (view.getId() == R.id.drawer_class) {
+//                    v.transToClazzFragment(clazzFragPresenter);
+//                } else if (view.getId() == R.id.drawer_message) {
+//                    if (MySharedPre.getInstance().getIdentity().equals("student")){
+//
+//                    }
+//                    v.transToMessage();
+//                } else if (view.getId() == R.id.drawer_info) {
+//                    v.transToInfoActivity();
+//                } else if (view.getId() == R.id.drawer_about) {
+//                    v.transToAuthorInfo();
+//                } else if (view.getId() == R.id.drawer_setting) {
+//
+//                } else if (view.getId() == R.id.drawer_login){
+//                    quitLogin();
+//                }
+//                break;
+//        }
     }
 }

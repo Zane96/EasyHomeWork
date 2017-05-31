@@ -27,7 +27,7 @@ import rx.Subscriber;
 public class InfoActivity extends BaseActivityPresenter<InfoView> {
 
     private static final String TAG = InfoActivity.class.getSimpleName();
-    private final UserInfoModel model = UserInfoModel.getInstance();
+//    private final UserInfoModel model = UserInfoModel.getInstance();
     //private FinalSubscriber<PerInfo.DataEntity> subscriber;
 
     @Override
@@ -39,7 +39,7 @@ public class InfoActivity extends BaseActivityPresenter<InfoView> {
     public void inCreat(Bundle bundle) {
         v.init();
         MySharedPre sp = MySharedPre.getInstance();
-        v.refreshData(sp.getName(), sp.getRealName(), sp.getGender(), sp.getIntro());
+        v.refreshData(sp.getName(), sp.getRealName(), sp.getPassword(), sp.getIntro(),sp.getGender());
     }
 
     @Override
@@ -73,54 +73,55 @@ public class InfoActivity extends BaseActivityPresenter<InfoView> {
 //        model.getPerInfo(identity).subscribe(subscriber);
 //    }
 
-    private void changeInfo(String flag, String name, String realName, String intro, String gender){
-        MySharedPre sp = MySharedPre.getInstance();
 
-        model.modiPerInfo(flag, gender, realName, name, intro).subscribe(str -> {
-            v.showSuccess(gender, realName, name, intro);
-            sp.setRealName(realName);
-            sp.setName(name);
-            sp.setIntro(intro);
-            sp.setGender(gender);
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-
-            String name = v.getName();
-            String realName = v.getRealName();
-            String intro = v.getIntro();
-            String gender = v.getGneder();
-            String changData = data.getStringExtra(ChangeOtherInfoView.OTHER_RESULT);
-            String flag;
-            switch (requestCode) {
-                case InfoView.USERNAME_CODE:
-                    name = changData;
-                    break;
-                case InfoView.NAME_CODE:
-                    realName = changData;
-                    break;
-                case InfoView.SELFINTRO_CODE:
-                    intro = changData;
-                    break;
-                case InfoView.GENDER_CODE:
-                    gender = changData;
-                    break;
-                default:
-                    v.OnActivityResult(requestCode, resultCode, data);
-                    break;
-            }
-
-            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
-                flag = "1";
-            } else {
-                flag = "2";
-            }
-
-            changeInfo(flag, name, realName, intro, gender);
-        }
-    }
+//    private void changeInfo(String flag, String name, String realName, String intro){
+//        MySharedPre sp = MySharedPre.getInstance();
+//
+//        model.modiPerInfo(flag, gender, realName, name, intro).subscribe(str -> {
+//            v.showSuccess(gender, realName, name, intro);
+//            sp.setRealName(realName);
+//            sp.setName(name);
+//            sp.setIntro(intro);
+//            //   sp.setGender(gender);
+//        });
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//
+//            String name = v.getName();
+//            String realName = v.getRealName();
+//            String intro = v.getIntro();
+//            String gender = v.getGneder();
+//            String changData = data.getStringExtra(ChangeOtherInfoView.OTHER_RESULT);
+//            String flag;
+//            switch (requestCode) {
+//                case InfoView.USERNAME_CODE:
+//                    name = changData;
+//                    break;
+//                case InfoView.NAME_CODE:
+//                    realName = changData;
+//                    break;
+//                case InfoView.SELFINTRO_CODE:
+//                    intro = changData;
+//                    break;
+//                case InfoView.GENDER_CODE:
+//                    gender = changData;
+//                    break;
+//                default:
+//                    v.OnActivityResult(requestCode, resultCode, data);
+//                    break;
+//            }
+//
+//            if (MySharedPre.getInstance().getIdentity().equals("teacher")){
+//                flag = "1";
+//            } else {
+//                flag = "2";
+//            }
+//
+//            changeInfo(flag, name, realName, intro, gender);
+//        }
+//    }
 }

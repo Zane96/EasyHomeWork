@@ -48,8 +48,8 @@ public class MainView extends BaseViewImpl {
     FrameLayout mainFragmentReplace;
 //    @Bind(R.id.nav_view)
 //    NavigationView navView;
-    @Bind(R.id.nav_hmenu)
-    View include;
+//    @Bind(R.id.nav_hmenu)
+//    View include;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     private AppCompatActivity context;

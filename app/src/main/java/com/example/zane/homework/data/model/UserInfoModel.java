@@ -48,8 +48,8 @@ public class UserInfoModel {
     }
 
     //修改个人信息
-    public Observable<String> modiPerInfo(String flag, String gender, String realname,
+    public Observable<String> modiPerInfo(String flag, String password, String realname,
                                           String name, String selfintro){
-        return TransForm.transform(serviceApi.modiInfo(flag, gender, realname, name, selfintro));
+        return TransForm.transform(serviceApi.modiInfo(flag, password, realname, name, selfintro));
     }
 }

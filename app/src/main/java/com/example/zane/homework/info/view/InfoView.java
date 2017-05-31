@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,41 +39,49 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
 
     private static final String TAG = InfoActivity.class.getSimpleName();
     public static final String CHANGE_CONTENT = "changeContent";
-    public static final int USERNAME_CODE = 111;
-    public static final int NAME_CODE = 222;
-    public static final int SELFINTRO_CODE = 333;
-    public static final int PASSWORD_CODE = 444;
-    public static final int GENDER_CODE = 555;
 
-    @Bind(R.id.imaget_self_avatar)
-    ImageView imagetSelfAvatar;
-    @Bind(R.id.card_info_avatar)
-    CardView cardInfoAvatar;
+//    @Bind(R.id.imaget_self_avatar)
+//    ImageView imagetSelfAvatar;
+//    @Bind(R.id.card_info_avatar)
+//    CardView cardInfoAvatar;
+//    @Bind(R.id.card_info_username)
+//    CardView cardInfoUsername;
     @Bind(R.id.text_info_username)
     TextView textInfoUsername;
-    @Bind(R.id.card_info_username)
-    CardView cardInfoUsername;
     @Bind(R.id.text_info_name)
     TextView textInfoName;
-    @Bind(R.id.card_info_name)
-    CardView cardInfoName;
     @Bind(R.id.text_info_selfintro)
     TextView textInfoSelfintro;
-    @Bind(R.id.card_info_selfintro)
-    CardView cardInfoSelfintro;
     @Bind(R.id.text_info_password)
     TextView textInfoPassword;
-    @Bind(R.id.card_info_password)
-    CardView cardInfoPassword;
+
     @Bind(R.id.text_info_gender)
-    TextView textInfoGender;
-    @Bind(R.id.card_info_gender)
-    CardView cardInfoGender;
-    @Bind(R.id.toolbar_info)
-    Toolbar toolbarInfo;
+    ImageView imageView_gender;
+
+//    @Bind(R.id.text_info_gender)
+//    TextView textInfoGender;
+    @Bind(R.id.imageView_info_write)
+    ImageView imageView;
+    @Bind(R.id.imageView_info_back)
+    ImageView imageViewback;
+    @Bind(R.id.imageView_serect)
+    ImageView imageViewserect;
+
+//    @Bind(R.id.card_info_name)
+//    CardView cardInfoName;
+//    @Bind(R.id.card_info_selfintro)
+//    CardView cardInfoSelfintro;
+//    @Bind(R.id.card_info_password)
+//    CardView cardInfoPassword;
+//    @Bind(R.id.card_info_gender)
+//    CardView cardInfoGender;
+//    @Bind(R.id.toolbar_info)
+//    Toolbar toolbarInfo;
 
     private InfoActivity activity;
     private EasyImage image;
+
+    private int flag = 0;
 
     @Override
     public int getRootViewId() {
@@ -95,52 +104,88 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
             Looper.prepare();
             android.os.Handler handler = new android.os.Handler();
             Looper.loop();
-            Glide.with(activity)
-                    .load(uri)
-                    .transform(new CircleTransform(App.getInstance()))
-                    .into(imagetSelfAvatar);
+//            Glide.with(activity)
+//                    .load(uri)
+//                    .transform(new CircleTransform(App.getInstance()))
+//                    .into(imagetSelfAvatar);
         }
     };
 
     public void init() {
 
-        toolbarInfo.setTitle("我的信息");
-        activity.setSupportActionBar(toolbarInfo);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbarInfo.setTitle("我的信息");
+//        activity.setSupportActionBar(toolbarInfo);
+//        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RxToolbar.navigationClicks(toolbarInfo).subscribe(aVoid -> {activity.finish();});
+//        RxToolbar.navigationClicks(toolbarInfo).subscribe(aVoid -> {activity.finish();});
 
-        cardInfoAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ImageProviderBuilder builder = new ImageProviderBuilder()
-                                                             .with(activity)
-                                                             .setGetImageListener("uri", listener)
-                                                             .useCrop(200, 200);
-                new AlertDialog.Builder(activity).setItems(new String[]{"相册", "相机"}, (dialog, which) -> {
-                            switch (which) {
-                                case 0:
-                                    builder.useAlbum();
-                                    break;
-                                case 1:
-                                    builder.useCamera();
-                                    break;
-                            }
-                            image = EasyImage.creat(builder);
-                            image.execute();
-                        }).show();
-            }
-        });
+//        imageViewback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                activity.finish();
+//            }
+//        });
+//
+        imageViewserect.setOnClickListener(this);
+        imageViewback.setOnClickListener(this);
+        imageView.setOnClickListener(this);
+//        imageViewserect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (flag == 0){
+//                    imageViewserect.setImageResource(R.drawable.ic_secretn);
+//                    flag = 1;
+//                }else if (flag == 1 )
+//                imageViewserect.setImageResource(R.drawable.ic_secrety);
+//                flag =0;
+//            }
+//        });
 
-        cardInfoGender.setOnClickListener(this);
-        cardInfoName.setOnClickListener(this);
+
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent()
+//            }
+//        });
+
+//        cardInfoAvatar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final ImageProviderBuilder builder = new ImageProviderBuilder()
+//                                                             .with(activity)
+//                                                             .setGetImageListener("uri", listener)
+//                                                             .useCrop(200, 200);
+//                new AlertDialog.Builder(activity).setItems(new String[]{"相册", "相机"}, (dialog, which) -> {
+//                            switch (which) {
+//                                case 0:
+//                                    builder.useAlbum();
+//                                    break;
+//                                case 1:
+//                                    builder.useCamera();
+//                                    break;
+//                            }
+//                            image = EasyImage.creat(builder);
+//                            image.execute();
+//                        }).show();
+//            }
+//        });
+
+//        cardInfoGender.setOnClickListener(this);
+//        cardInfoName.setOnClickListener(this);
         //cardInfoPassword.setOnClickListener(this);
-        cardInfoSelfintro.setOnClickListener(this);
-        cardInfoUsername.setOnClickListener(this);
+//        cardInfoSelfintro.setOnClickListener(this);
+//        cardInfoUsername.setOnClickListener(this);
     }
 
-    public void refreshData(String name, String realName, String gender, String intro){
-        textInfoGender.setText(gender);
+    public void refreshData(String name, String realName, String serect, String intro,String gender){
+        if (gender.equals("男")){
+            imageView_gender.setImageResource(R.drawable.ic_male);
+        }else if(gender.equals("女")){
+            imageView_gender.setImageResource(R.drawable.ic_famale);
+        }
+        //textInfoGender.setText(gender);
+        textInfoPassword.setText(serect);
         textInfoName.setText(realName);
         textInfoSelfintro.setText(intro);
         textInfoUsername.setText(name);
@@ -154,29 +199,46 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(activity, ChangeOtherInfoActivity.class);
+//        Intent intent = new Intent(activity, ChangeOtherInfoActivity.class);
         switch (v.getId()) {
-            case R.id.card_info_password:
-                Intent intentPassword = new Intent(activity, ChangPasswordActivity.class);
-                intentPassword.putExtra(CHANGE_CONTENT, textInfoPassword.getText());
-                activity.startActivityForResult(intentPassword, PASSWORD_CODE);
+            case R.id.imageView_info_write:
+                Log.e(TAG, "onClick: " +"123" );
+                Intent intent = new Intent(activity, ChangeOtherInfoActivity.class);
+                activity.startActivity(intent);
                 break;
-            case R.id.card_info_gender:
-                intent.putExtra(CHANGE_CONTENT, textInfoGender.getText());
-                activity.startActivityForResult(intent, GENDER_CODE);
+            case R.id.imageView_info_back:
+                activity.finish();
                 break;
-            case R.id.card_info_name:
-                intent.putExtra(CHANGE_CONTENT, textInfoName.getText());
-                activity.startActivityForResult(intent, NAME_CODE);
+            case R.id.imageView_serect:
+                if (flag == 0){
+                    imageViewserect.setImageResource(R.drawable.ic_secrety);
+                    flag = 1;
+                }else if (flag == 1 ) {
+                    imageViewserect.setImageResource(R.drawable.ic_secretn);
+                    flag = 0;
+                }
                 break;
-            case R.id.card_info_selfintro:
-                intent.putExtra(CHANGE_CONTENT, textInfoSelfintro.getText());
-                activity.startActivityForResult(intent, SELFINTRO_CODE);
-                break;
-            case R.id.card_info_username:
-                intent.putExtra(CHANGE_CONTENT, textInfoUsername.getText());
-                activity.startActivityForResult(intent, USERNAME_CODE);
-                break;
+//            case R.id.card_info_password:
+//                Intent intentPassword = new Intent(activity, ChangPasswordActivity.class);
+//                intentPassword.putExtra(CHANGE_CONTENT, textInfoPassword.getText());
+//                activity.startActivityForResult(intentPassword, PASSWORD_CODE);
+//                break;
+//            case R.id.card_info_gender:
+//                intent.putExtra(CHANGE_CONTENT, textInfoGender.getText());
+//                activity.startActivityForResult(intent, GENDER_CODE);
+//                break;
+//            case R.id.card_info_name:
+//                intent.putExtra(CHANGE_CONTENT, textInfoName.getText());
+//                activity.startActivityForResult(intent, NAME_CODE);
+//                break;
+//            case R.id.card_info_selfintro:
+//                intent.putExtra(CHANGE_CONTENT, textInfoSelfintro.getText());
+//                activity.startActivityForResult(intent, SELFINTRO_CODE);
+//                break;
+//            case R.id.card_info_username:
+//                intent.putExtra(CHANGE_CONTENT, textInfoUsername.getText());
+//                activity.startActivityForResult(intent, USERNAME_CODE);
+//                break;
         }
     }
 
@@ -188,24 +250,13 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
         return textInfoName.getText().toString();
     }
 
-    public String getGneder(){
-        return textInfoGender.getText().toString();
-    }
+//    public String getGneder(){
+//        return textInfoGender.getText().toString();
+//    }
 
     public String getIntro(){
         return textInfoSelfintro.getText().toString();
     }
 
 
-    public void showSuccess(String gender, String realName, String name, String intro){
-        Snackbar.make(textInfoGender, "信息修改成功～", Snackbar.LENGTH_SHORT).show();
-        textInfoUsername.setText(name);
-        textInfoName.setText(realName);
-        textInfoGender.setText(gender);
-        textInfoSelfintro.setText(intro);
-    }
-
-    public void showFaile(){
-        Snackbar.make(textInfoGender, "信息修改失败～", Snackbar.LENGTH_SHORT).show();
-    }
 }
