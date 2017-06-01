@@ -1,5 +1,6 @@
 package com.example.zane.homework.message.presenters;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.example.zane.easymvp.base.IPersenter;
