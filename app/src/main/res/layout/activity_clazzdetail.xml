@@ -2,19 +2,16 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/background"
-    tools:context="com.example.zane.homework.MainActivity">
+    android:background="@color/background">
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/viewpager_clazzdetail"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_clazzdetail"
@@ -26,14 +23,14 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="302dp"
         android:fitsSystemWindows="true"
         android:theme="@style/MyCustomToolBarStyle">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/coll_clazzdetail"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="255dp"
             android:fitsSystemWindows="true"
             android:theme="@style/MyCustomToolBarStyle"
             app:contentScrim="?attr/colorPrimary"
@@ -99,7 +96,7 @@
                 <TextView
                     android:id="@+id/textview_clazzdetail_classname"
                     android:layout_width="300dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_above="@+id/textview_clazzdetail_score"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
@@ -112,11 +109,11 @@
                 <TextView
                     android:id="@+id/textview_clazzdetail_score"
                     android:layout_width="150dp"
-                    android:layout_height="20dp"
+                    android:layout_height="25dp"
                     android:layout_alignLeft="@+id/textview_clazzdetail_classname"
                     android:layout_alignParentBottom="true"
                     android:layout_alignStart="@+id/textview_clazzdetail_classname"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="24dp"
                     android:text="每门课20分"
                     android:textColor="#ffffff"
                     android:textSize="16sp" />

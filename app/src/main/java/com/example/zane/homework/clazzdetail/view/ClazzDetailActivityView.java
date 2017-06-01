@@ -48,7 +48,7 @@ import butterknife.Bind;
  * Email: zanebot96@gmail.com
  */
 
-public class ClazzDetailActivityView extends BaseActivityView {
+public class ClazzDetailActivityView extends BaseActivityView implements View.OnClickListener{
 
     public static final String COURSENAME = "courseName";
     public static final String CID = "cid";
@@ -141,6 +141,9 @@ public class ClazzDetailActivityView extends BaseActivityView {
                 }).show();
             }
         });
+
+        back.setOnClickListener(this);
+        about.setOnClickListener(this);
     }
 
 //    Callback callback = new Callback() {
@@ -228,4 +231,14 @@ public class ClazzDetailActivityView extends BaseActivityView {
         return imageView.getLocalVisibleRect(rect);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageView_clazzdetail_about:
+                break;
+            case R.id.imageView_clazzdetail_back:
+                activity.finish();
+                break;
+        }
+    }
 }

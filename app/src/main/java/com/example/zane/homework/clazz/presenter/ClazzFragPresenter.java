@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,14 +170,16 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
 
         @Bind(R.id.imageview_item_clazz)
         ImageView imageviewItemClazz;
-        @Bind(R.id.textview_item_couresename)
+        @Bind(R.id.textview_item_clazzname)
         TextView textviewItemCouresename;
-        @Bind(R.id.textview_item_owner)
+        @Bind(R.id.textview_item_jid)
         TextView textviewItemOwner;
         @Bind(R.id.clazz_item)
         CardView clazzItem;
         @Bind(R.id.textview_item_asid)
         TextView textviewItemAsid;
+        @Bind(R.id.textview_item_zongfen)
+        TextView textViewScore;
 
         private int itemPosition;
         private TeacherHavaClass.DataEntity teaData;
@@ -211,9 +214,10 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
             } else {
 
                 stuData = stuHaveCourses.get(position);
-                textviewItemCouresename.setText(stuData.getAddtion());
-                textviewItemOwner.setText("JID : " + stuData.getJid());
-                textviewItemAsid.setText("CID :" + stuData.getCid());
+                textviewItemCouresename.setText(stuData.getCourse());
+                textviewItemOwner.setText("JID:" + stuData.getJid());
+                textviewItemAsid.setText("CID:" + stuData.getCid());
+//                textViewScore.setText("每门课"+ stuData.getAddtion() + "分");
 
                 StudentLogin.getInstacne().setAvatar(RandomBackImage.getRandomAvatar());
 
@@ -245,8 +249,10 @@ public class ClazzFragPresenter extends BaseFragment<ClazzFragView> {
 
             if (Build.VERSION.SDK_INT > 21) {
                 mIsDetailsActivityStarted = true;
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),
-                        imageviewItemClazz, imageviewItemClazz.getTransitionName()).toBundle());
+                startActivity(intent);
+//                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+//                        imageviewItemClazz, imageviewItemClazz.getTransitionName()).toBundle());
+//                Log.e(TAG, "onClick: " + "ClassDetailActivityPresenter" );
             } else {
                 startActivity(intent);
             }

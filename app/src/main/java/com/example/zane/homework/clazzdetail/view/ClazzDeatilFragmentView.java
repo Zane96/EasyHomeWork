@@ -94,7 +94,5 @@ public class ClazzDeatilFragmentView extends BaseViewImpl {
         swipHomeworkFrag.setRefreshing(false);
     }
 
-    //-----------------------------------Notice-------------------------------------
-
 
 }

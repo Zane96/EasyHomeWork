@@ -88,9 +88,12 @@ public class ChangeOtherInfoView extends BaseActivityView {
     }
 
     private void initToolbar() {
-        super.initToolbar(activity, toolbarChangotherinfo, "修改信息");
+        toolbarChangotherinfo.setTitle("修改个人信息");
+        activity.setSupportActionBar(toolbarChangotherinfo);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        RxToolbar.navigationClicks(toolbarChangotherinfo).subscribe(aVoid -> {activity.finish();});
+        //super.initToolbar(activity, toolbarChangotherinfo, "修改信息");
     }
-
     public void init(String oldData){
         initToolbar();
 

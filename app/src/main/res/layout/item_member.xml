@@ -50,7 +50,7 @@
         <TextView
             android:id="@+id/textview_item_selfinfo"
             android:layout_width="288dp"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_alignBottom="@+id/imageview_item_member"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"

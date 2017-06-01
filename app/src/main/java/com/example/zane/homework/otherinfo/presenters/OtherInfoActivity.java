@@ -1,26 +1,16 @@
 package com.example.zane.homework.otherinfo.presenters;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 
 import com.example.zane.easymvp.base.IPersenter;
-import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.example.zane.homework.base.BaseActivity;
 import com.example.zane.homework.clazzdetail.presenter.MemberFragment;
-import com.example.zane.homework.clazzdetail.view.ClazzDetailActivityView;
 import com.example.zane.homework.data.bean.GetStatistc;
 import com.example.zane.homework.data.model.HomeWorkModel;
 import com.example.zane.homework.data.remote.FinalSubscriber;
 import com.example.zane.homework.entity.MemberDetail;
-import com.example.zane.homework.entity.StudentLogin;
 import com.example.zane.homework.otherinfo.view.OtherInfoView;
-import com.example.zane.homework.data.sp.MySharedPre;
 import com.example.zane.homework.utils.RandomBackImage;
-import com.jude.utils.JUtils;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Created by Zane on 16/6/13.

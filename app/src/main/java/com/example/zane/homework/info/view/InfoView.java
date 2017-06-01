@@ -23,6 +23,9 @@ import com.example.zane.easymvp.view.BaseViewImpl;
 import com.example.zane.homework.R;
 import com.example.zane.homework.app.App;
 import com.example.zane.homework.custom.CircleTransform;
+import com.example.zane.homework.data.sp.MySharedPre;
+import com.example.zane.homework.entity.StudentLogin;
+import com.example.zane.homework.entity.TeacherLogin;
 import com.example.zane.homework.info.presenters.ChangPasswordActivity;
 import com.example.zane.homework.info.presenters.ChangeOtherInfoActivity;
 import com.example.zane.homework.info.presenters.InfoActivity;
@@ -129,6 +132,8 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
         imageViewserect.setOnClickListener(this);
         imageViewback.setOnClickListener(this);
         imageView.setOnClickListener(this);
+
+        
 //        imageViewserect.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -171,11 +176,23 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
 //            }
 //        });
 
-//        cardInfoGender.setOnClickListener(this);
-//        cardInfoName.setOnClickListener(this);
-        //cardInfoPassword.setOnClickListener(this);
-//        cardInfoSelfintro.setOnClickListener(this);
-//        cardInfoUsername.setOnClickListener(this);
+/*        cardInfoGender.setOnClickListener(this);
+        cardInfoName.setOnClickListener(this);
+        cardInfoPassword.setOnClickListener(this);
+        cardInfoSelfintro.setOnClickListener(this);
+        cardInfoUsername.setOnClickListener(this);*/
+
+     /*   if (MySharedPre.getInstance().getIdentity().equals("teacher")) {
+            textInfoPassword.setText(TeacherLogin.getInstacne().getPsd());
+            textInfoName.setText(TeacherLogin.getInstacne().getName());
+            textInfoSelfintro.setText(TeacherLogin.getInstacne().getSelfIntro());
+            textInfoUsername.setText(TeacherLogin.getInstacne().getUserName());
+        }else {
+            textInfoPassword.setText(StudentLogin.getInstacne().getPsd());
+            textInfoName.setText(StudentLogin.getInstacne().getName());
+            textInfoSelfintro.setText(StudentLogin.getInstacne().getSelfIntro());
+            textInfoUsername.setText(StudentLogin.getInstacne().getUserName());
+        }*/
     }
 
     public void refreshData(String name, String realName, String serect, String intro,String gender){
@@ -202,7 +219,6 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
 //        Intent intent = new Intent(activity, ChangeOtherInfoActivity.class);
         switch (v.getId()) {
             case R.id.imageView_info_write:
-                Log.e(TAG, "onClick: " +"123" );
                 Intent intent = new Intent(activity, ChangeOtherInfoActivity.class);
                 activity.startActivity(intent);
                 break;
@@ -211,6 +227,7 @@ public class InfoView extends BaseViewImpl implements View.OnClickListener {
                 break;
             case R.id.imageView_serect:
                 if (flag == 0){
+                    Log.e(TAG, "onClick: " + "设置图片" );
                     imageViewserect.setImageResource(R.drawable.ic_secrety);
                     flag = 1;
                 }else if (flag == 1 ) {

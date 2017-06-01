@@ -31,7 +31,7 @@
             android:layout_marginStart="13dp"/>
 
         <TextView
-            android:id="@+id/textview_item_couresename"
+            android:id="@+id/textview_item_clazzname"
             android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/textview_item_asid"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="25dp"
             android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
@@ -54,13 +54,13 @@
             android:text="CID: 123"
             android:textColor="#4d4d4d"
             android:textSize="14sp"
-            android:layout_below="@+id/textview_item_couresename"
-            android:layout_toRightOf="@+id/textview_item_owner"
-            android:layout_toEndOf="@+id/textview_item_owner" />
+            android:layout_below="@+id/textview_item_clazzname"
+            android:layout_toRightOf="@+id/textview_item_jid"
+            android:layout_toEndOf="@+id/textview_item_jid" />
 
         <TextView
             android:id="@+id/textview_item_zongfen"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="25dp"
             android:layout_alignTop="@+id/textview_item_asid"
             android:layout_marginLeft="40dp"
@@ -68,17 +68,17 @@
             android:layout_toEndOf="@+id/textview_item_asid"
             android:layout_toRightOf="@+id/textview_item_asid"
             android:gravity="center_vertical"
-            android:text="每门课15分"
+            android:text="每门课20分"
             android:textColor="#4d4d4d"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textview_item_owner"
-            android:layout_width="wrap_content"
+            android:id="@+id/textview_item_jid"
+            android:layout_width="50dp"
             android:layout_height="25dp"
-            android:layout_alignLeft="@+id/textview_item_couresename"
-            android:layout_alignStart="@+id/textview_item_couresename"
-            android:layout_below="@+id/textview_item_couresename"
+            android:layout_alignLeft="@+id/textview_item_clazzname"
+            android:layout_alignStart="@+id/textview_item_clazzname"
+            android:layout_below="@+id/textview_item_clazzname"
             android:gravity="center_vertical"
             android:text="JID:63"
             android:textColor="#4d4d4d"

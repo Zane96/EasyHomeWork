@@ -23,8 +23,8 @@ import com.example.zane.homework.entity.StudentLogin;
 public class StuClazzViewHolder extends BaseListViewHolderImpl<StuHaveClass.DataEntity>{
 
     private ImageView imageviewItemClazz;
-//    private TextView textviewItemClazzname;
-    private TextView textviewItemCouresename;
+//    private TextView textviewItemCouresename;
+    private TextView textviewItemClazzname;
     private TextView textviewItemOwner;
     private TextView textviewItemAsid;
 
@@ -36,20 +36,20 @@ public class StuClazzViewHolder extends BaseListViewHolderImpl<StuHaveClass.Data
     @Override
     protected void initView() {
         imageviewItemClazz = get(R.id.imageview_item_clazz);
-//        textviewItemClazzname = get(R.id.textview_item_couresename);
-        textviewItemCouresename = get(R.id.textview_item_couresename);
-        textviewItemOwner = get(R.id.textview_item_owner);
+        textviewItemClazzname = get(R.id.textview_item_clazzname);
+//        textviewItemCouresename = get(R.id.textview_item_couresename);
+        textviewItemOwner = get(R.id.textview_item_jid);
         textviewItemAsid = get(R.id.textview_item_asid);
     }
 
     @Override
     public void setData(StuHaveClass.DataEntity dataEntity) {
-        textviewItemOwner.setVisibility(View.GONE);
+//        textviewItemOwner.setVisibility(View.GONE);
 
-
-        textviewItemAsid.setText("CID: " + dataEntity.getCid());
-//        textviewItemClazzname.setText(dataEntity.getClassname());
-        textviewItemCouresename.setText(dataEntity.getDescription());
+        textviewItemOwner.setText("   ");
+        textviewItemAsid.setText("CID:" + dataEntity.getCid());
+        textviewItemClazzname.setText(dataEntity.getClassname());
+        //textviewItemCouresename.setText(dataEntity.getDescription());
 
         Glide.with(App.getInstance())
                 .load(StudentLogin.getInstacne().getAvatar())
